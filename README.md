@@ -24,9 +24,7 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 
 ## Preview
 
-> _Add a GIF or short video here — e.g. `docs/demo.gif` or a YouTube embed._
-
-![demo placeholder](public/banner.png)
+![NudaUI demo](public/nuda-ui-demo.gif)
 
 ## ✨ Features
 
@@ -159,6 +157,6 @@ MIT © [Santiago Gómez de la Torre Romero](https://github.com/sgomez-dev)
 
 If NudaUI saves you time, a ⭐ on the repo is the nicest way to say thanks.
 
-[Site](https://nudaui.vercel.app) · [Components](https://nudaui.vercel.app/components) · [Twitter](https://twitter.com/nudaui)
+[Site](https://nudaui.vercel.app) · [Components](https://nudaui.vercel.app/components)
 
 </div>
