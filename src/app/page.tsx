@@ -8,7 +8,6 @@ import { CodeReveal } from "@/components/landing/code-reveal";
 import { InteractivePlayground } from "@/components/landing/interactive-playground";
 import { HorizontalShowcase } from "@/components/landing/horizontal-showcase";
 import { HowItWorks } from "@/components/landing/how-it-works";
-import { Testimonials } from "@/components/landing/testimonials";
 import { WhyNuda } from "@/components/landing/why-nuda";
 import { Roadmap } from "@/components/landing/roadmap";
 import { FAQ } from "@/components/landing/faq";
@@ -72,7 +71,6 @@ export default function Home() {
         <InteractivePlayground />
         <HorizontalShowcase />
         <HowItWorks />
-        <Testimonials />
         <WhyNuda />
         <Roadmap />
         <FAQ />

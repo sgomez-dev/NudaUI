@@ -32,12 +32,12 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 - **Copy-paste ownership** — shadcn/ui-style model. The code is yours the moment you paste it.
 - **Framework-agnostic** — React, Vue, Svelte, Astro, Next, Nuxt, Laravel, Django, Rails, or a plain `.html` file.
 - **Accessibility-aware** — `prefers-reduced-motion` respected, proper ARIA roles where it matters.
-- **157 components across 25 categories** — loaders, text effects, 3D, scroll, micro-interactions and more.
+- **303 components across 40 categories** — loaders, charts, AI/chat, drag & drop, command palette, theme toggles, hero sections, pricing, video player, onboarding, terminal & more.
 - **Tailwind-friendly, Tailwind-optional** — works with your setup, not against it.
 
 ## 📦 Components
 
-157 components, 25 categories.
+303 components, 40 categories.
 
 | Category | Sample components | Count |
 | --- | --- | --- |
@@ -66,6 +66,21 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 | Scroll Effects | Fade in, Parallax, Reveal, Progress bar… | 4 |
 | Cursors | Dot follower, Magnet, Trail, Blend… | 4 |
 | Tooltips | Arrow, Fade, Slide, Glass… | 4 |
+| Empty States | Empty Box, Inbox, Search, Folder, Ghost, Pulse… | 6 |
+| Charts | Bar, Line, Donut, Sparkline, Gauge, Heatmap, Area, Pie, KPI… | 10 |
+| Particles & Effects | Confetti, Sparkles, Fireflies, Snow, Rain, Fireworks, Bubbles, Stars, Comet… | 10 |
+| Stats & Counters | Count up, Trend card, Score ring, Streak, Live counter, Battery, Goal, Achievement… | 10 |
+| Form States | Float label, Search expand, Password strength, OTP, Validation, Shake, Toggle group, Range, Step indicator, Async submit | 10 |
+| Image Effects | Hover zoom, Ken Burns, Blur to focus, Color drain, Mask reveal, Tilt, Scan line, Glitch, Lightbox, Frame reveal | 10 |
+| AI / Chat UI | Streaming dots, Streaming text, Chat bubble, Thinking shimmer, Prompt composer, Citations, Token counter, Model selector, Stop, Message actions | 10 |
+| Drag & Drop | Drop zone, File card, Sortable, Drop indicator, Trash zone, Drag preview, Drop validation, Multi-file, Upload success, Reorder grid | 10 |
+| Command Palette | Cmd-K trigger, Spotlight, Result item, Group header, No results, Searching, Recent, Footer hints, Match highlight, Quick action | 10 |
+| Theme Toggle | Sun/Moon morph, Switch, Circle reveal, Three-state, Color schemes, Icon button, Dropdown, BG swap, System indicator, Slider | 10 |
+| Hero Sections | Centered, Split, Mesh gradient, Word reveal, Stat row, Avatar stack, Floating cards, Newsletter, Scroll indicator, Logo cloud | 10 |
+| Pricing Tables | Card, Popular tier, Billing toggle, Price morph, Feature list, Savings badge, Compare row, Currency, Discount countdown, Best value | 10 |
+| Video Player UI | Play/pause morph, Scrubber, Volume, Buffer, Big play, Controls reveal, Speed, Captions, Fullscreen, Live indicator | 10 |
+| Onboarding & Coachmarks | Spotlight, Tour tooltip, Step counter, Welcome modal, Feature pulse, Coach arrow, Skip, Confetti finale, New badge, Checklist | 10 |
+| Code & Terminal | Terminal cursor, Typing code, Copy button, File tree, Tab bar, Syntax reveal, Error squiggle, Run button, Command output, Diff highlight | 10 |
 
 Full catalog: [nudaui.vercel.app/components](https://nudaui.vercel.app/components)
 
