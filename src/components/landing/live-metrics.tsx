@@ -160,11 +160,14 @@ function Sparkline({ active }: { active: boolean }) {
 // Bar race — horizontal bars that fill on reveal
 // ─────────────────────────────────────────────────────────
 function BarRace({ active }: { active: boolean }) {
+  // Every framework is fully supported because the snippets are plain HTML +
+  // CSS — there's nothing framework-specific in the output. Bars all fill 100%.
   const bars = [
-    { label: "React", pct: 92 },
-    { label: "Vue", pct: 78 },
-    { label: "Svelte", pct: 64 },
-    { label: "Plain HTML", pct: 100 },
+    { label: "React" },
+    { label: "Vue" },
+    { label: "Svelte" },
+    { label: "Astro" },
+    { label: "Plain HTML" },
   ];
   return (
     <div className="space-y-3">
@@ -176,7 +179,7 @@ function BarRace({ active }: { active: boolean }) {
           <div className="relative flex-1 h-1.5 bg-border rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
-              animate={active ? { width: `${b.pct}%` } : { width: 0 }}
+              animate={active ? { width: "100%" } : { width: 0 }}
               transition={{ delay: 0.2 + i * 0.12, duration: 1.2, ease }}
               className="absolute inset-y-0 left-0 bg-accent rounded-full"
               style={{
@@ -185,8 +188,8 @@ function BarRace({ active }: { active: boolean }) {
               }}
             />
           </div>
-          <span className="text-[11px] font-mono tabular-nums text-text-secondary w-10 text-right">
-            <Counter value={b.pct} suffix="%" active={active} duration={1.4} />
+          <span className="text-[11px] font-mono tabular-nums text-accent w-10 text-right">
+            ✓
           </span>
         </div>
       ))}
@@ -229,10 +232,10 @@ function FluidGauge({ active }: { active: boolean }) {
       {/* Center label */}
       <div className="absolute inset-0 flex flex-col items-center justify-center mix-blend-difference">
         <span className="text-sm font-bold tabular-nums text-text-primary">
-          <Counter value={38} suffix="%" active={active} />
+          0<span className="text-[11px]">kb</span>
         </span>
         <span className="text-[9px] font-mono uppercase tracking-[0.18em] text-text-muted">
-          load
+          runtime
         </span>
       </div>
     </div>
@@ -243,15 +246,20 @@ function FluidGauge({ active }: { active: boolean }) {
 // Live ticker — infinite scrolling status strip
 // ─────────────────────────────────────────────────────────
 function Ticker() {
+  // Showcase the breadth of the catalog — categories, not made-up sizes.
   const items = [
-    "pulse 0.4kb",
-    "fade-up 0.3kb",
-    "marquee 0.2kb",
-    "blob-morph 0.6kb",
-    "parallax 0.5kb",
-    "glitch 0.8kb",
-    "shimmer 0.3kb",
-    "magnetic 0.9kb",
+    "loaders",
+    "ai / chat",
+    "command palette",
+    "charts",
+    "drag & drop",
+    "hero sections",
+    "pricing",
+    "video player",
+    "onboarding",
+    "code & terminal",
+    "particles",
+    "form states",
   ];
   const doubled = [...items, ...items];
 
@@ -336,21 +344,22 @@ export function LiveMetrics() {
                 <span className="relative inline-block w-2 h-2 rounded-full bg-accent" />
               </span>
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-text-muted">
-                Live pulse
+                What&apos;s shipped
               </p>
             </div>
             <h2
               id="live-metrics-heading"
               className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.05]"
             >
-              The numbers
+              The catalog,
               <br />
-              <span className="text-text-muted">don&apos;t sit still.</span>
+              <span className="text-text-muted">at a glance.</span>
             </h2>
           </div>
           <p className="text-base sm:text-lg text-text-secondary leading-relaxed max-w-lg">
-            Lightness you can measure. Every animation ships weighed,
-            accessibility-checked, and rendered on a 60fps budget.
+            Real numbers from the repo. Every component ships with the same
+            baseline: zero dependencies, semantic markup, and reduced-motion
+            handling.
           </p>
         </motion.div>
 
@@ -363,29 +372,23 @@ export function LiveMetrics() {
         >
           <motion.div style={{ filter: useTransform(heroBlur, (v) => `blur(${v}px)`) }}>
             <span className="block text-[clamp(4rem,14vw,10rem)] font-black tracking-[-0.06em] leading-[0.85] text-text-primary">
-              <Counter
-                value={99.4}
-                decimals={1}
-                suffix="%"
-                active={isInView}
-                duration={2.2}
-              />
+              <Counter value={303} active={isInView} duration={2.2} />
             </span>
             <span className="block mt-2 text-sm text-text-muted font-mono uppercase tracking-[0.2em]">
-              Pages where animations finish in under one frame
+              Components shipped — across 40 categories
             </span>
           </motion.div>
 
           <div className="flex gap-4">
-            <Ring percent={94} label="a11y" active={isInView} />
-            <Ring percent={72} label="coverage" active={isInView} />
+            <Ring percent={100} label="a11y" active={isInView} />
+            <Ring percent={100} label="reduced-motion" active={isInView} />
             <FluidGauge active={isInView} />
           </div>
         </motion.div>
 
-        {/* Grid — sparkline + bar race + secondary counters */}
+        {/* Grid — categories card + frameworks card */}
         <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mb-10">
-          {/* Sparkline card */}
+          {/* Categories card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -394,12 +397,12 @@ export function LiveMetrics() {
           >
             <div className="flex items-baseline justify-between mb-3">
               <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-text-muted">
-                Installs / week
+                Categories
               </span>
-              <span className="text-xs font-mono text-accent">+18.3%</span>
+              <span className="text-xs font-mono text-accent">∼7 / cat</span>
             </div>
             <div className="text-3xl font-black tracking-tight tabular-nums mb-2">
-              <Counter value={12840} active={isInView} duration={2.2} />
+              <Counter value={40} active={isInView} duration={2.2} />
             </div>
             <div className="h-12 -mx-2">
               <Sparkline active={isInView} />
@@ -418,7 +421,7 @@ export function LiveMetrics() {
                 Works with
               </span>
               <span className="text-xs font-mono text-text-muted">
-                zero install · across stacks
+                zero install · the snippets are plain HTML
               </span>
             </div>
             <BarRace active={isInView} />

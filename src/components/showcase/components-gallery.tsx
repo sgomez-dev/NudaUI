@@ -1,104 +1,37 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CodeBlock } from "@/components/ui/code-block";
 import { cn } from "@/lib/utils";
-import {
-  X,
-  Search,
-  Loader2,
-  RotateCw,
-  BarChart3,
-  Type,
-  MousePointer2,
-  ToggleLeft,
-  Layers,
-  Activity,
-  Zap,
-  Paintbrush,
-  Square,
-  Users,
-  Tag,
-  Navigation,
-  Bell,
-  MessageSquare,
-  Minus,
-  MousePointer,
-  Timer,
-  ArrowDown,
-  Box,
-  PanelTop,
-  ChevronsUpDown,
-  MoveHorizontal,
-} from "lucide-react";
+import { X, Search } from "lucide-react";
 
 import type { NudaComponent } from "./registry/types";
 import {
-  loaders,
-  spinners,
-  progress,
-  placeholders,
-  textEffects,
-  buttons,
-  togglesInputs,
-  cardsHover,
-  indicators,
-  microInteractions,
-  backgrounds,
-  bordersOutlines,
-  avatars,
-  badgesTags,
-  navigation as navigationComponents,
-  notifications,
-  tooltips,
-  dividers,
-  cursors,
-  countdowns,
-  scrollEffects,
-  threeDEffects,
-  modalsOverlays,
-  accordionsTabs,
-  marquees,
-} from "./registry";
+  categories,
+  totalCount,
+  componentHasJS,
+  allInlineCss,
+  type CategoryConfig,
+} from "./registry/categories";
 
-/* ── Category config ── */
-interface CategoryConfig {
-  id: string;
-  label: string;
-  icon: React.ElementType;
-  components: NudaComponent[];
-}
-
-const categories: CategoryConfig[] = [
-  { id: "loaders", label: "Loaders", icon: Loader2, components: loaders },
-  { id: "spinners", label: "Spinners", icon: RotateCw, components: spinners },
-  { id: "progress", label: "Progress", icon: BarChart3, components: progress },
-  { id: "placeholders", label: "Placeholders", icon: Layers, components: placeholders },
-  { id: "text-effects", label: "Text Effects", icon: Type, components: textEffects },
-  { id: "buttons", label: "Buttons", icon: MousePointer2, components: buttons },
-  { id: "toggles-inputs", label: "Toggles & Inputs", icon: ToggleLeft, components: togglesInputs },
-  { id: "cards-hover", label: "Cards & Hover", icon: Square, components: cardsHover },
-  { id: "indicators", label: "Indicators", icon: Activity, components: indicators },
-  { id: "micro-interactions", label: "Micro-interactions", icon: Zap, components: microInteractions },
-  { id: "backgrounds", label: "Backgrounds", icon: Paintbrush, components: backgrounds },
-  { id: "borders-outlines", label: "Borders & Outlines", icon: Square, components: bordersOutlines },
-  { id: "avatars", label: "Avatars", icon: Users, components: avatars },
-  { id: "badges-tags", label: "Badges & Tags", icon: Tag, components: badgesTags },
-  { id: "navigation", label: "Navigation", icon: Navigation, components: navigationComponents },
-  { id: "notifications", label: "Notifications", icon: Bell, components: notifications },
-  { id: "tooltips", label: "Tooltips", icon: MessageSquare, components: tooltips },
-  { id: "dividers", label: "Dividers", icon: Minus, components: dividers },
-  { id: "cursors", label: "Cursors", icon: MousePointer, components: cursors },
-  { id: "countdowns", label: "Countdowns", icon: Timer, components: countdowns },
-  { id: "scroll-effects", label: "Scroll Effects", icon: ArrowDown, components: scrollEffects },
-  { id: "three-d", label: "3D Effects", icon: Box, components: threeDEffects },
-  { id: "modals-overlays", label: "Modals & Overlays", icon: PanelTop, components: modalsOverlays },
-  { id: "accordions-tabs", label: "Accordions & Tabs", icon: ChevronsUpDown, components: accordionsTabs },
-  { id: "marquees", label: "Marquees & Tickers", icon: MoveHorizontal, components: marquees },
-];
-
-const totalCount = categories.reduce((acc, c) => acc + c.components.length, 0);
+/* ── Pre-compute search index ──
+   One pass at module load instead of `n × 3` toLowerCase() calls per keystroke. */
+type IndexedComponent = NudaComponent & {
+  __search: string;
+  __hasJS: boolean;
+};
+type IndexedCategory = Omit<CategoryConfig, "components"> & {
+  components: IndexedComponent[];
+};
+const indexed: IndexedCategory[] = categories.map((cat) => ({
+  ...cat,
+  components: cat.components.map((c) => ({
+    ...c,
+    __search: `${c.name} ${c.category} ${c.id}`.toLowerCase(),
+    __hasJS: componentHasJS(c),
+  })),
+}));
 
 /* ── Scroll spy hook ── */
 function useScrollSpy(ids: string[]) {
@@ -127,28 +60,83 @@ function useScrollSpy(ids: string[]) {
   return active;
 }
 
+/* ── Lazy section ──
+   Section content is a *lot* of DOM with live CSS animations. Skip the
+   rendering work until it's near the viewport so the initial paint stays
+   cheap. Once mounted, we keep it mounted so scrolling back doesn't re-init
+   animations. */
+function LazyGrid({
+  count,
+  children,
+}: {
+  count: number;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (visible) return;
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" } // pre-render before user reaches the section
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [visible]);
+
+  return (
+    <div ref={ref}>
+      {visible ? (
+        children
+      ) : (
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
+          {Array.from({ length: count }).map((_, i) => (
+            <div
+              key={i}
+              aria-hidden="true"
+              className="aspect-square rounded-xl border border-border bg-surface-light/20"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── Gallery ── */
 export function ComponentsGallery() {
   const [search, setSearch] = useState("");
+  const [noJSOnly, setNoJSOnly] = useState(false);
   const [selected, setSelected] = useState<NudaComponent | null>(null);
-  const sectionIds = useMemo(() => categories.map((c) => `section-${c.id}`), []);
+
+  const sectionIds = useMemo(
+    () => indexed.map((c) => `section-${c.id}`),
+    []
+  );
   const activeSection = useScrollSpy(sectionIds);
 
   const filteredCategories = useMemo(() => {
-    if (!search.trim()) return categories;
-    const q = search.toLowerCase();
-    return categories
+    const q = search.trim().toLowerCase();
+    if (!q && !noJSOnly) return indexed;
+    return indexed
       .map((cat) => ({
         ...cat,
-        components: cat.components.filter(
-          (c) =>
-            c.name.toLowerCase().includes(q) ||
-            c.category.toLowerCase().includes(q) ||
-            c.id.toLowerCase().includes(q)
-        ),
+        components: cat.components.filter((c) => {
+          if (noJSOnly && c.__hasJS) return false;
+          if (q && !c.__search.includes(q)) return false;
+          return true;
+        }),
       }))
       .filter((cat) => cat.components.length > 0);
-  }, [search]);
+  }, [search, noJSOnly]);
 
   const filteredCount = filteredCategories.reduce(
     (acc, cat) => acc + cat.components.length,
@@ -161,7 +149,9 @@ export function ComponentsGallery() {
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [selected]);
 
   useEffect(() => {
@@ -174,6 +164,11 @@ export function ComponentsGallery() {
 
   return (
     <div className="max-w-[1400px] mx-auto">
+      {/* All component CSS hoisted into one tag — class names are uniquely
+          prefixed (`nuda-*`), so a single global block is safe and avoids
+          mounting 300+ <style> tags. */}
+      <style dangerouslySetInnerHTML={{ __html: allInlineCss }} />
+
       {/* Header */}
       <div className="mb-6 sm:mb-10">
         <motion.h1
@@ -190,15 +185,30 @@ export function ComponentsGallery() {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="mt-3 text-text-secondary max-w-xl"
         >
-          <span className="text-accent font-semibold">{totalCount}</span> animations
-          across {categories.length} categories.
+          <span className="text-accent font-semibold">{totalCount}</span>{" "}
+          animations across {indexed.length} categories.
           <br />
           <span className="text-text-muted text-sm">
             Pure HTML + CSS + vanilla JS — zero dependencies, zero build tools.
           </span>
           <span className="flex flex-wrap gap-1 sm:gap-1.5 mt-2">
-            {["React", "Vue", "Svelte", "Angular", "Laravel", "Django", "Rails", "Go", "PHP", "Astro", "HTML"].map((fw) => (
-              <span key={fw} className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[10px] font-mono font-medium bg-accent/8 text-accent/80 border border-accent/15">
+            {[
+              "React",
+              "Vue",
+              "Svelte",
+              "Angular",
+              "Laravel",
+              "Django",
+              "Rails",
+              "Go",
+              "PHP",
+              "Astro",
+              "HTML",
+            ].map((fw) => (
+              <span
+                key={fw}
+                className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[10px] font-mono font-medium bg-accent/8 text-accent/80 border border-accent/15"
+              >
                 {fw}
               </span>
             ))}
@@ -233,7 +243,18 @@ export function ComponentsGallery() {
               )}
             </div>
 
-            {categories.map((cat) => {
+            {/* Filters */}
+            <label className="flex items-center gap-2 px-3 py-1.5 text-[11px] text-text-muted hover:text-text-secondary cursor-pointer select-none mb-3">
+              <input
+                type="checkbox"
+                checked={noJSOnly}
+                onChange={(e) => setNoJSOnly(e.target.checked)}
+                className="accent-accent"
+              />
+              <span>CSS-only (no JS)</span>
+            </label>
+
+            {indexed.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeSection === `section-${cat.id}`;
               return (
@@ -267,7 +288,7 @@ export function ComponentsGallery() {
         {/* Main */}
         <main className="flex-1 min-w-0">
           {/* Mobile search */}
-          <div className="lg:hidden relative mb-6">
+          <div className="lg:hidden relative mb-4">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input
               type="text"
@@ -278,9 +299,20 @@ export function ComponentsGallery() {
             />
           </div>
 
+          {/* Mobile filter */}
+          <label className="lg:hidden flex items-center gap-2 mb-4 px-3 py-1.5 text-[11px] text-text-muted bg-surface-light border border-border rounded-lg w-fit cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={noJSOnly}
+              onChange={(e) => setNoJSOnly(e.target.checked)}
+              className="accent-accent"
+            />
+            <span>CSS-only (no JS)</span>
+          </label>
+
           {/* Mobile pills */}
           <div className="lg:hidden flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-8 overflow-x-auto pb-2">
-            {categories.map((cat) => (
+            {indexed.map((cat) => (
               <a
                 key={cat.id}
                 href={`#section-${cat.id}`}
@@ -291,9 +323,11 @@ export function ComponentsGallery() {
             ))}
           </div>
 
-          {search && (
+          {(search || noJSOnly) && (
             <p className="text-xs text-text-muted mb-6 font-mono">
-              {filteredCount} result{filteredCount !== 1 ? "s" : ""} for &quot;{search}&quot;
+              {filteredCount} result{filteredCount !== 1 ? "s" : ""}
+              {search && <> for &quot;{search}&quot;</>}
+              {noJSOnly && <> · CSS-only</>}
             </p>
           )}
 
@@ -311,38 +345,43 @@ export function ComponentsGallery() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
-                {cat.components.map((comp) => (
-                  <button
-                    key={comp.id}
-                    onClick={() => setSelected(comp)}
-                    className="group w-full relative flex flex-col items-center justify-center gap-2 sm:gap-3 p-4 sm:p-6 md:p-8 rounded-xl border border-border bg-surface-light/30 hover:bg-surface-light hover:border-accent/20 transition-all duration-300 aspect-square text-left overflow-hidden"
-                  >
-                    {comp.cssInline && (
-                      <style
-                        dangerouslySetInnerHTML={{ __html: comp.cssInline }}
-                      />
-                    )}
-                    <div className="flex items-center justify-center flex-1">
-                      {comp.preview}
-                    </div>
-                    <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4">
-                      <p className="text-[10px] sm:text-xs font-medium text-text-primary truncate">
-                        {comp.name}
-                      </p>
-                      <div className="flex items-center gap-1.5">
-                        <p className="text-[8px] sm:text-[10px] text-text-muted font-mono truncate">
-                          {comp.category}
-                        </p>
-                        <span className="text-[7px] sm:text-[8px] text-accent/60 font-mono hidden sm:inline flex-shrink-0">
-                          · any stack
-                        </span>
+              <LazyGrid count={cat.components.length}>
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
+                  {cat.components.map((comp) => (
+                    <button
+                      key={comp.id}
+                      onClick={() => setSelected(comp)}
+                      className="group w-full relative flex flex-col items-center justify-center gap-2 sm:gap-3 p-4 sm:p-6 md:p-8 rounded-xl border border-border bg-surface-light/30 hover:bg-surface-light hover:border-accent/20 transition-all duration-300 aspect-square text-left overflow-hidden"
+                    >
+                      <div className="flex items-center justify-center flex-1">
+                        {comp.preview}
                       </div>
-                    </div>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-accent/[0.03] to-transparent" />
-                  </button>
-                ))}
-              </div>
+                      <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4">
+                        <p className="text-[10px] sm:text-xs font-medium text-text-primary truncate">
+                          {comp.name}
+                        </p>
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-[8px] sm:text-[10px] text-text-muted font-mono truncate">
+                            {comp.category}
+                          </p>
+                          <span className="text-[7px] sm:text-[8px] text-accent/60 font-mono hidden sm:inline flex-shrink-0">
+                            · any stack
+                          </span>
+                        </div>
+                      </div>
+                      {comp.__hasJS && (
+                        <span
+                          className="absolute top-2 right-2 text-[8px] font-mono font-bold text-accent/60 bg-accent/5 border border-accent/15 px-1.5 py-0.5 rounded"
+                          title="Includes a JS snippet"
+                        >
+                          JS
+                        </span>
+                      )}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-accent/[0.03] to-transparent" />
+                    </button>
+                  ))}
+                </div>
+              </LazyGrid>
 
               <div className="mt-8 sm:mt-16 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
             </section>
@@ -351,13 +390,20 @@ export function ComponentsGallery() {
           {filteredCategories.length === 0 && (
             <div className="text-center py-20">
               <p className="text-text-muted">
-                No components match &quot;{search}&quot;
+                {search ? (
+                  <>No components match &quot;{search}&quot;</>
+                ) : (
+                  <>No components match the current filters</>
+                )}
               </p>
               <button
-                onClick={() => setSearch("")}
+                onClick={() => {
+                  setSearch("");
+                  setNoJSOnly(false);
+                }}
                 className="mt-3 text-xs text-accent hover:text-accent-dim transition-colors"
               >
-                Clear search
+                Clear filters
               </button>
             </div>
           )}
@@ -384,14 +430,29 @@ export function ComponentsGallery() {
             >
               <div className="flex items-center justify-between p-3 sm:p-5 border-b border-border flex-shrink-0">
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-sm sm:text-base truncate">{selected.name}</h3>
+                  <h3 className="font-semibold text-sm sm:text-base truncate">
+                    {selected.name}
+                  </h3>
                   <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-0.5">
                     <p className="text-[10px] sm:text-xs text-text-muted font-mono">
                       {selected.category}
                     </p>
                     <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-mono font-medium bg-accent/10 text-accent/80 border border-accent/20">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                      <span className="hidden sm:inline">Works with any framework</span>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span className="hidden sm:inline">
+                        Works with any framework
+                      </span>
                       <span className="sm:hidden">Any stack</span>
                     </span>
                   </div>
@@ -407,11 +468,8 @@ export function ComponentsGallery() {
 
               <div className="overflow-y-auto flex-1">
                 <div className="flex items-center justify-center p-6 sm:p-12 border-b border-border bg-surface/50 min-h-[150px] sm:min-h-[200px]">
-                  {selected.cssInline && (
-                    <style
-                      dangerouslySetInnerHTML={{ __html: selected.cssInline }}
-                    />
-                  )}
+                  {/* The component's CSS is already hoisted globally, so no
+                      need to inject it here again. */}
                   {selected.preview}
                 </div>
 

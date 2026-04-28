@@ -23,49 +23,49 @@ const milestones: {
   count: string;
 }[] = [
   {
-    quarter: "Q1",
-    date: "Jan — Mar",
-    title: "The foundation.",
+    quarter: "01",
+    date: "Foundation",
+    title: "The core kit.",
     body:
-      "Core kit of 30 components — loaders, entrances, text animations — all under 1kb. a11y baseline and reduced-motion enforced.",
+      "Loaders, spinners, text effects, buttons, cards, indicators, tooltips, micro-interactions — the building blocks every UI needs. a11y baseline and reduced-motion enforced from day one.",
     status: "shipped",
-    count: "30+",
+    count: "157",
   },
   {
-    quarter: "Q2",
-    date: "Apr — Jun",
-    title: "Scroll choreography.",
+    quarter: "02",
+    date: "Data & visuals",
+    title: "Charts and atmosphere.",
     body:
-      "Scroll-driven primitives: stagger, parallax, reveal. Zero-JS CSS-only variants where possible, tiny hooks when not.",
+      "Charts, sparklines, gauges, KPI cards, particle systems (confetti, fireflies, snow, rain), image effects (Ken Burns, glitch, mask reveal), counters, empty states.",
     status: "shipped",
-    count: "18+",
+    count: "56",
   },
   {
-    quarter: "Q3",
-    date: "Jul — Sep",
-    title: "Interactive playground.",
+    quarter: "03",
+    date: "Power-user UX",
+    title: "AI, drag, and Cmd-K.",
     body:
-      "Live preview editor, token inspector, and CLI for mirroring components into any repo — still no runtime, still no bundle.",
-    status: "in-progress",
-    count: "12+",
+      "AI / chat UI primitives (streaming dots, prompt composer, citations), drag & drop with native events, command palette with kbd hints, theme toggles.",
+    status: "shipped",
+    count: "40",
   },
   {
-    quarter: "Q4",
-    date: "Oct — Dec",
-    title: "Native bridges.",
+    quarter: "04",
+    date: "Marketing & flows",
+    title: "Hero to onboarding.",
     body:
-      "Opt-in SwiftUI / Jetpack Compose ports of the same primitives. Same names, same easing curves, same intent.",
-    status: "planned",
-    count: "soon",
+      "Hero sections, pricing tables with billing toggles, video player UI, onboarding spotlights and checklists, code & terminal snippets — the full landing-page surface area.",
+    status: "shipped",
+    count: "50",
   },
   {
-    quarter: "Q1 · '27",
+    quarter: "Next",
     date: "Looking ahead",
-    title: "A design token exchange.",
+    title: "A CLI and theme tokens.",
     body:
-      "Import your Figma variables, export a tokens.css. The animations inherit automatically — your system becomes the theme.",
+      "A small CLI to copy components into your repo (still no runtime), and a tokens.css system so a single CSS variables override can rebrand the whole catalog.",
     status: "planned",
-    count: "next",
+    count: "—",
   },
 ];
 
