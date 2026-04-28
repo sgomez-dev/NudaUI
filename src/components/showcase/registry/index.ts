@@ -1,27 +1,14 @@
+/**
+ * Public surface of the registry. Re-exports the single source of truth so
+ * downstream code can `import { categories, totalCount } from "./registry"`.
+ *
+ * Adding a new category? Edit only `./categories.ts`.
+ */
 export type { NudaComponent } from "./types";
-
-export { loaders } from "./loaders";
-export { spinners } from "./spinners";
-export { progress } from "./progress";
-export { placeholders } from "./placeholders";
-export { textEffects } from "./text-effects";
-export { buttons } from "./buttons";
-export { togglesInputs } from "./toggles-inputs";
-export { cardsHover } from "./cards-hover";
-export { indicators } from "./indicators";
-export { microInteractions } from "./micro-interactions";
-export { backgrounds } from "./backgrounds";
-export { bordersOutlines } from "./borders-outlines";
-export { avatars } from "./avatars";
-export { badgesTags } from "./badges-tags";
-export { navigation } from "./navigation";
-export { notifications } from "./notifications";
-export { tooltips } from "./tooltips";
-export { dividers } from "./dividers";
-export { cursors } from "./cursors";
-export { countdowns } from "./countdowns";
-export { scrollEffects } from "./scroll-effects";
-export { threeDEffects } from "./three-d";
-export { modalsOverlays } from "./modals-overlays";
-export { accordionsTabs } from "./accordions-tabs";
-export { marquees } from "./marquees";
+export {
+  categories,
+  totalCount,
+  componentHasJS,
+  allInlineCss,
+  type CategoryConfig,
+} from "./categories";
