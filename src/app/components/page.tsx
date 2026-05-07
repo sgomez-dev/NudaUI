@@ -5,13 +5,18 @@ import {
   breadcrumbSchema,
   collectionPageSchema,
   graph,
+  itemListSchema,
+  type JsonLdComponent,
 } from "@/lib/jsonld";
+import {
+  categories,
+  totalCount,
+} from "@/components/showcase/registry/categories";
 import { absoluteUrl, site } from "@/lib/site";
 import type { Metadata } from "next";
 
 const pageTitle = "Components gallery";
-const pageDescription =
-  "Browse 28+ copy-paste UI animations and components. Loaders, spinners, progress indicators, text effects, buttons, toggles, notifications, tooltips, cursors, 3D effects, scroll-driven animations and more. Zero dependencies, framework-agnostic.";
+const pageDescription = `Browse ${totalCount}+ copy-paste UI animations and components across ${categories.length} categories. Loaders, spinners, progress, text effects, buttons, toggles, hero sections, footers, login forms, calendars, sidebars, steppers, AI/chat UIs, command palettes, video player UI and more. Zero dependencies, framework-agnostic.`;
 const pageUrl = absoluteUrl("/components");
 
 export const metadata: Metadata = {
@@ -35,12 +40,28 @@ export const metadata: Metadata = {
 };
 
 export default function ComponentsPage() {
+  // Flatten the registry into the minimum shape JSON-LD needs. Avoids
+  // pulling React preview nodes into the schema payload.
+  const flat: JsonLdComponent[] = categories.flatMap((cat) =>
+    cat.components.map((c) => ({
+      id: c.id,
+      name: c.name,
+      category: c.category,
+    }))
+  );
+
   const jsonLd = graph(
     collectionPageSchema({
       url: pageUrl,
       name: `${pageTitle} — ${site.name}`,
       description: pageDescription,
-      itemCount: 28,
+      itemCount: totalCount,
+    }),
+    itemListSchema({
+      url: pageUrl,
+      name: `${site.name} — every component`,
+      description: pageDescription,
+      components: flat,
     }),
     breadcrumbSchema([
       { name: "Home", url: "/" },
