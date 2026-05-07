@@ -9,6 +9,14 @@ import {
   useTransform,
   animate,
 } from "framer-motion";
+import {
+  categories,
+  totalCount,
+} from "@/components/showcase/registry/categories";
+
+// Average components per category — kept derived so the "∼N / cat"
+// callout stays accurate as the registry grows.
+const avgPerCategory = Math.round(totalCount / categories.length);
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -372,10 +380,10 @@ export function LiveMetrics() {
         >
           <motion.div style={{ filter: useTransform(heroBlur, (v) => `blur(${v}px)`) }}>
             <span className="block text-[clamp(4rem,14vw,10rem)] font-black tracking-[-0.06em] leading-[0.85] text-text-primary">
-              <Counter value={303} active={isInView} duration={2.2} />
+              <Counter value={totalCount} active={isInView} duration={2.2} />
             </span>
             <span className="block mt-2 text-sm text-text-muted font-mono uppercase tracking-[0.2em]">
-              Components shipped — across 40 categories
+              Components shipped — across {categories.length} categories
             </span>
           </motion.div>
 
@@ -399,10 +407,10 @@ export function LiveMetrics() {
               <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-text-muted">
                 Categories
               </span>
-              <span className="text-xs font-mono text-accent">∼7 / cat</span>
+              <span className="text-xs font-mono text-accent">∼{avgPerCategory} / cat</span>
             </div>
             <div className="text-3xl font-black tracking-tight tabular-nums mb-2">
-              <Counter value={40} active={isInView} duration={2.2} />
+              <Counter value={categories.length} active={isInView} duration={2.2} />
             </div>
             <div className="h-12 -mx-2">
               <Sparkline active={isInView} />

@@ -37,6 +37,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages: { en: absoluteUrl("/components") },
       },
     },
+    {
+      url: absoluteUrl("/terms"),
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.3,
+      alternates: {
+        languages: { en: absoluteUrl("/terms") },
+      },
+    },
+    {
+      url: absoluteUrl("/privacy"),
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.3,
+      alternates: {
+        languages: { en: absoluteUrl("/privacy") },
+      },
+    },
   ];
 
   // One entry per category. The `#section-<id>` anchor matches the

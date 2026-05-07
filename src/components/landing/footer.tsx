@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { ContactDialog } from "@/components/landing/contact-dialog";
 
 export function Footer() {
   return (
@@ -31,12 +32,19 @@ export function Footer() {
           >
             GitHub
           </a>
-          <a
-            href={`mailto:${site.email}`}
+          <ContactDialog />
+          <Link
+            href="/terms"
             className="hover:text-text-primary transition-colors"
           >
-            Contact
-          </a>
+            Terms
+          </Link>
+          <Link
+            href="/privacy"
+            className="hover:text-text-primary transition-colors"
+          >
+            Privacy
+          </Link>
         </div>
 
         {/* Easter egg */}

@@ -78,6 +78,8 @@ export function GET(): Response {
   lines.push("## Optional");
   lines.push("");
   lines.push(`- Contact: <mailto:${site.email}>`);
+  lines.push(`- [Terms of use](${absoluteUrl("/terms")})`);
+  lines.push(`- [Privacy policy](${absoluteUrl("/privacy")})`);
   lines.push(`- [RSS feed](${absoluteUrl("/feed.xml")})`);
   lines.push(`- [Security policy](${absoluteUrl("/.well-known/security.txt")})`);
   lines.push(`- [humans.txt](${absoluteUrl("/humans.txt")})`);
