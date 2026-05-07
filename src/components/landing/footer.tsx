@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { site } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -10,7 +11,7 @@ export function Footer() {
             <span className="text-surface text-[10px] font-black">N</span>
           </div>
           <span className="text-xs text-text-muted font-mono">
-            nudaui.dev
+            {site.url.replace(/^https?:\/\//, "")}
           </span>
         </div>
 
@@ -23,7 +24,7 @@ export function Footer() {
             Components
           </Link>
           <a
-            href="https://github.com/nudaui"
+            href={site.social.github}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-text-primary transition-colors"

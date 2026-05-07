@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { site } from "@/lib/site";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -49,7 +50,7 @@ export function Navbar() {
             Components
           </Link>
           <a
-            href="https://github.com/nudaui"
+            href={site.social.github}
             target="_blank"
             rel="noopener noreferrer"
             className="px-3 py-1.5 text-sm text-text-muted hover:text-text-primary transition-colors"

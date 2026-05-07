@@ -10,6 +10,7 @@ import {
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { site } from "@/lib/site";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -160,7 +161,7 @@ export function Hero() {
               </Link>
             </MagneticButton>
             <a
-              href="https://github.com/nudaui"
+              href={site.social.github}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3.5 text-sm text-text-secondary hover:text-text-primary transition-colors"
