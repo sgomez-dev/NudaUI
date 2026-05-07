@@ -31,6 +31,12 @@ export function Footer() {
           >
             GitHub
           </a>
+          <a
+            href={`mailto:${site.email}`}
+            className="hover:text-text-primary transition-colors"
+          >
+            Contact
+          </a>
         </div>
 
         {/* Easter egg */}

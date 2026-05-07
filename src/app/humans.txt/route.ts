@@ -13,6 +13,7 @@ export function GET(): Response {
   const lines = [
     "/* TEAM */",
     "  Author:   Santiago Gómez de la Torre Romero",
+    `  Contact:  ${site.email}`,
     `  Site:     ${site.url}`,
     `  Source:   ${site.social.github}`,
     "",

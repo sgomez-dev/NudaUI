@@ -77,6 +77,7 @@ export function GET(): Response {
   // ── 5. Optional / secondary ─────────────────────────────────
   lines.push("## Optional");
   lines.push("");
+  lines.push(`- Contact: <mailto:${site.email}>`);
   lines.push(`- [RSS feed](${absoluteUrl("/feed.xml")})`);
   lines.push(`- [Security policy](${absoluteUrl("/.well-known/security.txt")})`);
   lines.push(`- [humans.txt](${absoluteUrl("/humans.txt")})`);

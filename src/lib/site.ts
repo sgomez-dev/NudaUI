@@ -47,6 +47,9 @@ export const site = {
   social: {
     github: "https://github.com/sgomez-dev/nudaui",
   },
+  // Inbox for press, partnership, and general contact. Security reports go
+  // through .well-known/security.txt instead — keep this address spam-soft.
+  email: "contact@nudaui.dev",
   // OG colors — kept here so the dynamic OG image and the manifest share tokens.
   theme: {
     background: "#09090b",

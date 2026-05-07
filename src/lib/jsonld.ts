@@ -54,6 +54,7 @@ export function organizationSchema(): JsonLd {
     name: site.name,
     url: site.url,
     description: site.shortDescription,
+    email: site.email,
     logo: {
       "@type": "ImageObject",
       url: absoluteUrl("/icon.png"),
@@ -61,6 +62,12 @@ export function organizationSchema(): JsonLd {
       height: 512,
     },
     sameAs: [site.social.github],
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: site.email,
+      contactType: "customer support",
+      availableLanguage: ["English", "Spanish"],
+    },
     founder: {
       "@type": "Person",
       name: "NudaUI team",
