@@ -48,6 +48,11 @@ import {
   Film,
   Compass,
   Terminal,
+  PanelBottom,
+  LogIn,
+  Calendar,
+  PanelLeft,
+  ListChecks,
   type LucideIcon,
 } from "lucide-react";
 
@@ -93,6 +98,11 @@ import { pricing } from "./pricing";
 import { videoPlayer } from "./video-player";
 import { onboarding } from "./onboarding";
 import { codeTerminal } from "./code-terminal";
+import { footers } from "./footers";
+import { auth } from "./auth";
+import { calendars } from "./calendars";
+import { sidebars } from "./sidebars";
+import { steppers } from "./steppers";
 
 export interface CategoryConfig {
   id: string;
@@ -142,6 +152,11 @@ export const categories: CategoryConfig[] = [
   { id: "video-player", label: "Video Player UI", icon: Film, components: videoPlayer },
   { id: "onboarding", label: "Onboarding & Coachmarks", icon: Compass, components: onboarding },
   { id: "code-terminal", label: "Code & Terminal", icon: Terminal, components: codeTerminal },
+  { id: "footers", label: "Footers", icon: PanelBottom, components: footers },
+  { id: "auth", label: "Login & Auth", icon: LogIn, components: auth },
+  { id: "calendars", label: "Calendars & Date Pickers", icon: Calendar, components: calendars },
+  { id: "sidebars", label: "Sidebars & Docks", icon: PanelLeft, components: sidebars },
+  { id: "steppers", label: "Steppers & Wizards", icon: ListChecks, components: steppers },
 ];
 
 /** Total number of components across every category. */
