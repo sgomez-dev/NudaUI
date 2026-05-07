@@ -45,8 +45,6 @@ export const site = {
     url: "https://nudaui.dev",
   },
   social: {
-    twitter: "@nudaui",
-    twitterUrl: "https://twitter.com/nudaui",
     github: "https://github.com/sgomez-dev/nudaui",
   },
   // OG colors — kept here so the dynamic OG image and the manifest share tokens.

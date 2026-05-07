@@ -9,8 +9,18 @@
 
 import { site, absoluteUrl } from "./site";
 import { faqs } from "./faqs";
+import { categoryDescriptions } from "./category-meta";
 
 type JsonLd = Record<string, unknown>;
+
+/** Minimal shape we need from a registry component for ItemList payloads.
+ *  Kept structural so it works for both the gallery's `IndexedComponent`
+ *  and the bare `NudaComponent` from the registry types — no import cycles. */
+export interface JsonLdComponent {
+  id: string;
+  name: string;
+  category: string;
+}
 
 /** The core website identity — search action hints at future site search. */
 export function websiteSchema(): JsonLd {
@@ -50,7 +60,7 @@ export function organizationSchema(): JsonLd {
       width: 512,
       height: 512,
     },
-    sameAs: [site.social.github, site.social.twitterUrl],
+    sameAs: [site.social.github],
     founder: {
       "@type": "Person",
       name: "NudaUI team",
@@ -63,7 +73,10 @@ export function organizationSchema(): JsonLd {
  * Classifying it as DeveloperApplication gives Google the signal to list it
  * in tool-oriented rich results.
  */
-export function softwareApplicationSchema(): JsonLd {
+export function softwareApplicationSchema(args?: {
+  /** Pass the category labels so `featureList` mirrors the live registry. */
+  features?: string[];
+}): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -77,6 +90,12 @@ export function softwareApplicationSchema(): JsonLd {
     softwareVersion: "0.1.0",
     license: "https://opensource.org/licenses/MIT",
     downloadUrl: site.social.github,
+    codeRepository: site.social.github,
+    programmingLanguage: ["CSS", "HTML", "JavaScript"],
+    keywords: site.keywords.join(", "),
+    ...(args?.features && args.features.length > 0
+      ? { featureList: args.features }
+      : {}),
     offers: {
       "@type": "Offer",
       price: "0",
@@ -151,6 +170,122 @@ export function collectionPageSchema(args: {
           },
         }
       : {}),
+  };
+}
+
+/**
+ * SoftwareSourceCode — one snippet "object" per registry component.
+ * Used as the `item` of every entry inside the gallery ItemList so search
+ * engines can index individual components as code samples (and LLMs can
+ * surface them by name when grounding).
+ *
+ * The @id uses the component's stable `id` slug so it survives a category
+ * rename. The URL points to the gallery (the modal-based UX has no per
+ * component route) — good enough as a canonical for a single SPA entry.
+ */
+export function softwareSourceCodeSchema(c: JsonLdComponent): JsonLd {
+  return {
+    "@type": "SoftwareSourceCode",
+    "@id": `${site.url}/components#${c.id}`,
+    name: c.name,
+    codeSampleType: "snippet",
+    programmingLanguage: ["CSS", "HTML"],
+    url: absoluteUrl("/components"),
+    isPartOf: { "@id": `${site.url}/#software` },
+    keywords: [c.category, c.name, "copy paste", "animation", "css"].join(", "),
+  };
+}
+
+/**
+ * ItemList — the canonical "this page is a list" schema. We emit one big
+ * ordered list with every component, so Google can show rich list results
+ * for queries like "css copy paste animation library".
+ */
+export function itemListSchema(args: {
+  url: string;
+  name: string;
+  description: string;
+  components: readonly JsonLdComponent[];
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${args.url}#itemlist`,
+    url: args.url,
+    name: args.name,
+    description: args.description,
+    numberOfItems: args.components.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: args.components.map((c, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: softwareSourceCodeSchema(c),
+    })),
+  };
+}
+
+/**
+ * HowTo — "How to use NudaUI in three steps". Surfaces NudaUI in
+ * AI Overviews and Google's HowTo card when somebody searches for
+ * "how to add CSS animations without dependencies".
+ */
+export function howToUseSchema(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${site.url}/#howto-use`,
+    name: `How to use ${site.name} in any project`,
+    description:
+      "Add a copy-paste CSS animation to any framework — React, Vue, Svelte, Astro, Laravel, Django, Rails, or plain HTML — in under a minute.",
+    totalTime: "PT1M",
+    estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "0" },
+    supply: [{ "@type": "HowToSupply", name: "A code editor" }],
+    tool: [{ "@type": "HowToTool", name: "Any framework that renders HTML" }],
+    step: [
+      {
+        "@type": "HowToStep",
+        position: 1,
+        name: "Browse the gallery",
+        text: `Open the components gallery on ${site.url}/components and pick the animation you want.`,
+        url: absoluteUrl("/components"),
+      },
+      {
+        "@type": "HowToStep",
+        position: 2,
+        name: "Copy the HTML and CSS",
+        text: "Open the component in the modal, switch between HTML / CSS / JS tabs, and copy the snippet you need.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "Paste into your project",
+        text: "Drop the markup wherever you need it. Tweak the CSS custom properties (color, size, timing) to match your design system. Done.",
+      },
+    ],
+  };
+}
+
+/**
+ * CategoryList — flattens our registry's `description` map into a
+ * lightweight DefinedTerm list. Surfaces inside the @graph as a glossary
+ * that LLMs can quote verbatim when describing the catalog.
+ */
+export function categoryGlossarySchema(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${site.url}/#categories`,
+    name: `${site.name} component categories`,
+    inDefinedTermSet: site.url,
+    hasDefinedTerm: Object.entries(categoryDescriptions).map(
+      ([id, description]) => ({
+        "@type": "DefinedTerm",
+        "@id": `${site.url}/components#section-${id}`,
+        name: id,
+        description,
+        inDefinedTermSet: `${site.url}/#categories`,
+      })
+    ),
   };
 }
 
