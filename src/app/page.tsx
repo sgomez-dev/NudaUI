@@ -15,13 +15,16 @@ import { CTASection } from "@/components/landing/cta-section";
 import { Footer } from "@/components/landing/footer";
 import {
   breadcrumbSchema,
+  categoryGlossarySchema,
   faqPageSchema,
   graph,
+  howToUseSchema,
   organizationSchema,
   softwareApplicationSchema,
   websiteSchema,
 } from "@/lib/jsonld";
 import { site } from "@/lib/site";
+import { categories } from "@/components/showcase/registry/categories";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -47,7 +50,11 @@ export default function Home() {
   const jsonLd = graph(
     websiteSchema(),
     organizationSchema(),
-    softwareApplicationSchema(),
+    softwareApplicationSchema({
+      features: categories.map((c) => c.label),
+    }),
+    howToUseSchema(),
+    categoryGlossarySchema(),
     faqPageSchema(),
     breadcrumbSchema([{ name: "Home", url: "/" }])
   );
