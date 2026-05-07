@@ -1,0 +1,31 @@
+# NudaUI security policy — RFC 9116
+# https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: https://github.com/sgomez-dev/nudaui/security/advisories/new
+Contact: mailto:security@nudaui.dev
+Expires: 2027-05-07T23:59:59.000Z
+Preferred-Languages: en, es
+Canonical: https://nudaui.dev/.well-known/security.txt
+Policy: https://github.com/sgomez-dev/nudaui/blob/main/SECURITY.md
+Acknowledgments: https://github.com/sgomez-dev/nudaui#-contributing
+
+# Notes
+#
+# NudaUI is a static, public reference site for copy-paste CSS animations.
+# We treat any of the following as a valid finding:
+#
+#   * XSS in the components gallery (preview HTML/CSS escaping bug).
+#   * Markup in a registry snippet that breaks out of the demo container.
+#   * Reflected/stored XSS, open redirect, or auth bypass on nudaui.dev.
+#   * Vulnerabilities in published code samples that would harm a user
+#     who pastes them as-is into their own project.
+#
+# Please do NOT report:
+#
+#   * Theoretical issues without a working PoC.
+#   * Vulnerabilities in our marketing third-party scripts (we run none).
+#   * Missing security headers on static asset paths under /_next/.
+#
+# We aim to acknowledge reports within 72 hours and ship a fix on a best
+# effort basis. NudaUI is maintained by an individual — be patient and
+# kind, and we'll do the same.

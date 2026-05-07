@@ -10,9 +10,9 @@
 [![License](https://img.shields.io/badge/license-MIT-e4ff54?style=flat-square&labelColor=09090b)](./LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-e4ff54?style=flat-square&labelColor=09090b)](https://github.com/sgomez-dev/nudaui/pulls)
 [![Built with CSS](https://img.shields.io/badge/built_with-CSS-e4ff54?style=flat-square&labelColor=09090b)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![Live](https://img.shields.io/badge/live-nudaui.vercel.app-e4ff54?style=flat-square&labelColor=09090b)](https://nudaui.vercel.app)
+[![Live](https://img.shields.io/badge/live-nudaui.dev-e4ff54?style=flat-square&labelColor=09090b)](https://nudaui.dev)
 
-[**Live site →**](https://nudaui.vercel.app) &nbsp;·&nbsp; [**Browse components →**](https://nudaui.vercel.app/components)
+[**Live site →**](https://nudaui.dev) &nbsp;·&nbsp; [**Browse components →**](https://nudaui.dev/components)
 
 </div>
 
@@ -32,12 +32,12 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 - **Copy-paste ownership** — shadcn/ui-style model. The code is yours the moment you paste it.
 - **Framework-agnostic** — React, Vue, Svelte, Astro, Next, Nuxt, Laravel, Django, Rails, or a plain `.html` file.
 - **Accessibility-aware** — `prefers-reduced-motion` respected, proper ARIA roles where it matters.
-- **303 components across 40 categories** — loaders, charts, AI/chat, drag & drop, command palette, theme toggles, hero sections, pricing, video player, onboarding, terminal & more.
+- **353 components across 45 categories** — loaders, charts, AI/chat, drag & drop, command palette, theme toggles, hero sections, pricing, video player, onboarding, terminal, footers, auth, calendars, sidebars, steppers & more.
 - **Tailwind-friendly, Tailwind-optional** — works with your setup, not against it.
 
 ## 📦 Components
 
-303 components, 40 categories.
+353 components, 45 categories.
 
 | Category | Sample components | Count |
 | --- | --- | --- |
@@ -81,12 +81,17 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 | Video Player UI | Play/pause morph, Scrubber, Volume, Buffer, Big play, Controls reveal, Speed, Captions, Fullscreen, Live indicator | 10 |
 | Onboarding & Coachmarks | Spotlight, Tour tooltip, Step counter, Welcome modal, Feature pulse, Coach arrow, Skip, Confetti finale, New badge, Checklist | 10 |
 | Code & Terminal | Terminal cursor, Typing code, Copy button, File tree, Tab bar, Syntax reveal, Error squiggle, Run button, Command output, Diff highlight | 10 |
+| Footers | Minimal, Newsletter, Mega grid, Aurora glow, Status, Sticky bar, Marquee, Big brand, Social stack, Back to top | 10 |
+| Login & Auth | Sign-in card, OAuth buttons, OTP input, Password reveal, Magic link, Strength meter, Auth tabs, Biometric, Verify email, Loading button | 10 |
+| Calendars & Date Pickers | Mini calendar, Date range, Date popover, Time wheel, Heatmap, Month switcher, Event pill, Day timeline, Countdown pill, Schedule card | 10 |
+| Sidebars & Docks | Collapse, macOS dock, Drawer slide, FAB dock, Vertical rail, Workspace switcher, Section tree, Bottom nav, Hover-reveal, Glass floating | 10 |
+| Steppers & Wizards | Linear, Vertical, Progress wizard, Numbered, Onboarding carousel, Wizard tabs, Trace, Card slide, Done step, Step pill | 10 |
 
-Full catalog: [nudaui.vercel.app/components](https://nudaui.vercel.app/components)
+Full catalog: [nudaui.dev/components](https://nudaui.dev/components)
 
 ## 🚀 Quick start
 
-Pick a component on [nudaui.vercel.app](https://nudaui.vercel.app/components), grab the HTML and CSS, paste. That's it.
+Pick a component on [nudaui.dev](https://nudaui.dev/components), grab the HTML and CSS, paste. That's it.
 
 ```html
 <!-- Pulse Dots Loader -->
@@ -172,6 +177,6 @@ MIT © [Santiago Gómez de la Torre Romero](https://github.com/sgomez-dev)
 
 If NudaUI saves you time, a ⭐ on the repo is the nicest way to say thanks.
 
-[Site](https://nudaui.vercel.app) · [Components](https://nudaui.vercel.app/components)
+[Site](https://nudaui.dev) · [Components](https://nudaui.dev/components)
 
 </div>
