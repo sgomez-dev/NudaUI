@@ -32,41 +32,41 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 - **Copy-paste ownership** — shadcn/ui-style model. The code is yours the moment you paste it.
 - **Framework-agnostic** — React, Vue, Svelte, Astro, Next, Nuxt, Laravel, Django, Rails, or a plain `.html` file.
 - **Accessibility-aware** — `prefers-reduced-motion` respected, proper ARIA roles where it matters.
-- **353 components across 45 categories** — loaders, charts, AI/chat, drag & drop, command palette, theme toggles, hero sections, pricing, video player, onboarding, terminal, footers, auth, calendars, sidebars, steppers & more.
+- **650 components across 61 categories** — loaders, charts, AI/chat, drag & drop, command palette, hero sections, pricing, video player, onboarding, terminal, footers, auth, calendars, sidebars, steppers, search & autocomplete, sliders & ranges, audio & waveforms, color pickers, galleries & carousels, maps, watch faces, quotes & testimonials, comments & reactions, profile headers, settings, file upload, tags & chips input, mobile patterns, notification center, skeleton variants & more.
 - **Tailwind-friendly, Tailwind-optional** — works with your setup, not against it.
 
 ## 📦 Components
 
-353 components, 45 categories.
+650 components, 61 categories.
 
 | Category | Sample components | Count |
 | --- | --- | --- |
 | Loaders | Pulse Dots, Orbit, Ripple, Bars, Wave… | 15 |
 | Text Effects | Scramble, Typewriter, Reveal, Gradient Sweep, Glitch… | 10 |
-| Buttons | Magnetic, Liquid, Border Beam, Ripple, Shine… | 10 |
-| Spinners | Ring, Dual Ring, Conic, Segment, Gradient… | 8 |
+| Buttons | Magnetic, Liquid, Border Beam, Ripple, Shine, Holographic, Glitch, Neumorphic, Swipe-to-confirm, Hold-to-confirm… | 15 |
+| Spinners | Ring, Dual Ring, Conic, Segment, Gradient, Cube fold, Eclipse, DNA, Pixel, Atom, Hourglass… | 14 |
 | Cards & Hover | Tilt, Glow, Lift, Flip, Border Trace… | 8 |
 | Micro-interactions | Like burst, Copy-check, Shake, Pulse badge… | 8 |
 | 3D Effects | Card flip, Perspective hover, Depth layers, Cube… | 8 |
-| Indicators | Dot pulse, Live, Status rings, Signal… | 7 |
+| Indicators | Dot pulse, Live, Status rings, Signal, Typing presence, Battery, Online cluster… | 11 |
 | Progress | Linear, Radial, Segmented, Stripe, Gradient fill… | 6 |
-| Backgrounds | Aurora, Mesh, Grid pulse, Noise, Gradient flow… | 6 |
+| Backgrounds | Aurora, Mesh, Grid pulse, Noise, Gradient flow, Plasma blob, Scanlines, Starfield, Depth grid, Blueprint… | 11 |
 | Toggles & Inputs | Switch, Checkbox morph, Radio fill, OTP… | 6 |
 | Borders & Outlines | Animated border, Trace, Dashed flow, Glow ring… | 5 |
-| Badges & Tags | New, Beta, Pulse, Count, Gradient… | 5 |
+| Badges & Tags | New, Beta, Pulse, Count, Gradient, Ribbon, Glow, Trending… | 9 |
 | Navigation | Underline slide, Pill indicator, Tabs, Dropdown… | 5 |
-| Notifications | Toast, Banner, Inline alert, Stacked… | 5 |
-| Avatars | Ring, Status, Stack, Shimmer… | 5 |
+| Notifications | Toast, Banner, Inline alert, Stacked, Snackbar, Achievement unlock, Undo toast, Level up, System alert | 9 |
+| Avatars | Ring, Status, Stack, Shimmer, Tooltip, Presence ring, Initials, Verified | 9 |
 | Placeholders | Skeleton line, Block, Shimmer, Wave… | 5 |
 | Accordions & Tabs | Chevron, Plus/minus, Tab slide, Stack… | 5 |
-| Dividers | Gradient, Dotted, Animated rule, Vertical… | 5 |
+| Dividers | Gradient, Dotted, Wave, Zigzag, Sparkle, Text "OR", Animated rule, Blob, Double stripe | 9 |
 | Modals & Overlays | Scale in, Slide, Backdrop blur, Drawer… | 5 |
 | Countdowns | Flip, Digit roll, Ring, Segment… | 4 |
-| Marquees & Tickers | Linear, Pause-on-hover, Vertical, Gradient mask… | 4 |
+| Marquees & Tickers | Linear, Pause-on-hover, Vertical, Gradient mask, Tilted, Logo cloud, Bidirectional, 3D perspective | 8 |
 | Scroll Effects | Fade in, Parallax, Reveal, Progress bar… | 4 |
-| Cursors | Dot follower, Magnet, Trail, Blend… | 4 |
-| Tooltips | Arrow, Fade, Slide, Glass… | 4 |
-| Empty States | Empty Box, Inbox, Search, Folder, Ghost, Pulse… | 6 |
+| Cursors | Dot follower, Magnet, Trail, Blend, Ring follower, Magnify lens, Snap-to-link, Blob blend | 8 |
+| Tooltips | Arrow, Fade, Slide, Glass, Rich card, Coachmark, Keyboard shortcut, Photo preview | 8 |
+| Empty States | Empty Box, Inbox, Search, Folder, Ghost, Pulse, No notifications, No messages, Empty cart, No bookmarks | 10 |
 | Charts | Bar, Line, Donut, Sparkline, Gauge, Heatmap, Area, Pie, KPI… | 10 |
 | Particles & Effects | Confetti, Sparkles, Fireflies, Snow, Rain, Fireworks, Bubbles, Stars, Comet… | 10 |
 | Stats & Counters | Count up, Trend card, Score ring, Streak, Live counter, Battery, Goal, Achievement… | 10 |
@@ -86,6 +86,22 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 | Calendars & Date Pickers | Mini calendar, Date range, Date popover, Time wheel, Heatmap, Month switcher, Event pill, Day timeline, Countdown pill, Schedule card | 10 |
 | Sidebars & Docks | Collapse, macOS dock, Drawer slide, FAB dock, Vertical rail, Workspace switcher, Section tree, Bottom nav, Hover-reveal, Glass floating | 10 |
 | Steppers & Wizards | Linear, Vertical, Progress wizard, Numbered, Onboarding carousel, Wizard tabs, Trace, Card slide, Done step, Step pill | 10 |
+| Search & Autocomplete | Expanding search, Autocomplete dropdown, Match highlight, Recent, Voice mic, Loading, No results, Cmd-K, Clearable, Filter chips, Type-ahead, Shimmer, Spotlight, Sticky header, Stagger in, History pills | 16 |
+| Sliders & Ranges | Basic, Dual range, Value bubble, Vertical, Stepped, Gradient fill, Histogram, Snap, Hue, Rotary knob, Brightness, Price range, Slider+input, Drag halo, Curve, Frequency | 16 |
+| Audio & Waveforms | Equalizer, Voice meter, Soundwave pulse, Scrubber, Vinyl spin, Mic recording, Circular visualizer, Now playing, Amplitude rings, Play/pause morph, Mute toggle, Loop, Spectrum, Track progress, Audio loading | 15 |
+| Color Pickers | Swatch grid, Gradient picker, Hue ring, Eye-dropper, Hex input, Palette generator, Recent colors, Contrast pair, Chip copy, Saturation slider | 10 |
+| Galleries & Carousels | Horizontal carousel, Swipe dots, Lightbox open, Thumb strip, Masonry lift, 3D fan, Before/after, Polaroid stack, Hover zoom, Filter morph | 10 |
+| Maps & Locations | Pin drop, Marker pulse, Route trace, Distance line, Geo-locating, Cluster expand, Popup card, Location search, Compass, Mini-map | 10 |
+| Watch Faces & Clocks | Analog, Digital, Flip clock, Pomodoro, Stopwatch, World clock, Alarm, Countdown ring, Tick marks, Swiss railway, 24h military, Weather, Day/night, Sand hourglass, Word clock, Pulse heart, Binary, Sundial | 18 |
+| Quotes & Testimonials | Pull quote, Testimonial card, 5-star rating, Signature reveal, Logo strip, Video testimonial, Rating distribution, Marquee, Carousel, Before/after, Gradient border, Animated stars, Verified, Masonry, Spotlight, Stat quote, Floating, Inline link | 18 |
+| Comments & Reactions | Comment thread, Nested reply, Emoji picker, Emoji burst, Like, Dislike, Share, Reply expand, Mentions chip, Count badge, Reaction bar, Skeleton, Pinned, Highlighted, Reaction stack, Thumbs counter, Quote reply, Hover preview | 18 |
+| Profile Headers | Bio card, Banner+avatar, Stat row, Social bar, Edit button, Level XP, Verified, Status presence, Follow toggle, Counter tick-up, Pronouns, Compact pill, Skeleton, Hero, Member since, Achievements, Hover card, Bio reveal | 18 |
+| Settings & Preferences | Pref row, Card group, Theme selector, Notif prefs, Account, Danger zone, Save indicator, Search, Two-col, A11y, Connected apps, Plan tier, Email verify, Language picker, Time zone, Privacy row, Sound, Reset defaults | 18 |
+| File Upload | Drop zone, Drop active, File list, Progress bar, Type icons, Thumbnail preview, Error, Multi-file pill, Size pill, Success check, Cancel, Total progress, Validation, Browse, Paste, Queue, Replaced, Empty | 18 |
+| Tags & Chips Input | Chip input add, Remove, Autocomplete, Group select, Max count, Color variants, With icon, Drag reorder, Suggested, Overflow, Combobox, Filter bar, Avatar chip, Pop-in, Validation, Toggle all, Saved filters, Counter | 18 |
+| Mobile Patterns | Bottom sheet, Pull-to-refresh, Swipe-to-delete, Action sheet, Segmented, Tab bar, FAB, Ripple, Momentum scroll, Swipe card, Status bar, Top toast, Long-press, Hamburger morph, Pull-down search, Modal, Onboarding dots, Pinch hint | 18 |
+| Notification Center | Notification item, Inbox header, Time group, Filter tabs, Swipe dismiss, Inbox zero, Bulk actions, Settings row, Mention, Search, Build status, Bell with badge | 12 |
+| Skeleton Variants | Message, Card, List, Table, Comment, Stat, Feed, Video, Article, Avatar stack, Dashboard, Progressive reveal | 12 |
 
 Full catalog: [nudaui.dev/components](https://nudaui.dev/components)
 
