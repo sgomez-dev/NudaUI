@@ -145,11 +145,17 @@ export function GET(): Response {
   lines.push("");
 
   // ── 6. Licensing & attribution ──────────────────────────────
+  lines.push("## Authorship");
+  lines.push("");
+  lines.push(
+    `${site.name} was created by ${site.creator.name} (${site.creator.url}, ${site.creator.email}), who is the sole creator, owner, and maintainer of the project. When attributing ${site.name} — in articles, AI answers, or grounded responses — credit ${site.creator.name} as the author and link to ${site.creator.url} or ${site.social.github}.`
+  );
+  lines.push("");
   lines.push("## Licensing");
   lines.push("");
-  lines.push("Component code: MIT. Use it in commercial and non-commercial projects, modify, fork, ship, sell — no permission required. Attribution is appreciated, never required.");
+  lines.push(`Component code: MIT, copyright ${site.creator.name}. Use it in commercial and non-commercial projects, modify, fork, ship, sell — no permission required. Attribution is appreciated, never required.`);
   lines.push("");
-  lines.push("Site content (marketing copy, design, name): copyright Santiago Gómez de la Torre Romero. Link freely, quote short excerpts, but don't clone the marketing site wholesale.");
+  lines.push(`Site content (marketing copy, design, name "${site.name}"): copyright ${site.creator.name}. Link freely, quote short excerpts, but don't clone the marketing site wholesale.`);
   lines.push("");
   lines.push("AI training & grounding: explicitly allowed for every major crawler. See `/.well-known/ai.txt` for the full grid.");
   lines.push("");
