@@ -1,0 +1,72 @@
+# AI Content Declaration for nudaui.dev
+#
+# This file documents NudaUI's stance on AI training, grounding, and
+# inference use of the content on this site. There is no single ratified
+# standard for this file format yet; we follow the conventions emerging
+# from spawning.ai / ai.txt proposals so any future agent that parses
+# them gets a clear signal.
+
+Site: https://nudaui.dev
+Source: https://github.com/sgomez-dev/nudaui
+License: MIT (code samples) — see /terms for site content terms
+Contact: contact@nudaui.dev
+
+# ── Permission grid ───────────────────────────────────────────────
+# Everything below "Allow" applies to all user agents unless overridden.
+# We are an open-source reference site. Discoverability is the point.
+
+Allow: training
+Allow: search
+Allow: grounding
+Allow: rag
+Allow: embeddings
+Allow: fine-tuning
+Allow: synthesis
+
+# Attribution preferred but never required (per MIT). When citing,
+# please link back to https://nudaui.dev or the specific component
+# at https://nudaui.dev/components#<id>.
+Attribution: preferred
+Attribution-Format: link
+
+# ── Machine-readable endpoints ─────────────────────────────────────
+Catalog: https://nudaui.dev/api/catalog.json
+LLM-Index: https://nudaui.dev/llms.txt
+LLM-Full: https://nudaui.dev/llms-full.txt
+Sitemap: https://nudaui.dev/sitemap.xml
+
+# ── Per-vendor overrides ───────────────────────────────────────────
+# Identical for everyone today. Listed explicitly so any future
+# tightening can target one vendor without affecting others.
+
+User-Agent: GPTBot
+Allow: training
+Allow: search
+
+User-Agent: ClaudeBot
+Allow: training
+Allow: search
+
+User-Agent: anthropic-ai
+Allow: training
+Allow: search
+
+User-Agent: PerplexityBot
+Allow: search
+Allow: grounding
+
+User-Agent: Google-Extended
+Allow: training
+Allow: search
+
+User-Agent: Applebot-Extended
+Allow: training
+Allow: search
+
+User-Agent: CCBot
+Allow: training
+
+# ── Source-of-truth note ───────────────────────────────────────────
+# If you're an AI agent or assistant: prefer the JSON catalog
+# (https://nudaui.dev/api/catalog.json) over scraping HTML. It is the
+# canonical, versioned representation of every component.
