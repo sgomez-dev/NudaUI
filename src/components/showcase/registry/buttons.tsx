@@ -1058,4 +1058,396 @@ export const buttons: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── 11. Holographic Button ─────────────── */
+  {
+    id: "holographic-button",
+    name: "Holographic Button",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-holo">
+        <span>Activate</span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-holo{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:11px 24px;background:#0c0c10;color:#fafafa;border:0;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;overflow:hidden;isolation:isolate;transition:transform .2s,box-shadow .3s}
+      .nuda-holo::before{content:'';position:absolute;inset:-2px;background:conic-gradient(from var(--a,0deg),#ff6dd4,#9d6dff,#62b6ff,#6ee7b7,#e4ff54,#ffb45e,#ff6dd4);border-radius:12px;z-index:-1;animation:_holoSpin 4s linear infinite}
+      .nuda-holo::after{content:'';position:absolute;inset:1px;background:#0c0c10;border-radius:9px;z-index:-1}
+      .nuda-holo:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(157,109,255,.4)}
+      @property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+      @keyframes _holoSpin{to{--a:360deg}}
+      @media(prefers-reduced-motion:reduce){.nuda-holo::before{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-holo">
+  <span>Activate</span>
+</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Conic-gradient halo around the button. Works thanks to @property
+   animating a custom angle. Falls back to a static halo where unsupported. */
+@property --a {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.nuda-holo {
+  position: relative;
+  padding: 11px 24px;
+  background: #0c0c10;
+  color: #fafafa;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.nuda-holo::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from var(--a, 0deg),
+    #ff6dd4, #9d6dff, #62b6ff, #6ee7b7, #e4ff54, #ffb45e, #ff6dd4
+  );
+  border-radius: 12px;
+  z-index: -1;
+  animation: nuda-holo-spin 4s linear infinite;
+}
+
+.nuda-holo::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: #0c0c10;
+  border-radius: 9px;
+  z-index: -1;
+}
+
+@keyframes nuda-holo-spin { to { --a: 360deg; } }`,
+      },
+    ],
+  },
+
+  /* ─────────────── 12. Glitch Button ─────────────── */
+  {
+    id: "glitch-button",
+    name: "Glitch Button",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-glitchbtn" data-text="EXECUTE">
+        EXECUTE
+      </button>
+    ),
+    cssInline: `
+      .nuda-glitchbtn{position:relative;padding:10px 22px;background:#0c0c10;color:#e4ff54;border:1px solid #e4ff54;border-radius:6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:700;letter-spacing:.08em;cursor:pointer;text-transform:uppercase;transition:background .2s}
+      .nuda-glitchbtn:hover{background:rgba(228,255,84,.08)}
+      .nuda-glitchbtn::before,.nuda-glitchbtn::after{content:attr(data-text);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;mix-blend-mode:screen;opacity:0;pointer-events:none}
+      .nuda-glitchbtn::before{color:#ff5e7a;clip-path:polygon(0 0,100% 0,100% 45%,0 45%)}
+      .nuda-glitchbtn::after{color:#62b6ff;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%)}
+      .nuda-glitchbtn:hover::before{opacity:1;animation:_glitchPos 0.4s steps(2) infinite}
+      .nuda-glitchbtn:hover::after{opacity:1;animation:_glitchNeg 0.4s steps(2) infinite}
+      @keyframes _glitchPos{0%{transform:translate(0)}25%{transform:translate(-2px,1px)}75%{transform:translate(2px,-1px)}100%{transform:translate(0)}}
+      @keyframes _glitchNeg{0%{transform:translate(0)}25%{transform:translate(2px,-1px)}75%{transform:translate(-2px,1px)}100%{transform:translate(0)}}
+      @media(prefers-reduced-motion:reduce){.nuda-glitchbtn:hover::before,.nuda-glitchbtn:hover::after{animation:none;opacity:0}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-glitchbtn" data-text="EXECUTE">
+  EXECUTE
+</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-glitchbtn {
+  position: relative;
+  padding: 10px 22px;
+  background: #0c0c10;
+  color: #e4ff54;
+  border: 1px solid #e4ff54;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.nuda-glitchbtn::before,
+.nuda-glitchbtn::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nuda-glitchbtn::before {
+  color: #ff5e7a;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.nuda-glitchbtn::after {
+  color: #62b6ff;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+.nuda-glitchbtn:hover::before {
+  opacity: 1;
+  animation: nuda-glitch-pos 0.4s steps(2) infinite;
+}
+
+.nuda-glitchbtn:hover::after {
+  opacity: 1;
+  animation: nuda-glitch-neg 0.4s steps(2) infinite;
+}
+
+@keyframes nuda-glitch-pos {
+  0%   { transform: translate(0); }
+  25%  { transform: translate(-2px, 1px); }
+  75%  { transform: translate(2px, -1px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes nuda-glitch-neg {
+  0%   { transform: translate(0); }
+  25%  { transform: translate(2px, -1px); }
+  75%  { transform: translate(-2px, 1px); }
+  100% { transform: translate(0); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 13. Neumorphic Button ─────────────── */
+  {
+    id: "neumorphic-button",
+    name: "Neumorphic Button",
+    category: "Buttons",
+    preview: <button className="nuda-neumo">Press me</button>,
+    cssInline: `
+      .nuda-neumo{padding:11px 24px;background:#1a1a20;color:#fafafa;border:0;border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:6px 6px 12px rgba(0,0,0,.5),-4px -4px 10px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.05);transition:box-shadow .25s,transform .15s}
+      .nuda-neumo:hover{transform:translateY(-1px);box-shadow:8px 8px 16px rgba(0,0,0,.55),-5px -5px 12px rgba(255,255,255,.05),inset 0 1px 0 rgba(255,255,255,.08)}
+      .nuda-neumo:active{transform:translateY(1px);box-shadow:inset 4px 4px 8px rgba(0,0,0,.55),inset -3px -3px 6px rgba(255,255,255,.04)}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-neumo">Press me</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-neumo {
+  padding: 11px 24px;
+  background: #1a1a20;
+  color: #fafafa;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow:
+    6px 6px 12px rgba(0, 0, 0, 0.5),
+    -4px -4px 10px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.25s, transform 0.15s;
+}
+
+.nuda-neumo:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 4px 4px 8px rgba(0, 0, 0, 0.55),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.04);
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 14. Swipe to Confirm ─────────────── */
+  {
+    id: "swipe-confirm",
+    name: "Swipe to Confirm",
+    category: "Buttons",
+    preview: (
+      <div className="nuda-swipe">
+        <span className="nuda-swipe__bg">Swipe to confirm</span>
+        <span className="nuda-swipe__fill" style={{ width: "30%" }} />
+        <span className="nuda-swipe__thumb" style={{ left: "calc(30% - 24px)" }}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-swipe{position:relative;display:inline-flex;align-items:center;justify-content:center;width:240px;height:46px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:99px;overflow:hidden;user-select:none}
+      .nuda-swipe__bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#a0a0a8;font-size:12px;font-weight:500;letter-spacing:.04em;z-index:1;pointer-events:none}
+      .nuda-swipe__fill{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,#e4ff54,#6ee7b7);border-radius:99px;transition:width .35s cubic-bezier(.16,1,.3,1)}
+      .nuda-swipe__thumb{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:#09090b;border:2px solid #e4ff54;color:#e4ff54;display:flex;align-items:center;justify-content:center;cursor:grab;box-shadow:0 4px 14px -4px rgba(228,255,84,.5);transition:left .35s cubic-bezier(.16,1,.3,1)}
+      .nuda-swipe__thumb svg{width:18px;height:18px;animation:_swipeNudge 1.4s ease-in-out infinite}
+      @keyframes _swipeNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-swipe__thumb svg{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-swipe">
+  <span class="nuda-swipe__bg">Swipe to confirm</span>
+  <span class="nuda-swipe__fill" style="width:0"></span>
+  <span class="nuda-swipe__thumb" style="left:0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  </span>
+</div>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `const root  = document.querySelector('.nuda-swipe');
+const fill  = root.querySelector('.nuda-swipe__fill');
+const thumb = root.querySelector('.nuda-swipe__thumb');
+
+let dragging = false;
+let startX = 0;
+let pct = 0;
+
+const setPct = (v) => {
+  pct = Math.max(0, Math.min(100, v));
+  const px = (root.clientWidth - 48) * (pct / 100);
+  fill.style.width = pct + '%';
+  thumb.style.left = px + 'px';
+  if (pct >= 95) {
+    root.dispatchEvent(new CustomEvent('confirm'));
+    pct = 100;
+  }
+};
+
+thumb.addEventListener('pointerdown', (e) => {
+  dragging = true;
+  startX = e.clientX - thumb.offsetLeft;
+});
+window.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+  const px = e.clientX - startX;
+  setPct((px / (root.clientWidth - 48)) * 100);
+});
+window.addEventListener('pointerup', () => {
+  dragging = false;
+  if (pct < 95) setPct(0);
+});`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-swipe__thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #09090b;
+  border: 2px solid #e4ff54;
+  color: #e4ff54;
+  cursor: grab;
+  transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 15. Hold to Confirm ─────────────── */
+  {
+    id: "hold-confirm",
+    name: "Hold to Confirm",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-hold is-holding">
+        <span className="nuda-hold__fill" />
+        <span className="nuda-hold__text">Hold to delete</span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-hold{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:11px 22px;background:rgba(255,94,122,.06);border:1px solid rgba(255,94,122,.3);color:#ff5e7a;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;overflow:hidden;transition:background .25s}
+      .nuda-hold:hover{background:rgba(255,94,122,.1)}
+      .nuda-hold__fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#ff5e7a;transition:width 1.4s linear,opacity .3s}
+      .nuda-hold.is-holding .nuda-hold__fill{width:100%}
+      .nuda-hold.is-confirmed .nuda-hold__fill{opacity:0}
+      .nuda-hold__text{position:relative;z-index:1;mix-blend-mode:difference;color:#fafafa}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-hold">
+  <span class="nuda-hold__fill"></span>
+  <span class="nuda-hold__text">Hold to delete</span>
+</button>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `const btn = document.querySelector('.nuda-hold');
+let timer = null;
+
+const start = () => {
+  btn.classList.add('is-holding');
+  timer = setTimeout(() => {
+    btn.classList.add('is-confirmed');
+    btn.dispatchEvent(new CustomEvent('confirm'));
+  }, 1400);
+};
+
+const cancel = () => {
+  btn.classList.remove('is-holding');
+  clearTimeout(timer);
+};
+
+btn.addEventListener('pointerdown', start);
+btn.addEventListener('pointerup', cancel);
+btn.addEventListener('pointerleave', cancel);`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-hold__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: #ff5e7a;
+  transition: width 1.4s linear, opacity 0.3s;
+}
+
+.nuda-hold.is-holding .nuda-hold__fill { width: 100%; }
+.nuda-hold.is-confirmed .nuda-hold__fill { opacity: 0; }
+
+.nuda-hold__text {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: difference;
+  color: #fafafa;
+}`,
+      },
+    ],
+  },
 ];
