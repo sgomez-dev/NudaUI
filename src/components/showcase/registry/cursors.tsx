@@ -395,4 +395,325 @@ export const cursors: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── 5. Ring Follower ─────────────── */
+  {
+    id: "ring-follower",
+    name: "Ring Follower",
+    category: "Cursors",
+    preview: (
+      <div className="nuda-ringfollow-area" data-demo>
+        <div className="nuda-ringfollow__ring" />
+        <div className="nuda-ringfollow__dot" />
+        <span>Move your mouse</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-ringfollow-area{position:relative;width:100%;max-width:240px;height:130px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);overflow:hidden;cursor:none;display:flex;align-items:center;justify-content:center;color:#63636e;font-size:11px}
+      .nuda-ringfollow__dot{position:absolute;width:6px;height:6px;border-radius:50%;background:#e4ff54;left:-20px;top:-20px;transform:translate(-50%,-50%);pointer-events:none;transition:transform .06s;z-index:2}
+      .nuda-ringfollow__ring{position:absolute;width:34px;height:34px;border-radius:50%;border:2px solid #e4ff54;left:-20px;top:-20px;transform:translate(-50%,-50%);pointer-events:none;transition:transform .25s cubic-bezier(.16,1,.3,1),width .25s,height .25s,opacity .25s}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-ringfollow-area">
+  <div class="nuda-ringfollow__ring"></div>
+  <div class="nuda-ringfollow__dot"></div>
+  <span>Move your mouse</span>
+</div>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `(function () {
+  var area = document.querySelector('.nuda-ringfollow-area');
+  var dot  = area.querySelector('.nuda-ringfollow__dot');
+  var ring = area.querySelector('.nuda-ringfollow__ring');
+  if (!area) return;
+
+  area.addEventListener('mousemove', function (e) {
+    var rect = area.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    dot.style.left  = ring.style.left = x + 'px';
+    dot.style.top   = ring.style.top  = y + 'px';
+  });
+
+  area.querySelectorAll('a, button, span').forEach(function (el) {
+    el.addEventListener('mouseenter', function () {
+      ring.style.width = ring.style.height = '52px';
+      ring.style.opacity = '0.5';
+    });
+    el.addEventListener('mouseleave', function () {
+      ring.style.width = ring.style.height = '34px';
+      ring.style.opacity = '1';
+    });
+  });
+})();`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-ringfollow-area {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: none;
+}
+
+.nuda-ringfollow__dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e4ff54;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: transform 0.06s;
+  z-index: 2;
+}
+
+.nuda-ringfollow__ring {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #e4ff54;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.25s,
+    height 0.25s,
+    opacity 0.25s;
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 6. Magnify Lens ─────────────── */
+  {
+    id: "magnify-lens",
+    name: "Magnify Lens",
+    category: "Cursors",
+    preview: (
+      <div className="nuda-magnify-area" data-demo>
+        <div className="nuda-magnify__text">
+          Hover for &times;3 magnification.
+        </div>
+        <div className="nuda-magnify__lens" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-magnify-area{position:relative;width:100%;max-width:240px;height:130px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);overflow:hidden;cursor:none;display:flex;align-items:center;justify-content:center;padding:0 16px}
+      .nuda-magnify__text{color:#a0a0a8;font-size:14px;text-align:center;line-height:1.4}
+      .nuda-magnify__lens{position:absolute;width:50px;height:50px;border-radius:50%;border:2px solid #e4ff54;background:rgba(228,255,84,.06);backdrop-filter:invert(.1) saturate(1.4) blur(.4px);-webkit-backdrop-filter:invert(.1) saturate(1.4) blur(.4px);box-shadow:0 0 0 4px rgba(228,255,84,.08);pointer-events:none;transform:translate(-50%,-50%) scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+      .nuda-magnify-area:hover .nuda-magnify__lens{transform:translate(-50%,-50%) scale(1)}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-magnify-area">
+  <div class="nuda-magnify__text">Hover for ×3 magnification.</div>
+  <div class="nuda-magnify__lens"></div>
+</div>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `(function () {
+  var area = document.querySelector('.nuda-magnify-area');
+  var lens = area.querySelector('.nuda-magnify__lens');
+  if (!area) return;
+
+  area.addEventListener('mousemove', function (e) {
+    var rect = area.getBoundingClientRect();
+    lens.style.left = (e.clientX - rect.left) + 'px';
+    lens.style.top  = (e.clientY - rect.top) + 'px';
+  });
+})();`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-magnify-area { cursor: none; }
+
+.nuda-magnify__lens {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #e4ff54;
+  background: rgba(228, 255, 84, 0.06);
+  backdrop-filter: invert(0.1) saturate(1.4) blur(0.4px);
+  -webkit-backdrop-filter: invert(0.1) saturate(1.4) blur(0.4px);
+  box-shadow: 0 0 0 4px rgba(228, 255, 84, 0.08);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nuda-magnify-area:hover .nuda-magnify__lens {
+  transform: translate(-50%, -50%) scale(1);
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 7. Snap to Link ─────────────── */
+  {
+    id: "snap-cursor",
+    name: "Snap-to-Link Cursor",
+    category: "Cursors",
+    preview: (
+      <div className="nuda-snapcur-area" data-demo>
+        <button className="nuda-snapcur__target" data-snap>Snap here</button>
+        <span className="nuda-snapcur__cursor" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-snapcur-area{position:relative;width:100%;max-width:240px;height:130px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);overflow:hidden;cursor:none;display:flex;align-items:center;justify-content:center}
+      .nuda-snapcur__target{padding:7px 14px;background:rgba(228,255,84,.08);border:1px solid rgba(228,255,84,.3);color:#e4ff54;border-radius:8px;font-size:12px;cursor:none}
+      .nuda-snapcur__cursor{position:absolute;width:14px;height:14px;border-radius:50%;background:#e4ff54;pointer-events:none;transform:translate(-50%,-50%);transition:transform .25s cubic-bezier(.34,1.56,.64,1),width .3s cubic-bezier(.34,1.56,.64,1),height .3s cubic-bezier(.34,1.56,.64,1),border-radius .3s,background .25s,mix-blend-mode .2s}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-snapcur-area">
+  <button class="nuda-snapcur__target" data-snap>Snap here</button>
+  <span class="nuda-snapcur__cursor"></span>
+</div>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `(function () {
+  var area = document.querySelector('.nuda-snapcur-area');
+  var cur  = area.querySelector('.nuda-snapcur__cursor');
+  if (!area) return;
+
+  area.addEventListener('mousemove', function (e) {
+    var snap = e.target.closest('[data-snap]');
+    if (snap) {
+      var r = snap.getBoundingClientRect();
+      var areaR = area.getBoundingClientRect();
+      cur.style.left   = r.left - areaR.left + r.width / 2 + 'px';
+      cur.style.top    = r.top  - areaR.top  + r.height / 2 + 'px';
+      cur.style.width  = (r.width + 8)  + 'px';
+      cur.style.height = (r.height + 8) + 'px';
+      cur.style.borderRadius = '10px';
+      cur.style.background = 'transparent';
+      cur.style.boxShadow = 'inset 0 0 0 2px #e4ff54';
+    } else {
+      var rect = area.getBoundingClientRect();
+      cur.style.left = (e.clientX - rect.left) + 'px';
+      cur.style.top  = (e.clientY - rect.top)  + 'px';
+      cur.style.width = cur.style.height = '14px';
+      cur.style.borderRadius = '50%';
+      cur.style.background = '#e4ff54';
+      cur.style.boxShadow = 'none';
+    }
+  });
+})();`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-snapcur-area { cursor: none; }
+
+.nuda-snapcur__cursor {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e4ff54;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width  0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-radius 0.3s,
+    background 0.25s;
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 8. Blob Blend Cursor ─────────────── */
+  {
+    id: "blob-cursor",
+    name: "Blob Blend Cursor",
+    category: "Cursors",
+    preview: (
+      <div className="nuda-blobcur-area" data-demo>
+        <span className="nuda-blobcur__text">CREATE</span>
+        <span className="nuda-blobcur__blob" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-blobcur-area{position:relative;width:100%;max-width:240px;height:130px;border-radius:12px;background:#fafafa;overflow:hidden;cursor:none;display:flex;align-items:center;justify-content:center;isolation:isolate}
+      .nuda-blobcur__text{color:#09090b;font-size:32px;font-weight:900;letter-spacing:-.02em;font-family:Georgia,serif}
+      .nuda-blobcur__blob{position:absolute;width:80px;height:80px;border-radius:50%;background:#e4ff54;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform .25s cubic-bezier(.34,1.56,.64,1),width .35s,height .35s;left:-50px;top:50%}
+      .nuda-blobcur-area:hover .nuda-blobcur__blob{animation:_blobMorph 4s ease-in-out infinite}
+      @keyframes _blobMorph{0%,100%{border-radius:50%}33%{border-radius:60% 40% 50% 70%/50%}66%{border-radius:40% 60% 70% 50%/60%}}
+      @media(prefers-reduced-motion:reduce){.nuda-blobcur-area:hover .nuda-blobcur__blob{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-blobcur-area">
+  <span class="nuda-blobcur__text">CREATE</span>
+  <span class="nuda-blobcur__blob"></span>
+</div>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `(function () {
+  var area = document.querySelector('.nuda-blobcur-area');
+  var blob = area.querySelector('.nuda-blobcur__blob');
+  if (!area) return;
+
+  area.addEventListener('mousemove', function (e) {
+    var rect = area.getBoundingClientRect();
+    blob.style.left = (e.clientX - rect.left) + 'px';
+    blob.style.top  = (e.clientY - rect.top)  + 'px';
+  });
+})();`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-blobcur__blob {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #e4ff54;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.35s,
+    height 0.35s;
+}
+
+.nuda-blobcur-area:hover .nuda-blobcur__blob {
+  animation: nuda-blob-morph 4s ease-in-out infinite;
+}
+
+@keyframes nuda-blob-morph {
+  0%, 100% { border-radius: 50%; }
+  33% { border-radius: 60% 40% 50% 70% / 50%; }
+  66% { border-radius: 40% 60% 70% 50% / 60%; }
+}`,
+      },
+    ],
+  },
 ];
