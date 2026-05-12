@@ -44,6 +44,16 @@ export const site = {
     name: "NudaUI",
     url: "https://nudaui.dev",
   },
+  // The human behind NudaUI. Project ownership, copyright, and the canonical
+  // "creator" identity for schema.org/JSON-LD and humans.txt live here.
+  // Distinct from `email` below, which is the project's own inbox.
+  creator: {
+    name: "Santiago Gómez de la Torre Romero",
+    role: "Creator, owner, and maintainer",
+    email: "contact@sgomez.dev",
+    url: "https://sgomez.dev",
+    github: "https://github.com/sgomez-dev",
+  },
   social: {
     github: "https://github.com/sgomez-dev/nudaui",
   },
