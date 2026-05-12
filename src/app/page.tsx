@@ -24,7 +24,10 @@ import {
   websiteSchema,
 } from "@/lib/jsonld";
 import { site } from "@/lib/site";
-import { categories } from "@/components/showcase/registry/categories";
+import {
+  categories,
+  totalCount,
+} from "@/components/showcase/registry/categories";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -52,6 +55,7 @@ export default function Home() {
     organizationSchema(),
     softwareApplicationSchema({
       features: categories.map((c) => c.label),
+      componentCount: totalCount,
     }),
     howToUseSchema(),
     categoryGlossarySchema(),
