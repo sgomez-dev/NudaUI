@@ -437,4 +437,220 @@ export const avatars: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Avatar with Tooltip ─────────────── */
+  {
+    id: "avatar-tooltip",
+    name: "Avatar with Tooltip",
+    category: "Avatars",
+    preview: (
+      <div className="nuda-avtt">
+        <span className="nuda-avtt__avatar" />
+        <span className="nuda-avtt__tip">Sara Linde</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-avtt{position:relative;display:inline-flex}
+      .nuda-avtt__avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#9d6dff,#ff6dd4);cursor:pointer;transition:transform .25s}
+      .nuda-avtt:hover .nuda-avtt__avatar{transform:scale(1.08)}
+      .nuda-avtt__tip{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) translateY(4px);padding:4px 10px;background:#09090b;border:1px solid rgba(255,255,255,.1);border-radius:6px;color:#fafafa;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.16,1,.3,1)}
+      .nuda-avtt:hover .nuda-avtt__tip{opacity:1;transform:translateX(-50%) translateY(0)}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-avtt">
+  <span class="nuda-avtt__avatar"></span>
+  <span class="nuda-avtt__tip">Sara Linde</span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-avtt__tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px);
+  padding: 4px 10px;
+  background: #09090b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fafafa;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Presence Ring ─────────────── */
+  {
+    id: "presence-ring",
+    name: "Presence Ring",
+    category: "Avatars",
+    preview: (
+      <div className="nuda-presence">
+        <svg className="nuda-presence__ring" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="2" />
+          <circle cx="20" cy="20" r="18" fill="none" stroke="#6ee7b7" strokeWidth="2" strokeDasharray="113" strokeDashoffset="28" strokeLinecap="round" transform="rotate(-90 20 20)" />
+        </svg>
+        <span className="nuda-presence__avatar" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-presence{position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px}
+      .nuda-presence__ring{position:absolute;width:100%;height:100%;animation:_presPulse 3s ease-in-out infinite}
+      .nuda-presence__avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#62b6ff,#9d6dff)}
+      @keyframes _presPulse{0%,100%{opacity:1}50%{opacity:.6}}
+      @media(prefers-reduced-motion:reduce){.nuda-presence__ring{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-presence">
+  <svg class="nuda-presence__ring" viewBox="0 0 40 40">
+    <circle cx="20" cy="20" r="18" fill="none"
+            stroke="rgba(255,255,255,.08)" stroke-width="2" />
+    <circle cx="20" cy="20" r="18" fill="none" stroke="#6ee7b7" stroke-width="2"
+            stroke-dasharray="113" stroke-dashoffset="28"
+            stroke-linecap="round" transform="rotate(-90 20 20)" />
+  </svg>
+  <span class="nuda-presence__avatar"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-presence__ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: nuda-pres-pulse 3s ease-in-out infinite;
+}
+
+@keyframes nuda-pres-pulse {
+  0%, 100% { opacity: 1;   }
+  50%      { opacity: 0.6; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Avatar Initials ─────────────── */
+  {
+    id: "avatar-initials",
+    name: "Avatar Initials",
+    category: "Avatars",
+    preview: (
+      <div className="nuda-initials" style={{ background: "linear-gradient(135deg,#62b6ff,#9d6dff)" }}>
+        <span>SL</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-initials{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;color:#fafafa;font-size:13px;font-weight:700;letter-spacing:.04em;text-shadow:0 1px 2px rgba(0,0,0,.3);transition:transform .25s}
+      .nuda-initials:hover{transform:rotate(-8deg) scale(1.08)}
+      .nuda-initials span{animation:_initPop .45s cubic-bezier(.34,1.56,.64,1)}
+      @keyframes _initPop{from{transform:scale(0)}to{transform:scale(1)}}
+      @media(prefers-reduced-motion:reduce){.nuda-initials span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-initials" style="background:linear-gradient(135deg,#62b6ff,#9d6dff)">
+  <span>SL</span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fafafa;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s;
+}
+
+.nuda-initials:hover {
+  transform: rotate(-8deg) scale(1.08);
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Verified Avatar ─────────────── */
+  {
+    id: "verified-avatar",
+    name: "Verified Avatar",
+    category: "Avatars",
+    preview: (
+      <div className="nuda-verified">
+        <span className="nuda-verified__avatar" />
+        <span className="nuda-verified__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 13l4 4L19 7" />
+          </svg>
+        </span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-verified{position:relative;display:inline-flex}
+      .nuda-verified__avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ffb45e,#ff6dd4)}
+      .nuda-verified__badge{position:absolute;right:-2px;bottom:-2px;display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#62b6ff;color:#fafafa;border:2px solid #09090b;animation:_verifPop .55s cubic-bezier(.34,1.56,.64,1) .2s both}
+      .nuda-verified__badge svg{width:9px;height:9px;stroke-dasharray:30;stroke-dashoffset:30;animation:_verifDraw .5s ease forwards .55s}
+      @keyframes _verifPop{from{transform:scale(0)}to{transform:scale(1)}}
+      @keyframes _verifDraw{to{stroke-dashoffset:0}}
+      @media(prefers-reduced-motion:reduce){.nuda-verified__badge{animation:none}.nuda-verified__badge svg{stroke-dashoffset:0;animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-verified">
+  <span class="nuda-verified__avatar"></span>
+  <span class="nuda-verified__badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 13l4 4L19 7" />
+    </svg>
+  </span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-verified__badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #62b6ff;
+  color: #fafafa;
+  border: 2px solid #09090b;
+  animation: nuda-verif-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+.nuda-verified__badge svg {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: nuda-verif-draw 0.5s ease forwards 0.55s;
+}`,
+      },
+    ],
+  },
 ];
