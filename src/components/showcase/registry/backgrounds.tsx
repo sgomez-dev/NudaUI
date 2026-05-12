@@ -460,4 +460,305 @@ export const backgrounds: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── 7. Plasma Blob ─────────────── */
+  {
+    id: "plasma-blob",
+    name: "Plasma Blob",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-plasma">
+        <span className="nuda-plasma__b1" />
+        <span className="nuda-plasma__b2" />
+        <span className="nuda-plasma__b3" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-plasma{position:relative;width:100%;max-width:200px;height:120px;border-radius:12px;overflow:hidden;background:#09090b;isolation:isolate;filter:contrast(1.05)}
+      .nuda-plasma span{position:absolute;width:120px;height:120px;border-radius:50%;filter:blur(28px);mix-blend-mode:screen;animation:_plasmaMove 14s ease-in-out infinite}
+      .nuda-plasma__b1{background:#9d6dff;top:-30px;left:-30px}
+      .nuda-plasma__b2{background:#ff6dd4;bottom:-30px;right:-20px;animation-delay:-5s;animation-duration:18s}
+      .nuda-plasma__b3{background:#62b6ff;top:30%;left:35%;animation-delay:-9s;animation-duration:22s}
+      @keyframes _plasmaMove{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-20px) scale(1.2)}66%{transform:translate(-30px,30px) scale(.8)}}
+      @media(prefers-reduced-motion:reduce){.nuda-plasma span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-plasma">
+  <span class="nuda-plasma__b1"></span>
+  <span class="nuda-plasma__b2"></span>
+  <span class="nuda-plasma__b3"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-plasma {
+  position: relative;
+  overflow: hidden;
+  background: #09090b;
+  isolation: isolate;
+  filter: contrast(1.05);
+}
+
+.nuda-plasma span {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  filter: blur(40px);
+  mix-blend-mode: screen;
+  animation: nuda-plasma-move 14s ease-in-out infinite;
+}
+
+.nuda-plasma__b1 { background: #9d6dff; top: -30px;  left: -30px;  }
+.nuda-plasma__b2 { background: #ff6dd4; bottom: -30px; right: -20px;
+                   animation-delay: -5s; animation-duration: 18s; }
+.nuda-plasma__b3 { background: #62b6ff; top: 30%; left: 35%;
+                   animation-delay: -9s; animation-duration: 22s; }
+
+@keyframes nuda-plasma-move {
+  0%, 100% { transform: translate(0, 0) scale(1);     }
+  33%      { transform: translate(40px, -20px) scale(1.2); }
+  66%      { transform: translate(-30px, 30px) scale(0.8); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 8. Scanlines ─────────────── */
+  {
+    id: "scanlines-bg",
+    name: "Scanlines",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-scanlines">
+        <span className="nuda-scanlines__sweep" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-scanlines{position:relative;width:100%;max-width:200px;height:120px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#09090b,#1a1a20);background-image:repeating-linear-gradient(0deg,rgba(228,255,84,.04) 0,rgba(228,255,84,.04) 1px,transparent 1px,transparent 4px),linear-gradient(135deg,#09090b,#1a1a20)}
+      .nuda-scanlines__sweep{position:absolute;left:0;right:0;height:80px;background:linear-gradient(180deg,transparent,rgba(228,255,84,.16),transparent);animation:_scanSweep 4s linear infinite}
+      @keyframes _scanSweep{0%{transform:translateY(-100%)}100%{transform:translateY(120px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-scanlines__sweep{animation:none;opacity:0}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-scanlines">
+  <span class="nuda-scanlines__sweep"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-scanlines {
+  position: relative;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(228, 255, 84, 0.04) 0,
+      rgba(228, 255, 84, 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    linear-gradient(135deg, #09090b, #1a1a20);
+}
+
+.nuda-scanlines__sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(180deg, transparent, rgba(228, 255, 84, 0.16), transparent);
+  animation: nuda-scan-sweep 4s linear infinite;
+}
+
+@keyframes nuda-scan-sweep {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(120px); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 9. Starfield ─────────────── */
+  {
+    id: "starfield-bg",
+    name: "Starfield",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-stars">
+        <span className="nuda-stars__layer nuda-stars__layer--1" />
+        <span className="nuda-stars__layer nuda-stars__layer--2" />
+        <span className="nuda-stars__layer nuda-stars__layer--3" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-stars{position:relative;width:100%;max-width:200px;height:120px;border-radius:12px;overflow:hidden;background:radial-gradient(ellipse at center,#1a1a20 0%,#09090b 100%)}
+      .nuda-stars__layer{position:absolute;inset:0;background-repeat:repeat;background-image:radial-gradient(1px 1px at 20% 30%,#fafafa,transparent),radial-gradient(1px 1px at 60% 70%,#fafafa,transparent),radial-gradient(2px 2px at 80% 20%,#fafafa,transparent),radial-gradient(1px 1px at 40% 80%,#fafafa,transparent),radial-gradient(1px 1px at 90% 50%,#fafafa,transparent);animation:_starsDrift 30s linear infinite}
+      .nuda-stars__layer--2{opacity:.6;animation-duration:50s;animation-direction:reverse}
+      .nuda-stars__layer--3{opacity:.3;animation-duration:80s}
+      @keyframes _starsDrift{from{transform:translate(0,0)}to{transform:translate(-50px,30px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-stars__layer{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-stars">
+  <span class="nuda-stars__layer nuda-stars__layer--1"></span>
+  <span class="nuda-stars__layer nuda-stars__layer--2"></span>
+  <span class="nuda-stars__layer nuda-stars__layer--3"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-stars__layer {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, #fafafa, transparent),
+    radial-gradient(1px 1px at 60% 70%, #fafafa, transparent),
+    radial-gradient(2px 2px at 80% 20%, #fafafa, transparent),
+    radial-gradient(1px 1px at 40% 80%, #fafafa, transparent),
+    radial-gradient(1px 1px at 90% 50%, #fafafa, transparent);
+  animation: nuda-stars-drift 30s linear infinite;
+}
+
+.nuda-stars__layer--2 {
+  opacity: 0.6;
+  animation-duration: 50s;
+  animation-direction: reverse;
+}
+
+.nuda-stars__layer--3 {
+  opacity: 0.3;
+  animation-duration: 80s;
+}
+
+@keyframes nuda-stars-drift {
+  from { transform: translate(0, 0);     }
+  to   { transform: translate(-50px, 30px); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 10. Depth Grid ─────────────── */
+  {
+    id: "depth-grid",
+    name: "Depth Grid",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-depthgrid">
+        <span />
+      </div>
+    ),
+    cssInline: `
+      .nuda-depthgrid{position:relative;width:100%;max-width:200px;height:120px;border-radius:12px;overflow:hidden;background:radial-gradient(ellipse at center bottom,rgba(228,255,84,.15),transparent 70%),#09090b;perspective:200px}
+      .nuda-depthgrid span{position:absolute;left:-50%;right:-50%;bottom:0;height:200%;background-image:linear-gradient(90deg,rgba(228,255,84,.3) 1px,transparent 1px),linear-gradient(0deg,rgba(228,255,84,.3) 1px,transparent 1px);background-size:24px 24px;transform:rotateX(60deg);transform-origin:bottom;animation:_depthScroll 1.4s linear infinite}
+      @keyframes _depthScroll{from{background-position:0 0}to{background-position:0 24px}}
+      @media(prefers-reduced-motion:reduce){.nuda-depthgrid span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-depthgrid">
+  <span></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-depthgrid {
+  position: relative;
+  background:
+    radial-gradient(ellipse at center bottom, rgba(228, 255, 84, 0.15), transparent 70%),
+    #09090b;
+  perspective: 200px;
+  overflow: hidden;
+}
+
+.nuda-depthgrid span {
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  bottom: 0;
+  height: 200%;
+  background-image:
+    linear-gradient(90deg, rgba(228, 255, 84, 0.3) 1px, transparent 1px),
+    linear-gradient(0deg,  rgba(228, 255, 84, 0.3) 1px, transparent 1px);
+  background-size: 24px 24px;
+  transform: rotateX(60deg);
+  transform-origin: bottom;
+  animation: nuda-depth-scroll 1.4s linear infinite;
+}
+
+@keyframes nuda-depth-scroll {
+  from { background-position: 0 0;    }
+  to   { background-position: 0 24px; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 11. Blueprint Grid ─────────────── */
+  {
+    id: "blueprint-bg",
+    name: "Blueprint Grid",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-blueprint" />
+    ),
+    cssInline: `
+      .nuda-blueprint{position:relative;width:100%;max-width:200px;height:120px;border-radius:12px;background:#0a1a2e;background-image:linear-gradient(rgba(99,202,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(99,202,255,.18) 1px,transparent 1px),linear-gradient(rgba(99,202,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(99,202,255,.08) 1px,transparent 1px);background-size:40px 40px,40px 40px,8px 8px,8px 8px;animation:_bpDrift 30s linear infinite}
+      .nuda-blueprint::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(99,202,255,.18),transparent 60%);border-radius:inherit}
+      @keyframes _bpDrift{to{background-position:40px 40px,40px 40px,8px 8px,8px 8px}}
+      @media(prefers-reduced-motion:reduce){.nuda-blueprint{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-blueprint"></div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-blueprint {
+  position: relative;
+  background: #0a1a2e;
+  background-image:
+    linear-gradient(rgba(99, 202, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 202, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(rgba(99, 202, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 202, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+  animation: nuda-bp-drift 30s linear infinite;
+}
+
+.nuda-blueprint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at top right,
+    rgba(99, 202, 255, 0.18),
+    transparent 60%
+  );
+  border-radius: inherit;
+}
+
+@keyframes nuda-bp-drift {
+  to { background-position: 40px 40px, 40px 40px, 8px 8px, 8px 8px; }
+}`,
+      },
+    ],
+  },
 ];
