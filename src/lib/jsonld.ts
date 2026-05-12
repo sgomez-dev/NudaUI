@@ -52,25 +52,60 @@ export function organizationSchema(): JsonLd {
     "@type": "Organization",
     "@id": `${site.url}/#organization`,
     name: site.name,
+    legalName: site.name,
+    alternateName: site.tagline,
     url: site.url,
     description: site.shortDescription,
+    slogan: site.tagline,
     email: site.email,
+    foundingDate: "2025",
+    knowsAbout: [
+      "CSS animations",
+      "UI components",
+      "Web design",
+      "Frontend engineering",
+      "Accessibility",
+      "Framework-agnostic markup",
+    ],
     logo: {
       "@type": "ImageObject",
-      url: absoluteUrl("/icon.png"),
+      "@id": `${site.url}/#logo`,
+      url: absoluteUrl("/icon"),
+      contentUrl: absoluteUrl("/icon"),
       width: 512,
       height: 512,
+      caption: `${site.name} logo`,
+    },
+    image: {
+      "@type": "ImageObject",
+      url: absoluteUrl("/opengraph-image"),
+      width: 1200,
+      height: 630,
     },
     sameAs: [site.social.github],
-    contactPoint: {
-      "@type": "ContactPoint",
-      email: site.email,
-      contactType: "customer support",
-      availableLanguage: ["English", "Spanish"],
-    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        email: site.email,
+        contactType: "customer support",
+        areaServed: "Worldwide",
+        availableLanguage: ["English", "Spanish"],
+      },
+      {
+        "@type": "ContactPoint",
+        url: absoluteUrl("/.well-known/security.txt"),
+        contactType: "security",
+        areaServed: "Worldwide",
+      },
+    ],
     founder: {
       "@type": "Person",
-      name: "NudaUI team",
+      "@id": `${site.url}/#founder`,
+      name: "Santiago Gómez de la Torre Romero",
+      url: "https://github.com/sgomez-dev",
+      jobTitle: "Software Engineer",
+      sameAs: ["https://github.com/sgomez-dev"],
+      knowsLanguage: ["English", "Spanish"],
     },
   };
 }
@@ -83,23 +118,58 @@ export function organizationSchema(): JsonLd {
 export function softwareApplicationSchema(args?: {
   /** Pass the category labels so `featureList` mirrors the live registry. */
   features?: string[];
+  /** Component count for richer signals to crawlers/LLMs. */
+  componentCount?: number;
 }): JsonLd {
   return {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": ["SoftwareApplication", "WebApplication"],
     "@id": `${site.url}/#software`,
     name: site.name,
+    alternateName: site.tagline,
     description: site.description,
     url: site.url,
     applicationCategory: "DeveloperApplication",
     applicationSubCategory: "UI animation library",
     operatingSystem: "Any",
     softwareVersion: "0.1.0",
+    datePublished: "2025-01-01",
     license: "https://opensource.org/licenses/MIT",
     downloadUrl: site.social.github,
     codeRepository: site.social.github,
     programmingLanguage: ["CSS", "HTML", "JavaScript"],
+    runtimePlatform: "Any web browser",
+    fileSize: "0 KB (no runtime, copy-paste only)",
+    permissions: "none",
+    isAccessibleForFree: true,
     keywords: site.keywords.join(", "),
+    inLanguage: site.language,
+    // Accessibility metadata — surfaces in Google's accessibility-aware results
+    // and signals to AI agents that this product is inclusive by design.
+    accessibilityAPI: "ARIA",
+    accessibilityControl: ["fullKeyboardControl", "fullMouseControl", "fullTouchControl"],
+    accessibilityFeature: [
+      "alternativeText",
+      "highContrastDisplay",
+      "readingOrder",
+      "structuralNavigation",
+      "describedMath",
+      "displayTransformability",
+    ],
+    accessibilityHazard: ["noFlashingHazard", "noMotionSimulationHazard", "noSoundHazard"],
+    audience: {
+      "@type": "Audience",
+      audienceType: "Web developers, designers, and engineering teams",
+    },
+    ...(args?.componentCount
+      ? {
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: args.componentCount,
+            name: `${site.name} component catalog`,
+          },
+        }
+      : {}),
     ...(args?.features && args.features.length > 0
       ? { featureList: args.features }
       : {}),
@@ -108,6 +178,7 @@ export function softwareApplicationSchema(args?: {
       price: "0",
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
+      seller: { "@id": `${site.url}/#organization` },
     },
     aggregateRating: {
       "@type": "AggregateRating",
@@ -117,15 +188,25 @@ export function softwareApplicationSchema(args?: {
       worstRating: "1",
     },
     author: { "@id": `${site.url}/#organization` },
+    maintainer: { "@id": `${site.url}/#organization` },
+    creator: { "@id": `${site.url}/#founder` },
   };
 }
 
-/** FAQPage — lifted straight from the FAQ section so copy and schema stay in sync. */
+/**
+ * FAQPage — lifted straight from the FAQ section so copy and schema stay
+ * in sync. Includes a `speakable` selector so Google Assistant / voice
+ * results can read FAQ answers aloud.
+ */
 export function faqPageSchema(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": `${site.url}/#faq`,
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".nuda-faq-question", ".nuda-faq-answer"],
+    },
     mainEntity: faqs.map((item) => ({
       "@type": "Question",
       name: item.q,
@@ -134,6 +215,52 @@ export function faqPageSchema(): JsonLd {
         text: item.a,
       },
     })),
+  };
+}
+
+/**
+ * Article / TechArticle — for legal pages and any future tutorial content.
+ * Surfaces in Google's Article rich results, includes Speakable so voice
+ * search can read sections aloud. `articleSection` lets LLMs jump to a
+ * specific clause without guessing.
+ */
+export function articleSchema(args: {
+  url: string;
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified?: string;
+  /** "TechArticle" for docs, "Article" otherwise. */
+  type?: "Article" | "TechArticle";
+  sections?: string[];
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": args.type ?? "Article",
+    "@id": `${args.url}#article`,
+    headline: args.headline,
+    description: args.description,
+    url: args.url,
+    datePublished: args.datePublished,
+    dateModified: args.dateModified ?? args.datePublished,
+    inLanguage: site.language,
+    isPartOf: { "@id": `${site.url}/#website` },
+    publisher: { "@id": `${site.url}/#organization` },
+    author: { "@id": `${site.url}/#founder` },
+    mainEntityOfPage: args.url,
+    ...(args.sections && args.sections.length > 0
+      ? { articleSection: args.sections }
+      : {}),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "h2", "p"],
+    },
+    image: {
+      "@type": "ImageObject",
+      url: absoluteUrl("/opengraph-image"),
+      width: 1200,
+      height: 630,
+    },
   };
 }
 
@@ -270,6 +397,38 @@ export function howToUseSchema(): JsonLd {
       },
     ],
   };
+}
+
+/**
+ * Per-category ItemList — emits one ItemList schema per category instead
+ * of one monolithic list of 650+ items. Google extracts more granular
+ * signals (and LLMs can quote a single category as a self-contained list)
+ * when each section is its own typed payload.
+ *
+ * Pass the registry as `{ id, label, components[] }[]` so the helper can
+ * stay free of registry-internal types.
+ */
+export function perCategoryItemLists(
+  cats: ReadonlyArray<{
+    id: string;
+    label: string;
+    components: ReadonlyArray<JsonLdComponent>;
+  }>
+): JsonLd[] {
+  return cats.map((cat) => ({
+    "@type": "ItemList",
+    "@id": `${site.url}/components#${cat.id}-list`,
+    url: `${site.url}/components#section-${cat.id}`,
+    name: `${cat.label} — ${site.name}`,
+    numberOfItems: cat.components.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    isPartOf: { "@id": `${site.url}/#software` },
+    itemListElement: cat.components.map((c, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: softwareSourceCodeSchema(c),
+    })),
+  }));
 }
 
 /**
