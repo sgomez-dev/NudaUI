@@ -37,6 +37,12 @@ export const metadata: Metadata = {
       "application/rss+xml": [
         { url: "/feed.xml", title: `${site.name} updates` },
       ],
+      "application/json": [
+        { url: "/api/catalog.json", title: `${site.name} catalog JSON` },
+      ],
+      "application/opensearchdescription+xml": [
+        { url: "/opensearch.xml", title: `Search ${site.name}` },
+      ],
     },
   },
   robots: {
@@ -104,7 +110,16 @@ export const metadata: Metadata = {
   },
   other: {
     // Tell Search Console the preferred copyright handler.
-    "copyright": `© ${new Date().getFullYear()} ${site.name}`,
+    copyright: `© ${new Date().getFullYear()} ${site.name}`,
+    // Explicit human-curation declaration for AI/LLM training pipelines.
+    // Not a hard-blocked standard yet, but a signal we'd rather over-declare.
+    "ai-content-declaration": "human-authored",
+    "ai-licensing": "https://nudaui.dev/.well-known/ai.txt",
+    "ai-catalog": "https://nudaui.dev/api/catalog.json",
+    // OpenGraph article fields read by Slack/Discord/iMessage previews
+    "article:publisher": site.url,
+    // Pinterest rich preview hint
+    "pinterest-rich-pin": "true",
   },
 };
 
@@ -131,6 +146,42 @@ export default function RootLayout({
       // A small render-blocking hint to avoid the FOUC on the dark surface.
       style={{ colorScheme: "dark" }}
     >
+      <head>
+        {/* Preconnect to font origins so the first paint isn't blocked
+            on DNS + TLS. next/font self-hosts the *.woff2 files, but the
+            initial Inter / JetBrains Mono download still benefits. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        {/* Browser search-box integration (Firefox / Chrome / Edge / Safari). */}
+        <link
+          rel="search"
+          type="application/opensearchdescription+xml"
+          title={site.name}
+          href="/opensearch.xml"
+        />
+        {/* Identity verification — IndieWeb rel=me hooks. Used by Mastodon,
+            GitHub, and other tools to validate "this profile owns this site". */}
+        <link rel="me" href={site.social.github} />
+        <link rel="me" href={`mailto:${site.email}`} />
+        {/* Author entity discovery for crawlers and AI agents. */}
+        <link
+          rel="author"
+          href={`${site.url}/.well-known/security.txt`}
+          type="text/plain"
+        />
+        {/* Machine-readable catalog discovery (consumed by /api/catalog.json
+            alternates above; explicit <link> makes it visible to dumb crawlers). */}
+        <link
+          rel="alternate"
+          type="application/json"
+          title={`${site.name} catalog JSON`}
+          href="/api/catalog.json"
+        />
+      </head>
       <body className="min-h-screen bg-surface text-text-primary antialiased">
         {/* Accessible skip link — first focusable element on every page. */}
         <a
