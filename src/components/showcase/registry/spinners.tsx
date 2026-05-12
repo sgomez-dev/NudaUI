@@ -671,4 +671,303 @@ export const spinners: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Cube Fold ─────────────── */
+  {
+    id: "cube-fold",
+    name: "Cube Fold",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-cubefold">
+        <span /><span /><span /><span />
+      </div>
+    ),
+    cssInline: `
+      .nuda-cubefold{position:relative;width:32px;height:32px;transform:rotate(45deg)}
+      .nuda-cubefold span{position:absolute;width:50%;height:50%;background:#e4ff54;transform-origin:100% 100%;animation:_cubeFold 2.4s ease-in-out infinite both}
+      .nuda-cubefold span:nth-child(2){top:0;right:0;transform:scale(1.1) rotate(90deg);animation-delay:.3s}
+      .nuda-cubefold span:nth-child(3){bottom:0;right:0;transform:scale(1.1) rotate(180deg);animation-delay:.6s}
+      .nuda-cubefold span:nth-child(4){bottom:0;left:0;transform:scale(1.1) rotate(270deg);animation-delay:.9s}
+      @keyframes _cubeFold{0%,10%{transform:perspective(140px) rotateX(-180deg);opacity:0}25%,75%{transform:perspective(140px) rotateX(0);opacity:1}90%,100%{transform:perspective(140px) rotateY(180deg);opacity:0}}
+      @media(prefers-reduced-motion:reduce){.nuda-cubefold span{animation:none;opacity:.5}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-cubefold">
+  <span></span><span></span><span></span><span></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-cubefold span {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background: #e4ff54;
+  transform-origin: 100% 100%;
+  animation: nuda-cube-fold 2.4s ease-in-out infinite both;
+}
+
+@keyframes nuda-cube-fold {
+  0%, 10%   { transform: perspective(140px) rotateX(-180deg); opacity: 0; }
+  25%, 75%  { transform: perspective(140px) rotateX(0);       opacity: 1; }
+  90%, 100% { transform: perspective(140px) rotateY(180deg);  opacity: 0; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Orbit Eclipse ─────────────── */
+  {
+    id: "orbit-eclipse",
+    name: "Orbit Eclipse",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-eclipse">
+        <span className="nuda-eclipse__sun" />
+        <span className="nuda-eclipse__moon" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-eclipse{position:relative;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center}
+      .nuda-eclipse__sun{position:absolute;width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffb45e,#ff5e7a);box-shadow:0 0 16px rgba(255,180,94,.5)}
+      .nuda-eclipse__moon{position:absolute;width:28px;height:28px;border-radius:50%;background:#09090b;animation:_eclipseOrbit 2s linear infinite;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+      @keyframes _eclipseOrbit{0%{transform:translateX(-30px) scale(.6)}50%{transform:translateX(0) scale(1)}100%{transform:translateX(30px) scale(.6)}}
+      @media(prefers-reduced-motion:reduce){.nuda-eclipse__moon{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-eclipse">
+  <span class="nuda-eclipse__sun"></span>
+  <span class="nuda-eclipse__moon"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-eclipse__moon {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #09090b;
+  animation: nuda-eclipse-orbit 2s linear infinite;
+}
+
+@keyframes nuda-eclipse-orbit {
+  0%   { transform: translateX(-30px) scale(0.6); }
+  50%  { transform: translateX(0)     scale(1);   }
+  100% { transform: translateX(30px)  scale(0.6); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── DNA Helix ─────────────── */
+  {
+    id: "dna-helix",
+    name: "DNA Helix",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-dna">
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+          <span key={i} style={{ animationDelay: `${i * 0.12}s`, left: `${i * 8}px` }} />
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-dna{position:relative;width:60px;height:24px;display:inline-block}
+      .nuda-dna span{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:#e4ff54;animation:_dnaWave 1.4s ease-in-out infinite}
+      @keyframes _dnaWave{0%,100%{transform:translateY(-10px) scale(.8);background:#e4ff54}50%{transform:translateY(10px) scale(1);background:#62b6ff}}
+      @media(prefers-reduced-motion:reduce){.nuda-dna span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-dna">
+  <!-- 8 spans with sequential left offsets and animation-delay -->
+  <span style="left:0;animation-delay:0s"></span>
+  <span style="left:8px;animation-delay:.12s"></span>
+  <!-- ... -->
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-dna span {
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e4ff54;
+  animation: nuda-dna-wave 1.4s ease-in-out infinite;
+}
+
+@keyframes nuda-dna-wave {
+  0%, 100% { transform: translateY(-10px) scale(0.8); background: #e4ff54; }
+  50%      { transform: translateY(10px)  scale(1);   background: #62b6ff; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Pixel Loader ─────────────── */
+  {
+    id: "pixel-loader",
+    name: "Pixel Loader",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-pixel">
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <span key={i} style={{ animationDelay: `${i * 0.1}s` }} />
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-pixel{display:inline-grid;grid-template-columns:repeat(3,1fr);gap:2px;width:28px;height:28px}
+      .nuda-pixel span{background:#e4ff54;border-radius:1px;animation:_pixBlink 1.4s ease-in-out infinite}
+      @keyframes _pixBlink{0%,40%,100%{opacity:.2;transform:scale(.7)}20%{opacity:1;transform:scale(1)}}
+      @media(prefers-reduced-motion:reduce){.nuda-pixel span{animation:none;opacity:.5}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-pixel">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-pixel span {
+  background: #e4ff54;
+  border-radius: 1px;
+  animation: nuda-pix-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes nuda-pix-blink {
+  0%, 40%, 100% { opacity: 0.2; transform: scale(0.7); }
+  20%           { opacity: 1;   transform: scale(1);   }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Atom ─────────────── */
+  {
+    id: "atom-spinner",
+    name: "Atom Spinner",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-atom">
+        <span className="nuda-atom__orbit nuda-atom__orbit--1" />
+        <span className="nuda-atom__orbit nuda-atom__orbit--2" />
+        <span className="nuda-atom__orbit nuda-atom__orbit--3" />
+        <span className="nuda-atom__core" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-atom{position:relative;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center}
+      .nuda-atom__orbit{position:absolute;width:100%;height:100%;border:1px solid #e4ff54;border-radius:50%;border-color:#e4ff54 transparent #e4ff54 transparent;animation:_atomSpinA 1.4s linear infinite}
+      .nuda-atom__orbit--2{animation:_atomSpinB 1.8s linear infinite}
+      .nuda-atom__orbit--3{animation:_atomSpinC 2.2s linear infinite}
+      .nuda-atom__core{position:absolute;width:6px;height:6px;border-radius:50%;background:#e4ff54;box-shadow:0 0 8px #e4ff54}
+      @keyframes _atomSpinA{to{transform:rotate(360deg)}}
+      @keyframes _atomSpinB{from{transform:rotate(60deg)}to{transform:rotate(-300deg)}}
+      @keyframes _atomSpinC{from{transform:rotate(-60deg)}to{transform:rotate(300deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-atom__orbit{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-atom">
+  <span class="nuda-atom__orbit nuda-atom__orbit--1"></span>
+  <span class="nuda-atom__orbit nuda-atom__orbit--2"></span>
+  <span class="nuda-atom__orbit nuda-atom__orbit--3"></span>
+  <span class="nuda-atom__core"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-atom__orbit {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #e4ff54;
+  border-radius: 50%;
+  border-color: #e4ff54 transparent #e4ff54 transparent;
+}
+
+.nuda-atom__core {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e4ff54;
+  box-shadow: 0 0 8px #e4ff54;
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Hourglass ─────────────── */
+  {
+    id: "hourglass-spinner",
+    name: "Hourglass",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-hour">
+        <svg viewBox="0 0 24 32" fill="currentColor">
+          <path d="M4 2h16v6L14 16l6 8v6H4v-6l6-8L4 8z" stroke="#e4ff54" strokeWidth="1.5" fill="none" />
+          <path className="nuda-hour__sand" d="M7 5h10v3l-5 5-5-5z" fill="#e4ff54" />
+        </svg>
+      </div>
+    ),
+    cssInline: `
+      .nuda-hour{display:inline-flex;color:#e4ff54;animation:_hourFlip 2.8s ease-in-out infinite}
+      .nuda-hour svg{width:22px;height:30px}
+      @keyframes _hourFlip{0%,40%{transform:rotate(0)}50%,90%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-hour{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-hour">
+  <svg viewBox="0 0 24 32" fill="currentColor">
+    <path d="M4 2h16v6L14 16l6 8v6H4v-6l6-8L4 8z"
+          stroke="#e4ff54" stroke-width="1.5" fill="none" />
+    <path class="nuda-hour__sand" d="M7 5h10v3l-5 5-5-5z" fill="#e4ff54" />
+  </svg>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-hour {
+  display: inline-flex;
+  color: #e4ff54;
+  animation: nuda-hour-flip 2.8s ease-in-out infinite;
+}
+
+@keyframes nuda-hour-flip {
+  0%, 40%   { transform: rotate(0);      }
+  50%, 90%  { transform: rotate(180deg); }
+  100%      { transform: rotate(360deg); }
+}`,
+      },
+    ],
+  },
 ];
