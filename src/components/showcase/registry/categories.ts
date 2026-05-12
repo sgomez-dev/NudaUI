@@ -53,6 +53,22 @@ import {
   Calendar,
   PanelLeft,
   ListChecks,
+  Search,
+  SlidersHorizontal,
+  Music,
+  Palette,
+  Images,
+  MapPin,
+  Watch,
+  Quote,
+  MessageCircle,
+  UserCircle,
+  Settings,
+  Upload,
+  Hash,
+  Smartphone,
+  Inbox as InboxFull,
+  CircleDashed,
   type LucideIcon,
 } from "lucide-react";
 
@@ -103,6 +119,22 @@ import { auth } from "./auth";
 import { calendars } from "./calendars";
 import { sidebars } from "./sidebars";
 import { steppers } from "./steppers";
+import { searchAutocomplete } from "./search-autocomplete";
+import { slidersRanges } from "./sliders-ranges";
+import { audioWaveforms } from "./audio-waveforms";
+import { colorPickers } from "./color-pickers";
+import { galleriesCarousels } from "./galleries-carousels";
+import { mapsLocations } from "./maps-locations";
+import { watchFaces } from "./watch-faces";
+import { quotesTestimonials } from "./quotes-testimonials";
+import { commentsReactions } from "./comments-reactions";
+import { profileHeaders } from "./profile-headers";
+import { settingsPreferences } from "./settings-preferences";
+import { fileUpload } from "./file-upload";
+import { multiChips } from "./multi-chips";
+import { mobilePatterns } from "./mobile-patterns";
+import { notificationCenter } from "./notification-center";
+import { skeletonVariants } from "./skeleton-variants";
 
 export interface CategoryConfig {
   id: string;
@@ -157,6 +189,22 @@ export const categories: CategoryConfig[] = [
   { id: "calendars", label: "Calendars & Date Pickers", icon: Calendar, components: calendars },
   { id: "sidebars", label: "Sidebars & Docks", icon: PanelLeft, components: sidebars },
   { id: "steppers", label: "Steppers & Wizards", icon: ListChecks, components: steppers },
+  { id: "search-autocomplete", label: "Search & Autocomplete", icon: Search, components: searchAutocomplete },
+  { id: "sliders-ranges", label: "Sliders & Ranges", icon: SlidersHorizontal, components: slidersRanges },
+  { id: "audio-waveforms", label: "Audio & Waveforms", icon: Music, components: audioWaveforms },
+  { id: "color-pickers", label: "Color Pickers", icon: Palette, components: colorPickers },
+  { id: "galleries-carousels", label: "Galleries & Carousels", icon: Images, components: galleriesCarousels },
+  { id: "maps-locations", label: "Maps & Locations", icon: MapPin, components: mapsLocations },
+  { id: "watch-faces", label: "Watch Faces & Clocks", icon: Watch, components: watchFaces },
+  { id: "quotes-testimonials", label: "Quotes & Testimonials", icon: Quote, components: quotesTestimonials },
+  { id: "comments-reactions", label: "Comments & Reactions", icon: MessageCircle, components: commentsReactions },
+  { id: "profile-headers", label: "Profile Headers", icon: UserCircle, components: profileHeaders },
+  { id: "settings-preferences", label: "Settings & Preferences", icon: Settings, components: settingsPreferences },
+  { id: "file-upload", label: "File Upload", icon: Upload, components: fileUpload },
+  { id: "multi-chips", label: "Tags & Chips Input", icon: Hash, components: multiChips },
+  { id: "mobile-patterns", label: "Mobile Patterns", icon: Smartphone, components: mobilePatterns },
+  { id: "notification-center", label: "Notification Center", icon: InboxFull, components: notificationCenter },
+  { id: "skeleton-variants", label: "Skeleton Variants", icon: CircleDashed, components: skeletonVariants },
 ];
 
 /** Total number of components across every category. */
