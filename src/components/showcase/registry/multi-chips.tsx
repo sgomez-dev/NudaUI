@@ -1362,8 +1362,8 @@ export const multiChips: NudaComponent[] = [
     preview: (
       <div className="nuda-chip-avatar">
         <span className="nuda-chip-avatar__chip">
-          <span className="nuda-chip-avatar__img" style={{ background: "linear-gradient(135deg,#e4ff54,#86efac)" }}>SG</span>
-          @santiago
+          <span className="nuda-chip-avatar__img" style={{ background: "linear-gradient(135deg,#e4ff54,#86efac)" }}>NU</span>
+          @nuda
           <button aria-label="Remove" className="nuda-chip-avatar__x">×</button>
         </span>
         <span className="nuda-chip-avatar__chip">
@@ -1394,8 +1394,8 @@ export const multiChips: NudaComponent[] = [
         code: `<div class="nuda-chip-avatar">
   <span class="nuda-chip-avatar__chip">
     <span class="nuda-chip-avatar__img"
-          style="background:linear-gradient(135deg,#e4ff54,#86efac)">SG</span>
-    @santiago
+          style="background:linear-gradient(135deg,#e4ff54,#86efac)">NU</span>
+    @nuda
     <button class="nuda-chip-avatar__x" aria-label="Remove">×</button>
   </span>
   <span class="nuda-chip-avatar__chip">
