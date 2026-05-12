@@ -55,6 +55,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages: { en: absoluteUrl("/privacy") },
       },
     },
+    {
+      url: absoluteUrl("/changelog"),
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.5,
+      alternates: {
+        languages: { en: absoluteUrl("/changelog") },
+      },
+    },
   ];
 
   // One entry per category. The `#section-<id>` anchor matches the
