@@ -101,10 +101,12 @@ export function organizationSchema(): JsonLd {
     founder: {
       "@type": "Person",
       "@id": `${site.url}/#founder`,
-      name: "Santiago Gómez de la Torre Romero",
-      url: "https://github.com/sgomez-dev",
+      name: site.creator.name,
+      url: site.creator.url,
+      email: site.creator.email,
       jobTitle: "Software Engineer",
-      sameAs: ["https://github.com/sgomez-dev"],
+      description: `${site.creator.role} of ${site.name}.`,
+      sameAs: [site.creator.url, site.creator.github],
       knowsLanguage: ["English", "Spanish"],
     },
   };
@@ -190,6 +192,9 @@ export function softwareApplicationSchema(args?: {
     author: { "@id": `${site.url}/#organization` },
     maintainer: { "@id": `${site.url}/#organization` },
     creator: { "@id": `${site.url}/#founder` },
+    copyrightHolder: { "@id": `${site.url}/#founder` },
+    copyrightYear: 2025,
+    copyrightNotice: `© 2025 ${site.creator.name}. ${site.name} is created and owned by ${site.creator.name}; component source code is released under the MIT license.`,
   };
 }
 
