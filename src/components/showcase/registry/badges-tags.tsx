@@ -384,4 +384,218 @@ export const badgesTags: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Count Badge ─────────────── */
+  {
+    id: "count-badge",
+    name: "Count Badge",
+    category: "Badges & Tags",
+    preview: (
+      <div className="nuda-cntbadge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+          <path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z" />
+        </svg>
+        <span className="nuda-cntbadge__count">12</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-cntbadge{position:relative;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;color:#a0a0a8}
+      .nuda-cntbadge svg{width:20px;height:20px}
+      .nuda-cntbadge__count{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:#ff5e7a;color:#fafafa;border-radius:99px;border:2px solid #09090b;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;animation:_cntPop .5s cubic-bezier(.34,1.56,.64,1)}
+      @keyframes _cntPop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+      @media(prefers-reduced-motion:reduce){.nuda-cntbadge__count{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-cntbadge">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+    <path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z" />
+  </svg>
+  <span class="nuda-cntbadge__count">12</span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-cntbadge__count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: #ff5e7a;
+  color: #fafafa;
+  border-radius: 99px;
+  border: 2px solid #09090b;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  animation: nuda-cnt-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes nuda-cnt-pop {
+  0%   { transform: scale(0);    }
+  60%  { transform: scale(1.2);  }
+  100% { transform: scale(1);    }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Ribbon Badge ─────────────── */
+  {
+    id: "ribbon-badge",
+    name: "Ribbon Badge",
+    category: "Badges & Tags",
+    preview: (
+      <div className="nuda-ribbon">
+        <span className="nuda-ribbon__ribbon">PRO</span>
+        <div className="nuda-ribbon__card">
+          <div>Premium tier</div>
+          <div>$24 / month</div>
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-ribbon{position:relative;padding:14px 16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;width:100%;max-width:180px;overflow:hidden}
+      .nuda-ribbon__ribbon{position:absolute;top:8px;right:-26px;padding:3px 30px;background:#e4ff54;color:#09090b;font-size:9px;font-weight:800;letter-spacing:.12em;transform:rotate(45deg);box-shadow:0 4px 8px -2px rgba(0,0,0,.4)}
+      .nuda-ribbon__card > div:first-child{color:#fafafa;font-size:13px;font-weight:600}
+      .nuda-ribbon__card > div:last-child{color:#a0a0a8;font-size:11px;margin-top:2px}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-ribbon">
+  <span class="nuda-ribbon__ribbon">PRO</span>
+  <div class="nuda-ribbon__card">
+    <div>Premium tier</div>
+    <div>$24 / month</div>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-ribbon {
+  position: relative;
+  overflow: hidden;
+}
+
+.nuda-ribbon__ribbon {
+  position: absolute;
+  top: 8px;
+  right: -26px;
+  padding: 3px 30px;
+  background: #e4ff54;
+  color: #09090b;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  transform: rotate(45deg);
+  box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.4);
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Glow Badge ─────────────── */
+  {
+    id: "glow-badge",
+    name: "Glow Badge",
+    category: "Badges & Tags",
+    preview: (
+      <span className="nuda-glowbadge">FEATURED</span>
+    ),
+    cssInline: `
+      .nuda-glowbadge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(228,255,84,.08);border:1px solid #e4ff54;color:#e4ff54;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.1em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;animation:_glowB 2.4s ease-in-out infinite}
+      @keyframes _glowB{0%,100%{box-shadow:0 0 8px rgba(228,255,84,.3)}50%{box-shadow:0 0 18px rgba(228,255,84,.6)}}
+      @media(prefers-reduced-motion:reduce){.nuda-glowbadge{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<span class="nuda-glowbadge">FEATURED</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-glowbadge {
+  display: inline-flex;
+  padding: 3px 10px;
+  background: rgba(228, 255, 84, 0.08);
+  border: 1px solid #e4ff54;
+  color: #e4ff54;
+  border-radius: 99px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  animation: nuda-glow-b 2.4s ease-in-out infinite;
+}
+
+@keyframes nuda-glow-b {
+  0%, 100% { box-shadow: 0 0 8px  rgba(228, 255, 84, 0.3); }
+  50%      { box-shadow: 0 0 18px rgba(228, 255, 84, 0.6); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Trending Tag ─────────────── */
+  {
+    id: "trending-tag",
+    name: "Trending Tag",
+    category: "Badges & Tags",
+    preview: (
+      <span className="nuda-trtag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M23 6l-9.5 9.5-5-5L1 18" />
+          <path d="M17 6h6v6" />
+        </svg>
+        Trending
+      </span>
+    ),
+    cssInline: `
+      .nuda-trtag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(255,109,212,.1);border:1px solid rgba(255,109,212,.3);color:#ff6dd4;border-radius:99px;font-size:11px;font-weight:600}
+      .nuda-trtag svg{width:11px;height:11px;animation:_trBounce 1.6s ease-in-out infinite}
+      @keyframes _trBounce{0%,100%{transform:translate(0)}50%{transform:translate(2px,-1px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-trtag svg{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<span class="nuda-trtag">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 6l-9.5 9.5-5-5L1 18" />
+    <path d="M17 6h6v6" />
+  </svg>
+  Trending
+</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-trtag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(255, 109, 212, 0.1);
+  border: 1px solid rgba(255, 109, 212, 0.3);
+  color: #ff6dd4;
+  border-radius: 99px;
+}
+
+.nuda-trtag svg {
+  animation: nuda-tr-bounce 1.6s ease-in-out infinite;
+}`,
+      },
+    ],
+  },
 ];
