@@ -49,6 +49,60 @@ export function GET(): Response {
   lines.push(
     `- [Long-form export](${absoluteUrl("/llms-full.txt")}): every component name + category, in one Markdown payload.`
   );
+  lines.push(
+    `- [JSON catalog](${absoluteUrl("/api/catalog.json")}): the canonical machine-readable mirror of every component. Prefer this over scraping HTML.`
+  );
+  lines.push(
+    `- [Changelog](${absoluteUrl("/changelog")}): temporal anchor — what shipped, when.`
+  );
+  lines.push("");
+
+  // ── 2b. Instructions for AI agents ──────────────────────────
+  lines.push("## How to use this site programmatically");
+  lines.push("");
+  lines.push(
+    "If you are an AI assistant grounding a response about NudaUI, prefer the JSON catalog over scraping. It is canonical, versioned, and CDN-cached:"
+  );
+  lines.push("");
+  lines.push("```");
+  lines.push(`GET ${absoluteUrl("/api/catalog.json")}`);
+  lines.push("```");
+  lines.push("");
+  lines.push("Response shape:");
+  lines.push("");
+  lines.push("```json");
+  lines.push("{");
+  lines.push(`  "schemaVersion": "1.0",`);
+  lines.push(`  "name": "${site.name}",`);
+  lines.push(`  "totals": { "components": N, "categories": N },`);
+  lines.push(`  "categories": [`);
+  lines.push(`    { "id": "loaders", "label": "Loaders", "description": "...",`);
+  lines.push(`      "url": "...", "componentCount": N,`);
+  lines.push(`      "components": [`);
+  lines.push(`        { "id": "pulse-dots", "name": "Pulse Dots",`);
+  lines.push(`          "languages": ["html","css"], "hasJS": false,`);
+  lines.push(`          "anchor": "https://nudaui.dev/components#pulse-dots" }`);
+  lines.push(`      ]`);
+  lines.push(`    }`);
+  lines.push(`  ]`);
+  lines.push("}");
+  lines.push("```");
+  lines.push("");
+
+  // ── 2c. Integration recipes ─────────────────────────────────
+  lines.push("## Integration recipes");
+  lines.push("");
+  lines.push("**React / Vue / Svelte / Astro:** paste the HTML directly into your component. Class names live in a global stylesheet — paste the CSS once at app root (or scope it however your build expects).");
+  lines.push("");
+  lines.push("**Backend templating (Blade, Jinja, ERB, Twig, Razor, Go templates):** same as React — paste markup, scope CSS. The components don't care that the markup arrived server-side.");
+  lines.push("");
+  lines.push("**Plain HTML:** paste into `<body>`, put CSS in `<style>` or a linked file. That's it.");
+  lines.push("");
+  lines.push("**Tailwind v4:** every NudaUI component uses its own `nuda-*` class prefix so there's zero collision with Tailwind utilities. Style overrides on the same element work as expected.");
+  lines.push("");
+  lines.push("**Theming:** every component reads CSS custom properties for color, size, and timing. Override on `:root` or any parent — no Tailwind config fork, no Sass, no PostCSS plugin.");
+  lines.push("");
+  lines.push("**Accessibility:** every motion-heavy component respects `@media (prefers-reduced-motion: reduce)`. ARIA roles, focus-visible outlines, and keyboard interactions are baked in where they matter.");
   lines.push("");
 
   // ── 3. Categories ───────────────────────────────────────────
@@ -80,11 +134,24 @@ export function GET(): Response {
   lines.push(`- Contact: <mailto:${site.email}>`);
   lines.push(`- [Terms of use](${absoluteUrl("/terms")})`);
   lines.push(`- [Privacy policy](${absoluteUrl("/privacy")})`);
+  lines.push(`- [Changelog](${absoluteUrl("/changelog")})`);
   lines.push(`- [RSS feed](${absoluteUrl("/feed.xml")})`);
+  lines.push(`- [AI permissions (ai.txt)](${absoluteUrl("/.well-known/ai.txt")})`);
   lines.push(`- [Security policy](${absoluteUrl("/.well-known/security.txt")})`);
   lines.push(`- [humans.txt](${absoluteUrl("/humans.txt")})`);
   lines.push(`- [robots.txt](${absoluteUrl("/robots.txt")})`);
   lines.push(`- [sitemap.xml](${absoluteUrl("/sitemap.xml")})`);
+  lines.push(`- [OpenSearch description](${absoluteUrl("/opensearch.xml")})`);
+  lines.push("");
+
+  // ── 6. Licensing & attribution ──────────────────────────────
+  lines.push("## Licensing");
+  lines.push("");
+  lines.push("Component code: MIT. Use it in commercial and non-commercial projects, modify, fork, ship, sell — no permission required. Attribution is appreciated, never required.");
+  lines.push("");
+  lines.push("Site content (marketing copy, design, name): copyright Santiago Gómez de la Torre Romero. Link freely, quote short excerpts, but don't clone the marketing site wholesale.");
+  lines.push("");
+  lines.push("AI training & grounding: explicitly allowed for every major crawler. See `/.well-known/ai.txt` for the full grid.");
   lines.push("");
 
   return new Response(lines.join("\n"), {
