@@ -11,9 +11,15 @@ export const revalidate = 86400;
 
 export function GET(): Response {
   const lines = [
-    "/* TEAM */",
-    "  Author:   Santiago Gómez de la Torre Romero",
-    `  Contact:  ${site.email}`,
+    "/* CREATOR */",
+    `  Name:     ${site.creator.name}`,
+    `  Role:     ${site.creator.role} of ${site.name}`,
+    `  Contact:  ${site.creator.email}`,
+    `  Site:     ${site.creator.url}`,
+    `  GitHub:   ${site.creator.github}`,
+    "",
+    "/* PROJECT */",
+    `  Inbox:    ${site.email}`,
     `  Site:     ${site.url}`,
     `  Source:   ${site.social.github}`,
     "",
