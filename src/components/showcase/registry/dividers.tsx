@@ -356,4 +356,187 @@ export const dividers: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── TEXT DIVIDER ─────────────── */
+  {
+    id: "text-divider",
+    name: "Text Divider",
+    category: "Dividers",
+    preview: (
+      <div className="nuda-textdiv" role="separator">
+        <span className="nuda-textdiv__line" />
+        <span className="nuda-textdiv__label">OR</span>
+        <span className="nuda-textdiv__line" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-textdiv{display:flex;align-items:center;gap:10px;width:100%;max-width:200px;color:#63636e;font-size:10px;font-weight:600;letter-spacing:.12em}
+      .nuda-textdiv__line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent)}
+      .nuda-textdiv__label{padding:0 4px}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-textdiv" role="separator">
+  <span class="nuda-textdiv__line"></span>
+  <span class="nuda-textdiv__label">OR</span>
+  <span class="nuda-textdiv__line"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-textdiv__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.16),
+    transparent
+  );
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── ANIMATED RULE ─────────────── */
+  {
+    id: "animated-rule",
+    name: "Animated Rule",
+    category: "Dividers",
+    preview: (
+      <div className="nuda-animrule" role="separator">
+        <span />
+      </div>
+    ),
+    cssInline: `
+      .nuda-animrule{position:relative;width:100%;max-width:200px;height:1px;background:rgba(255,255,255,.06);overflow:hidden}
+      .nuda-animrule span{position:absolute;left:0;top:0;width:60px;height:100%;background:linear-gradient(90deg,transparent,#e4ff54,transparent);animation:_ruleSlide 2.4s ease-in-out infinite}
+      @keyframes _ruleSlide{0%{transform:translateX(-100%)}100%{transform:translateX(340%)}}
+      @media(prefers-reduced-motion:reduce){.nuda-animrule span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-animrule" role="separator">
+  <span></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-animrule span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #e4ff54, transparent);
+  animation: nuda-rule-slide 2.4s ease-in-out infinite;
+}
+
+@keyframes nuda-rule-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(340%);  }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── BLOB DIVIDER ─────────────── */
+  {
+    id: "blob-divider",
+    name: "Blob Divider",
+    category: "Dividers",
+    preview: (
+      <svg className="nuda-blobdiv" viewBox="0 0 400 40" preserveAspectRatio="none" role="separator">
+        <path d="M0 20 Q60 5 120 20 T240 20 T360 20 T480 20 L400 20 L400 40 L0 40 Z" fill="rgba(228,255,84,.08)" />
+        <path d="M0 20 Q60 5 120 20 T240 20 T360 20 T480 20" fill="none" stroke="#e4ff54" strokeWidth="1.2" />
+      </svg>
+    ),
+    cssInline: `
+      .nuda-blobdiv{width:100%;height:30px;animation:_blobShift 8s ease-in-out infinite}
+      @keyframes _blobShift{0%,100%{transform:translateX(0)}50%{transform:translateX(-8px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-blobdiv{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<svg class="nuda-blobdiv" viewBox="0 0 400 40"
+     preserveAspectRatio="none" role="separator">
+  <path d="M0 20 Q60 5 120 20 T240 20 T360 20 T480 20 L400 20 L400 40 L0 40 Z"
+        fill="rgba(228,255,84,.08)" />
+  <path d="M0 20 Q60 5 120 20 T240 20 T360 20 T480 20"
+        fill="none" stroke="#e4ff54" stroke-width="1.2" />
+</svg>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-blobdiv {
+  width: 100%;
+  height: 30px;
+  animation: nuda-blob-shift 8s ease-in-out infinite;
+}
+
+@keyframes nuda-blob-shift {
+  0%, 100% { transform: translateX(0);    }
+  50%      { transform: translateX(-8px); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── DOUBLE STRIPE ─────────────── */
+  {
+    id: "double-stripe",
+    name: "Double Stripe",
+    category: "Dividers",
+    preview: (
+      <div className="nuda-2stripe" role="separator">
+        <span /><span />
+      </div>
+    ),
+    cssInline: `
+      .nuda-2stripe{display:flex;flex-direction:column;gap:3px;width:100%;max-width:200px}
+      .nuda-2stripe span{height:1px;background:linear-gradient(90deg,transparent,#e4ff54,transparent);opacity:.6;animation:_2stripePulse 3s ease-in-out infinite}
+      .nuda-2stripe span:nth-child(2){opacity:.3;animation-delay:.5s}
+      @keyframes _2stripePulse{0%,100%{opacity:.3}50%{opacity:.8}}
+      @media(prefers-reduced-motion:reduce){.nuda-2stripe span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-2stripe" role="separator">
+  <span></span>
+  <span></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-2stripe span {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e4ff54, transparent);
+  opacity: 0.6;
+  animation: nuda-2stripe-pulse 3s ease-in-out infinite;
+}
+
+.nuda-2stripe span:nth-child(2) {
+  opacity: 0.3;
+  animation-delay: 0.5s;
+}
+
+@keyframes nuda-2stripe-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.8; }
+}`,
+      },
+    ],
+  },
 ];
