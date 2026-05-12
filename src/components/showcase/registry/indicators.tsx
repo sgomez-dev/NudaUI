@@ -549,4 +549,205 @@ export const indicators: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Signal Strength ─────────────── */
+  {
+    id: "signal-strength",
+    name: "Signal Strength",
+    category: "Indicators",
+    preview: (
+      <div className="nuda-signal" aria-label="Strong signal">
+        <span className="is-on" /><span className="is-on" /><span className="is-on" /><span />
+      </div>
+    ),
+    cssInline: `
+      .nuda-signal{display:inline-flex;align-items:flex-end;gap:2px;height:18px}
+      .nuda-signal span{width:4px;background:rgba(255,255,255,.16);border-radius:1px;transition:background .35s}
+      .nuda-signal span:nth-child(1){height:30%}
+      .nuda-signal span:nth-child(2){height:55%}
+      .nuda-signal span:nth-child(3){height:80%}
+      .nuda-signal span:nth-child(4){height:100%}
+      .nuda-signal span.is-on{background:#6ee7b7;box-shadow:0 0 4px rgba(110,231,183,.4);animation:_sigPulse 2s ease-in-out infinite}
+      .nuda-signal span.is-on:nth-child(2){animation-delay:.15s}
+      .nuda-signal span.is-on:nth-child(3){animation-delay:.3s}
+      @keyframes _sigPulse{0%,100%{opacity:1}50%{opacity:.7}}
+      @media(prefers-reduced-motion:reduce){.nuda-signal span.is-on{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-signal" aria-label="Strong signal">
+  <span class="is-on"></span>
+  <span class="is-on"></span>
+  <span class="is-on"></span>
+  <span></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-signal span.is-on {
+  background: #6ee7b7;
+  box-shadow: 0 0 4px rgba(110, 231, 183, 0.4);
+  animation: nuda-sig-pulse 2s ease-in-out infinite;
+}
+
+.nuda-signal span.is-on:nth-child(2) { animation-delay: 0.15s; }
+.nuda-signal span.is-on:nth-child(3) { animation-delay: 0.3s; }`,
+      },
+    ],
+  },
+
+  /* ─────────────── Typing Presence ─────────────── */
+  {
+    id: "typing-presence",
+    name: "Typing Presence",
+    category: "Indicators",
+    preview: (
+      <div className="nuda-typing">
+        <span /><span /><span />
+        <span className="nuda-typing__name">Sara is typing…</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-typing{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:99px;color:#a0a0a8;font-size:11px}
+      .nuda-typing > span:not(.nuda-typing__name){width:5px;height:5px;border-radius:50%;background:#a0a0a8;animation:_typingDot 1.2s ease-in-out infinite}
+      .nuda-typing > span:nth-child(2){animation-delay:.15s}
+      .nuda-typing > span:nth-child(3){animation-delay:.3s;margin-right:4px}
+      @keyframes _typingDot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-typing > span:not(.nuda-typing__name){animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-typing">
+  <span></span><span></span><span></span>
+  <span class="nuda-typing__name">Sara is typing…</span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-typing > span:not(.nuda-typing__name) {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #a0a0a8;
+  animation: nuda-typing-dot 1.2s ease-in-out infinite;
+}
+
+@keyframes nuda-typing-dot {
+  0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+  40%           { opacity: 1;   transform: translateY(-3px); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Battery Indicator ─────────────── */
+  {
+    id: "battery-indicator",
+    name: "Battery Indicator",
+    category: "Indicators",
+    preview: (
+      <div className="nuda-batt">
+        <span className="nuda-batt__case">
+          <span className="nuda-batt__fill" style={{ width: "68%" }} />
+        </span>
+        <span className="nuda-batt__cap" />
+        <span className="nuda-batt__pct">68%</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-batt{display:inline-flex;align-items:center;gap:6px;color:#fafafa;font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+      .nuda-batt__case{position:relative;width:32px;height:14px;border:1.5px solid rgba(255,255,255,.4);border-radius:3px;padding:1.5px}
+      .nuda-batt__fill{display:block;height:100%;background:#6ee7b7;border-radius:1px;transition:width .5s,background .35s}
+      .nuda-batt__cap{width:2px;height:6px;background:rgba(255,255,255,.4);border-radius:0 1px 1px 0;margin-left:-1px}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-batt">
+  <span class="nuda-batt__case">
+    <span class="nuda-batt__fill" style="width:68%"></span>
+  </span>
+  <span class="nuda-batt__cap"></span>
+  <span class="nuda-batt__pct">68%</span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-batt__case {
+  position: relative;
+  width: 32px;
+  height: 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+  padding: 1.5px;
+}
+
+.nuda-batt__fill {
+  display: block;
+  height: 100%;
+  background: #6ee7b7;
+  border-radius: 1px;
+  transition: width 0.5s, background 0.35s;
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Online Dot Cluster ─────────────── */
+  {
+    id: "online-cluster",
+    name: "Online Cluster",
+    category: "Indicators",
+    preview: (
+      <div className="nuda-onlcluster">
+        <span className="nuda-onlcluster__count">8</span>
+        <span className="nuda-onlcluster__label">online</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-onlcluster{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;background:rgba(110,231,183,.06);border:1px solid rgba(110,231,183,.2);border-radius:99px;color:#6ee7b7;font-size:11px;font-weight:600}
+      .nuda-onlcluster__count{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#6ee7b7;color:#09090b;font-weight:700;font-variant-numeric:tabular-nums;animation:_onlPulse 2s ease-in-out infinite}
+      @keyframes _onlPulse{0%,100%{box-shadow:0 0 0 0 rgba(110,231,183,.5)}50%{box-shadow:0 0 0 4px rgba(110,231,183,0)}}
+      @media(prefers-reduced-motion:reduce){.nuda-onlcluster__count{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-onlcluster">
+  <span class="nuda-onlcluster__count">8</span>
+  <span class="nuda-onlcluster__label">online</span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-onlcluster__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #6ee7b7;
+  color: #09090b;
+  font-weight: 700;
+  animation: nuda-onl-pulse 2s ease-in-out infinite;
+}
+
+@keyframes nuda-onl-pulse {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(110, 231, 183, 0.5); }
+  50%      { box-shadow: 0 0 0 4px rgba(110, 231, 183, 0);   }
+}`,
+      },
+    ],
+  },
 ];
