@@ -100,6 +100,38 @@ export const categoryDescriptions: Record<string, string> = {
     "Sidebars, rails, and docks — collapsible sidebar, macOS-style dock, drawer slide, FAB action menu, vertical rail, workspace switcher, file tree, mobile bottom nav, hover-reveal, glass floating.",
   steppers:
     "Multi-step flows and wizards — linear stepper, vertical stepper, progress wizard, numbered, onboarding carousel, wizard tabs, SVG trace connector, card slide, done step, step pill indicator.",
+  "search-autocomplete":
+    "Search inputs and autocomplete primitives — expanding search, autocomplete dropdown, match highlight, recent searches, voice search, search loading, no-results state, Cmd-K trigger, clearable input, filter chips, type-ahead, async shimmer, spotlight modal, sticky search header, staggered results, search history pills.",
+  "sliders-ranges":
+    "Slider and range controls — single-value, dual-handle range, value bubble, vertical, stepped with ticks, animated gradient fill, histogram range, snap-to-step, hue picker, rotary knob, brightness slider, price range, slider + number input, drag-active thumb halo, curve preview, frequency bars.",
+  "audio-waveforms":
+    "Audio player UI and waveform visualizers — equalizer bars, voice activity meter, soundwave pulse, waveform scrubber, vinyl record spin, mic recording, circular visualizer, now-playing card, amplitude rings, play/pause morph, mute toggle, loop indicator, spectrum analyzer, track progress with waveform, audio buffering.",
+  "color-pickers":
+    "Color selection primitives for design tools, theme builders and dashboards — swatch grid, gradient picker, hue ring, eye-dropper trigger, hex input, palette generator, recents, contrast pair with AA/AAA badges, color chip with copy, saturation/lightness sliders.",
+  "galleries-carousels":
+    "Image gallery and carousel patterns — horizontal carousel with dots, swipe indicator, lightbox open, thumbnail strip, masonry hover lift, 3D image fan, before/after comparison slider, polaroid stack, hover zoom with caption reveal, filter morph tabs.",
+  "maps-locations":
+    "Map and location UI — pin drop bounce, marker pulse, route trace, distance line with chip, geo-locating spinner, cluster expand, popup card, location search with use-my-location, compass needle, mini-map with viewport.",
+  "watch-faces":
+    "Clock and watch face designs — analog clock, digital readout, flip clock, pomodoro ring, stopwatch, world clock card, alarm bells, countdown ring, Swiss railway, military 24h, weather clock, day/night, sand hourglass, word clock, pulse heart, binary clock, sundial.",
+  "quotes-testimonials":
+    "Customer testimonial and pull-quote patterns — pull quote, testimonial card, star rating card, signature reveal, logo + quote strip, video testimonial, rating distribution, marquee testimonials, carousel, before/after, gradient border quote, animated stars, verified customer, masonry grid, spotlight quote, stat quote, floating card, inline quote link.",
+  "comments-reactions":
+    "Comment thread and reaction UI — comment thread, nested reply, emoji picker, emoji burst, like button heart, dislike thumb, share, reply input expand, mentions chip, reaction count badge, reaction bar, comment skeleton, pinned comment, highlighted reply, reaction stack, thumbs up counter, quote reply, emoji hover preview.",
+  "profile-headers":
+    "User profile header patterns — bio card, banner + avatar, stat row, social links bar, edit profile button, level XP ring, verified checkmark, status presence, follow button toggle, follower count tick-up, pronouns pill, compact profile pill, skeleton loader, hero profile, member since badge, achievements strip, hover card, bio reveal.",
+  "settings-preferences":
+    "Settings and preferences UI — preference row toggle, settings card group, theme selector, notification preferences, account section, danger zone, save indicator, search settings input, two-column setting, accessibility section, connected apps, plan tier card, email verification, language picker, time zone picker, privacy row, sound preferences, reset to defaults.",
+  "file-upload":
+    "File upload lifecycle UI — drop zone idle and active states, file list item, upload progress bar, file type icons, image thumbnail preview, error state, multi-file count pill, file size pill, success checkmark, cancel upload, total progress, validation error, click-to-browse, paste hint, upload queue, file replaced, empty state.",
+  "multi-chips":
+    "Input-driven tag and chip UI — chip input add, chip remove animation, chip autocomplete dropdown, chip group, max-count counter, color variants, chip with icon, drag reorder, suggested tags, overflow more, multi-select combobox, removable filter chips, avatar chip, pop-in, validation error, group toggle, saved filter pills, counter badge.",
+  "mobile-patterns":
+    "Mobile-first interaction patterns — bottom sheet, pull-to-refresh, swipe-to-delete, action sheet, segmented control, mobile tab bar, FAB, ripple touch, momentum scroll, swipe card, status bar, top toast, long-press menu, drawer hamburger, pull-down search, mobile modal, onboarding dots, pinch-to-zoom hint.",
+  "notification-center":
+    "Inbox and notification center UI — notification item, inbox header with count, time-group separator, filter tabs, swipe-to-dismiss, inbox zero empty state, bulk action bar, notification setting row, mention notification, inbox search, build status notification, bell with badge.",
+  "skeleton-variants":
+    "Domain-specific skeleton loaders — message, card, list row, table, comment, stat card, feed, video player, article, avatar stack, dashboard, progressive text reveal.",
 };
 
 /** Convenience: get a description by id, falling back to a generic line. */
