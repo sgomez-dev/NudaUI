@@ -183,9 +183,21 @@ Good first contributions:
 - Accessibility improvements (reduced-motion, ARIA, focus states)
 - Typos, clarifications, or better code comments
 
+## 👤 Creator
+
+NudaUI is designed, built, and maintained by **Santiago Gómez de la Torre Romero** — sole creator, owner, and maintainer of the project.
+
+- 🌐 [sgomez.dev](https://sgomez.dev)
+- ✉️ [contact@sgomez.dev](mailto:contact@sgomez.dev)
+- 💻 [github.com/sgomez-dev](https://github.com/sgomez-dev)
+
+For project-level inquiries (press, partnerships, general contact), use [contact@nudaui.dev](mailto:contact@nudaui.dev). For anything addressed to me directly, use the email above.
+
 ## 📄 License
 
-MIT © [Santiago Gómez de la Torre Romero](https://github.com/sgomez-dev)
+Component code is released under the **MIT License**, copyright © Santiago Gómez de la Torre Romero. You may use, modify, and redistribute the components freely, including in commercial work. The "NudaUI" name, branding, and marketing site copy remain the property of the creator.
+
+MIT © [Santiago Gómez de la Torre Romero](https://sgomez.dev)
 
 ---
 
