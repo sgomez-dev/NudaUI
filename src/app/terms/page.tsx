@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/landing/navbar";
 import { Footer } from "@/components/landing/footer";
 import { absoluteUrl, site } from "@/lib/site";
-import { breadcrumbSchema, graph } from "@/lib/jsonld";
+import { articleSchema, breadcrumbSchema, graph } from "@/lib/jsonld";
 
 const pageTitle = "Terms of use";
 const pageDescription = `Terms governing the use of ${site.name} — the website, the component code, and the people behind it. MIT-licensed code, plain-English clauses, no hidden traps.`;
@@ -29,6 +29,26 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   const jsonLd = graph(
+    articleSchema({
+      url: pageUrl,
+      headline: `${pageTitle} — ${site.name}`,
+      description: pageDescription,
+      datePublished: "2026-05-07",
+      dateModified: lastUpdated,
+      type: "TechArticle",
+      sections: [
+        "The site and the code are different things",
+        "License for the Code",
+        "License for the Site Content",
+        "Acceptable use",
+        "No warranty",
+        "Limitation of liability",
+        "Third-party services",
+        "Changes",
+        "Governing law",
+        "Contact",
+      ],
+    }),
     breadcrumbSchema([
       { name: "Home", url: "/" },
       { name: "Terms", url: "/terms" },
