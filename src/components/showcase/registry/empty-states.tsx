@@ -844,4 +844,243 @@ export const emptyStates: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── No Notifications ─────────────── */
+  {
+    id: "empty-notifications",
+    name: "No Notifications",
+    category: "Empty States",
+    preview: (
+      <div className="nuda-empnotif">
+        <div className="nuda-empnotif__bell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.7 21a2 2 0 01-3.4 0" />
+          </svg>
+          <span className="nuda-empnotif__zen">Z</span>
+        </div>
+        <div className="nuda-empnotif__title">All caught up</div>
+        <div className="nuda-empnotif__sub">No new notifications</div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-empnotif{display:flex;flex-direction:column;align-items:center;padding:24px;text-align:center;width:100%;max-width:220px}
+      .nuda-empnotif__bell{position:relative;display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;color:#63636e;margin-bottom:10px}
+      .nuda-empnotif__bell svg{width:32px;height:32px}
+      .nuda-empnotif__zen{position:absolute;top:0;right:8px;color:#e4ff54;font-size:18px;font-style:italic;font-family:Georgia,serif;font-weight:700;animation:_zenFloat 2.4s ease-in-out infinite}
+      .nuda-empnotif__title{color:#fafafa;font-size:13px;font-weight:600}
+      .nuda-empnotif__sub{color:#a0a0a8;font-size:11px;margin-top:2px}
+      @keyframes _zenFloat{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(-6px) rotate(10deg);opacity:1}}
+      @media(prefers-reduced-motion:reduce){.nuda-empnotif__zen{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-empnotif">
+  <div class="nuda-empnotif__bell">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+      <path d="M13.7 21a2 2 0 01-3.4 0" />
+    </svg>
+    <span class="nuda-empnotif__zen">Z</span>
+  </div>
+  <div class="nuda-empnotif__title">All caught up</div>
+  <div class="nuda-empnotif__sub">No new notifications</div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-empnotif__zen {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  color: #e4ff54;
+  font-style: italic;
+  font-weight: 700;
+  animation: nuda-zen-float 2.4s ease-in-out infinite;
+}
+
+@keyframes nuda-zen-float {
+  0%, 100% { transform: translateY(0);                 opacity: 0.7; }
+  50%      { transform: translateY(-6px) rotate(10deg); opacity: 1;  }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── No Messages ─────────────── */
+  {
+    id: "empty-messages",
+    name: "No Messages",
+    category: "Empty States",
+    preview: (
+      <div className="nuda-empmsg">
+        <div className="nuda-empmsg__bubbles">
+          <span /><span /><span />
+        </div>
+        <div className="nuda-empmsg__title">No messages yet</div>
+        <div className="nuda-empmsg__sub">Start a conversation</div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-empmsg{display:flex;flex-direction:column;align-items:center;padding:24px;text-align:center;width:100%;max-width:220px}
+      .nuda-empmsg__bubbles{display:inline-flex;align-items:flex-end;gap:6px;margin-bottom:10px}
+      .nuda-empmsg__bubbles span{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);animation:_empMsgFloat 2.4s ease-in-out infinite}
+      .nuda-empmsg__bubbles span:nth-child(2){width:32px;height:32px;animation-delay:.3s;background:rgba(228,255,84,.05);border-color:rgba(228,255,84,.2)}
+      .nuda-empmsg__bubbles span:nth-child(3){animation-delay:.6s}
+      .nuda-empmsg__title{color:#fafafa;font-size:13px;font-weight:600}
+      .nuda-empmsg__sub{color:#a0a0a8;font-size:11px;margin-top:2px}
+      @keyframes _empMsgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-empmsg__bubbles span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-empmsg">
+  <div class="nuda-empmsg__bubbles">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="nuda-empmsg__title">No messages yet</div>
+  <div class="nuda-empmsg__sub">Start a conversation</div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-empmsg__bubbles span {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: nuda-emp-msg-float 2.4s ease-in-out infinite;
+}
+
+@keyframes nuda-emp-msg-float {
+  0%, 100% { transform: translateY(0);    }
+  50%      { transform: translateY(-4px); }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Empty Cart ─────────────── */
+  {
+    id: "empty-cart",
+    name: "Empty Cart",
+    category: "Empty States",
+    preview: (
+      <div className="nuda-empcart">
+        <div className="nuda-empcart__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6" />
+          </svg>
+          <span className="nuda-empcart__qmark">?</span>
+        </div>
+        <div className="nuda-empcart__title">Your cart is empty</div>
+        <button className="nuda-empcart__cta">Browse products</button>
+      </div>
+    ),
+    cssInline: `
+      .nuda-empcart{display:flex;flex-direction:column;align-items:center;padding:24px;text-align:center;width:100%;max-width:220px}
+      .nuda-empcart__icon{position:relative;display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;color:#63636e;margin-bottom:10px;animation:_cartTilt 4s ease-in-out infinite}
+      .nuda-empcart__icon svg{width:36px;height:36px}
+      .nuda-empcart__qmark{position:absolute;top:6px;right:8px;width:16px;height:16px;border-radius:50%;background:#e4ff54;color:#09090b;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+      .nuda-empcart__title{color:#fafafa;font-size:13px;font-weight:600;margin-bottom:10px}
+      .nuda-empcart__cta{padding:7px 14px;background:#e4ff54;color:#09090b;border:0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;transition:transform .15s,filter .2s}
+      .nuda-empcart__cta:hover{transform:translateY(-1px);filter:brightness(1.08)}
+      @keyframes _cartTilt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-empcart__icon{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-empcart">
+  <div class="nuda-empcart__icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1" />
+      <circle cx="20" cy="21" r="1" />
+      <path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6" />
+    </svg>
+    <span class="nuda-empcart__qmark">?</span>
+  </div>
+  <div class="nuda-empcart__title">Your cart is empty</div>
+  <button class="nuda-empcart__cta">Browse products</button>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-empcart__icon {
+  animation: nuda-cart-tilt 4s ease-in-out infinite;
+}
+
+@keyframes nuda-cart-tilt {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg);  }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Empty Bookmarks ─────────────── */
+  {
+    id: "empty-bookmarks",
+    name: "No Bookmarks",
+    category: "Empty States",
+    preview: (
+      <div className="nuda-empbm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path className="nuda-empbm__path" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+        </svg>
+        <div className="nuda-empbm__title">No bookmarks</div>
+        <div className="nuda-empbm__sub">Save items to revisit later</div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-empbm{display:flex;flex-direction:column;align-items:center;padding:24px;text-align:center;width:100%;max-width:220px;color:#63636e}
+      .nuda-empbm svg{width:42px;height:42px;margin-bottom:8px;overflow:visible}
+      .nuda-empbm__path{stroke-dasharray:80;stroke-dashoffset:80;animation:_empBmDraw 2s ease forwards}
+      .nuda-empbm__title{color:#fafafa;font-size:13px;font-weight:600}
+      .nuda-empbm__sub{color:#a0a0a8;font-size:11px;margin-top:2px}
+      @keyframes _empBmDraw{to{stroke-dashoffset:0}}
+      @media(prefers-reduced-motion:reduce){.nuda-empbm__path{stroke-dashoffset:0;animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-empbm">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path class="nuda-empbm__path"
+          d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+  </svg>
+  <div class="nuda-empbm__title">No bookmarks</div>
+  <div class="nuda-empbm__sub">Save items to revisit later</div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-empbm__path {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  animation: nuda-emp-bm-draw 2s ease forwards;
+}
+
+@keyframes nuda-emp-bm-draw { to { stroke-dashoffset: 0; } }`,
+      },
+    ],
+  },
 ];
