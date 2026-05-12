@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/landing/navbar";
 import { Footer } from "@/components/landing/footer";
 import { absoluteUrl, site } from "@/lib/site";
-import { breadcrumbSchema, graph } from "@/lib/jsonld";
+import { articleSchema, breadcrumbSchema, graph } from "@/lib/jsonld";
 
 const pageTitle = "Privacy policy";
 const pageDescription = `What data ${site.name} collects, what it doesn't, and how to reach us about it. Spoiler: we don't run analytics, we don't set cookies, and we don't have an account system.`;
@@ -29,6 +29,26 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   const jsonLd = graph(
+    articleSchema({
+      url: pageUrl,
+      headline: `${pageTitle} — ${site.name}`,
+      description: pageDescription,
+      datePublished: "2026-05-07",
+      dateModified: lastUpdated,
+      type: "TechArticle",
+      sections: [
+        "Who we are",
+        "What data we collect",
+        "What we don't do",
+        "Third parties",
+        "Your rights (GDPR)",
+        "Children",
+        "Data security",
+        "International transfers",
+        "Changes to this policy",
+        "Contact",
+      ],
+    }),
     breadcrumbSchema([
       { name: "Home", url: "/" },
       { name: "Privacy", url: "/privacy" },
