@@ -159,15 +159,15 @@ export const settingsPreferences: NudaComponent[] = [
         <div className="nuda-set-group__body">
           <div className="nuda-set-group__row">
             <span>Display name</span>
-            <span className="nuda-set-group__val">Santiago G.</span>
+            <span className="nuda-set-group__val">Nuda</span>
           </div>
           <div className="nuda-set-group__row">
             <span>Username</span>
-            <span className="nuda-set-group__val">@santi</span>
+            <span className="nuda-set-group__val">@nuda</span>
           </div>
           <div className="nuda-set-group__row">
             <span>Bio</span>
-            <span className="nuda-set-group__val">Designer at Evenbytes</span>
+            <span className="nuda-set-group__val">Building Nuda UI</span>
           </div>
         </div>
       </section>
@@ -193,15 +193,15 @@ export const settingsPreferences: NudaComponent[] = [
   <div class="nuda-set-group__body">
     <div class="nuda-set-group__row">
       <span>Display name</span>
-      <span class="nuda-set-group__val">Santiago G.</span>
+      <span class="nuda-set-group__val">Nuda</span>
     </div>
     <div class="nuda-set-group__row">
       <span>Username</span>
-      <span class="nuda-set-group__val">@santi</span>
+      <span class="nuda-set-group__val">@nuda</span>
     </div>
     <div class="nuda-set-group__row">
       <span>Bio</span>
-      <span class="nuda-set-group__val">Designer at Evenbytes</span>
+      <span class="nuda-set-group__val">Building Nuda UI</span>
     </div>
   </div>
 </section>`,
@@ -433,7 +433,7 @@ export const settingsPreferences: NudaComponent[] = [
           <span className="nuda-notif-pref__box" />
           <span className="nuda-notif-pref__text">
             <span className="nuda-notif-pref__name">Email</span>
-            <span className="nuda-notif-pref__desc">santiago@evenbytes.com</span>
+            <span className="nuda-notif-pref__desc">hello@nudaui.dev</span>
           </span>
         </label>
         <label className="nuda-notif-pref__row">
@@ -481,7 +481,7 @@ export const settingsPreferences: NudaComponent[] = [
     <span class="nuda-notif-pref__box"></span>
     <span class="nuda-notif-pref__text">
       <span class="nuda-notif-pref__name">Email</span>
-      <span class="nuda-notif-pref__desc">santiago@evenbytes.com</span>
+      <span class="nuda-notif-pref__desc">hello@nudaui.dev</span>
     </span>
   </label>
   <label class="nuda-notif-pref__row">
@@ -619,10 +619,10 @@ export const settingsPreferences: NudaComponent[] = [
     category: "Settings & Preferences",
     preview: (
       <div className="nuda-account">
-        <div className="nuda-account__avatar" aria-hidden="true">SG</div>
+        <div className="nuda-account__avatar" aria-hidden="true">NU</div>
         <div className="nuda-account__info">
-          <div className="nuda-account__name">Santiago Gómez</div>
-          <div className="nuda-account__email">santiago@evenbytes.com</div>
+          <div className="nuda-account__name">Nuda UI</div>
+          <div className="nuda-account__email">hello@nudaui.dev</div>
         </div>
         <button type="button" className="nuda-account__action">Change</button>
       </div>
@@ -643,10 +643,10 @@ export const settingsPreferences: NudaComponent[] = [
         label: "HTML",
         language: "html",
         code: `<div class="nuda-account">
-  <div class="nuda-account__avatar" aria-hidden="true">SG</div>
+  <div class="nuda-account__avatar" aria-hidden="true">NU</div>
   <div class="nuda-account__info">
-    <div class="nuda-account__name">Santiago Gómez</div>
-    <div class="nuda-account__email">santiago@evenbytes.com</div>
+    <div class="nuda-account__name">Nuda UI</div>
+    <div class="nuda-account__email">hello@nudaui.dev</div>
   </div>
   <button type="button" class="nuda-account__action">Change</button>
 </div>`,
@@ -1139,8 +1139,8 @@ export const settingsPreferences: NudaComponent[] = [
           <div className="nuda-two-col__hint">Opened when you launch the app.</div>
         </div>
         <div className="nuda-two-col__control">
-          <select defaultValue="evenbytes">
-            <option value="evenbytes">Evenbytes</option>
+          <select defaultValue="nuda-ui">
+            <option value="nuda-ui">Nuda UI</option>
             <option value="personal">Personal</option>
             <option value="acme">Acme Inc.</option>
           </select>
@@ -1173,7 +1173,7 @@ export const settingsPreferences: NudaComponent[] = [
   </div>
   <div class="nuda-two-col__control">
     <select>
-      <option value="evenbytes" selected>Evenbytes</option>
+      <option value="nuda-ui" selected>Nuda UI</option>
       <option value="personal">Personal</option>
       <option value="acme">Acme Inc.</option>
     </select>
@@ -1533,7 +1533,7 @@ export const settingsPreferences: NudaComponent[] = [
         </div>
         <div className="nuda-app-row__info">
           <div className="nuda-app-row__name">Slack</div>
-          <div className="nuda-app-row__meta">Connected · evenbytes.slack.com</div>
+          <div className="nuda-app-row__meta">Connected · nudaui.slack.com</div>
         </div>
         <button type="button" className="nuda-app-row__btn">Disconnect</button>
       </div>
@@ -1566,7 +1566,7 @@ export const settingsPreferences: NudaComponent[] = [
   </div>
   <div class="nuda-app-row__info">
     <div class="nuda-app-row__name">Slack</div>
-    <div class="nuda-app-row__meta">Connected · evenbytes.slack.com</div>
+    <div class="nuda-app-row__meta">Connected · nudaui.slack.com</div>
   </div>
   <button type="button" class="nuda-app-row__btn">Disconnect</button>
 </div>`,
@@ -1900,7 +1900,7 @@ export const settingsPreferences: NudaComponent[] = [
           </svg>
         </div>
         <div className="nuda-verify__info">
-          <div className="nuda-verify__email">santiago@evenbytes.com</div>
+          <div className="nuda-verify__email">hello@nudaui.dev</div>
           <div className="nuda-verify__status">
             <span className="nuda-verify__pill">Verified</span>
             <span className="nuda-verify__meta">on Apr 14, 2026</span>
@@ -1935,7 +1935,7 @@ export const settingsPreferences: NudaComponent[] = [
     </svg>
   </div>
   <div class="nuda-verify__info">
-    <div class="nuda-verify__email">santiago@evenbytes.com</div>
+    <div class="nuda-verify__email">hello@nudaui.dev</div>
     <div class="nuda-verify__status">
       <span class="nuda-verify__pill">Verified</span>
       <span class="nuda-verify__meta">on Apr 14, 2026</span>
