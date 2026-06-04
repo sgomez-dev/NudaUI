@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { site } from "@/lib/site";
+import { MotionProvider } from "@/components/motion-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -190,7 +191,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

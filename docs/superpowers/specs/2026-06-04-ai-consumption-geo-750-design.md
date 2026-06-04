@@ -308,3 +308,26 @@ the original design at the owner's request.
   reduced-motion guards). Integrated centrally, audited green (no id/class
   collisions, no incomplete CSS), build 1622 static pages, previews verified via
   Playwright. The integrity guard made parallel authoring safe.
+- **Phase 7 — DONE.** Creator entity link nudaui.dev ↔ sgomez.dev: visible
+  footer credit with `rel="author"` → sgomez.dev (verified rendering), and the
+  founder Person JSON-LD now carries givenName/familyName (compound surname) +
+  sameAs [sgomez.dev, GitHub], so the two domains resolve to one entity.
+- **Phase 6 — DONE (focused).** Landing already used consistent easing,
+  registry-derived counts, and responsive layout (verified desktop + 375px
+  mobile: clean, no overflow, 0 console errors). Concrete improvements: added
+  `<MotionConfig reducedMotion="user">` app-wide so every framer-motion
+  animation honors the OS reduce-motion setting (the site now practices the
+  accessibility it advertises), and corrected the stale gallery OG count
+  ("28+" → "800+"). A transient framer-motion useScroll HMR warning was
+  investigated — all six scroll targets are correctly positioned
+  (relative/absolute), so it is a dev-only artifact, not a production issue.
+  Did NOT rewrite working sections (no unrelated refactor).
+
+## Status: all 7 phases complete
+
+The branch `feat/ai-consumption-geo-750` delivers: a working copy-paste fix
+(158 healed + permanent audit guard), machine-readable code endpoints, 800+
+indexable per-component pages with rich JSON-LD, consolidated categories, 802
+components, creator entity linking, and an accessibility-respecting landing.
+Remaining owner-driven (off-code) work: backlinks + a reciprocal link from
+sgomez.dev (see the GEO/SEO appendix).
