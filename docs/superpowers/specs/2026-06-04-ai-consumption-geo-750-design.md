@@ -277,3 +277,15 @@ the original design at the owner's request.
   agents at them. Shared `component-payload.ts` is the single payload shape.
   Build generates 668 static pages; endpoints verified live (complete code,
   CORS `*`, 404s). An AI can now fetch a component's exact code from one URL.
+- **Phase 3 — DONE.** Static per-component pages `/components/[id]` (650 SSG):
+  SSR preview (via a client island so previews with handlers prerender) +
+  **full code in plain HTML** (indexable without JS) + related-component
+  interlinking. Per page: unique title/description/canonical, JSON-LD
+  (`SoftwareSourceCode` w/ code text + MIT + author, `BreadcrumbList`, and a
+  `Person` node linking the creator to sgomez.dev via `sameAs` — phase-7
+  groundwork), and a dynamic OG image. Sitemap lists all component URLs;
+  gallery cards are now crawlable `<a>` links (preventDefault → modal). Build:
+  1318 static pages; verified live (code in HTML, JSON-LD types, canonical,
+  OG 200, sitemap). Note: a stale `/components` OG ("28+") was corrected to
+  "650+"; it stays on the edge runtime (importing the registry there tripped a
+  Satori multi-child-div constraint at build).
