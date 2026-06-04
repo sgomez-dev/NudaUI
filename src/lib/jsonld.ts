@@ -109,8 +109,8 @@ export function organizationSchema(): JsonLd {
       jobTitle: "Software Engineer",
       description: `${site.creator.role} of ${site.name}.`,
       // sameAs binds this Person to the creator's higher-authority sites so the
-      // two domains resolve to one entity (NudaUI inherits the trust signal).
-      sameAs: [site.creator.url, site.creator.github],
+      // properties resolve to one entity (NudaUI inherits the trust signal).
+      sameAs: [...site.creator.sameAs],
       knowsLanguage: ["English", "Spanish"],
     },
   };
@@ -405,7 +405,7 @@ export function founderSchema(): JsonLd {
     url: site.creator.url,
     jobTitle: "Software Engineer",
     description: `${site.creator.role} of ${site.name}.`,
-    sameAs: [site.creator.url, site.creator.github],
+    sameAs: [...site.creator.sameAs],
   };
 }
 
