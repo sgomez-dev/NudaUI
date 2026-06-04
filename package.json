@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit": "vitest run src/lib/registry-audit.test.ts src/components/showcase/registry/registry-integrity.test.ts"
   },
   "dependencies": {
     "@types/node": "^25.5.0",
@@ -27,6 +30,8 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.1",
     "postcss": ">=8.5.10",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.8"
   }
 }
