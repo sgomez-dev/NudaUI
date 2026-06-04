@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { CodeBlock } from "@/components/ui/code-block";
 import { cn } from "@/lib/utils";
@@ -348,19 +349,18 @@ export function ComponentsGallery() {
               <LazyGrid count={cat.components.length}>
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
                   {cat.components.map((comp) => (
-                    // role=button (not <button>) because component previews may
-                    // themselves contain <button> elements — a button inside a
-                    // button is invalid HTML and breaks hydration + click handling.
-                    <div
+                    // A real crawlable <a> to the per-component page (SEO/GEO:
+                    // 650 indexable URLs), but clicking opens the in-page modal
+                    // for fast browsing. Cmd/Ctrl/middle-click still navigate.
+                    // Not a <button> — previews may contain their own <button>,
+                    // and a nested button breaks hydration.
+                    <a
                       key={comp.id}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => setSelected(comp)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setSelected(comp);
-                        }
+                      href={`/components/${comp.id}`}
+                      onClick={(e) => {
+                        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+                        e.preventDefault();
+                        setSelected(comp);
                       }}
                       className="group w-full relative flex flex-col items-center justify-center gap-2 sm:gap-3 p-4 sm:p-6 md:p-8 rounded-xl border border-border bg-surface-light/30 hover:bg-surface-light hover:border-accent/20 transition-all duration-300 aspect-square text-left overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
                     >
@@ -389,7 +389,7 @@ export function ComponentsGallery() {
                         </span>
                       )}
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-accent/[0.03] to-transparent" />
-                    </div>
+                    </a>
                   ))}
                 </div>
               </LazyGrid>
@@ -468,13 +468,22 @@ export function ComponentsGallery() {
                     </span>
                   </div>
                 </div>
-                <button
-                  onClick={() => setSelected(null)}
-                  className="p-2 rounded-lg hover:bg-surface-hover text-text-muted hover:text-text-primary transition-colors"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <Link
+                    href={`/components/${selected.id}`}
+                    className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs text-text-muted hover:text-accent hover:bg-surface-hover transition-colors"
+                    title="Open the full page for this component"
+                  >
+                    Full page ↗
+                  </Link>
+                  <button
+                    onClick={() => setSelected(null)}
+                    className="p-2 rounded-lg hover:bg-surface-hover text-text-muted hover:text-text-primary transition-colors"
+                    aria-label="Close"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               <div className="overflow-y-auto flex-1">
