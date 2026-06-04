@@ -268,3 +268,12 @@ the original design at the owner's request.
   registry; build gated on it (`prebuild`). Verified via Playwright (modal shows
   complete CSS, 0 nested buttons). Catalog confirmed at **650 components / 61
   categories**.
+- **Phase 2 — DONE.** Machine-readable code endpoints (the missing piece):
+  `/api/components/[id].json` (full code per component, 650 static pages,
+  CORS, 404 for unknown), `/api/catalog-full.json` (whole library with code —
+  the static, cacheable alternative to the force-static-incompatible
+  `?include=code`), and `/api/registry.json` (flat index). `llms.txt`,
+  `llms-full.txt`, `catalog.json` links, and `ai.txt` all updated to point
+  agents at them. Shared `component-payload.ts` is the single payload shape.
+  Build generates 668 static pages; endpoints verified live (complete code,
+  CORS `*`, 404s). An AI can now fetch a component's exact code from one URL.
