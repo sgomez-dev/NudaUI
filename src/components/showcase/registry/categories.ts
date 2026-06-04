@@ -23,6 +23,8 @@ import {
   Tag,
   Navigation as NavigationIcon,
   ChevronDown,
+  ChevronRight,
+  MoreHorizontal,
   Bell,
   MessageSquare,
   Minus,
@@ -137,6 +139,8 @@ import { mobilePatterns } from "./mobile-patterns";
 import { notificationCenter } from "./notification-center";
 import { skeletonVariants } from "./skeleton-variants";
 import { dropdownsMenus } from "./dropdowns-menus";
+import { pagination } from "./pagination";
+import { breadcrumbs } from "./breadcrumbs";
 
 export interface CategoryConfig {
   id: string;
@@ -164,6 +168,8 @@ const rawCategories: CategoryConfig[] = [
   { id: "badges-tags", label: "Badges & Tags", icon: Tag, components: badgesTags },
   { id: "navigation", label: "Navigation", icon: NavigationIcon, components: navigation },
   { id: "dropdowns-menus", label: "Dropdowns & Menus", icon: ChevronDown, components: dropdownsMenus },
+  { id: "breadcrumbs", label: "Breadcrumbs", icon: ChevronRight, components: breadcrumbs },
+  { id: "pagination", label: "Pagination", icon: MoreHorizontal, components: pagination },
   { id: "notifications", label: "Toasts & Alerts", icon: Bell, components: notifications },
   { id: "tooltips", label: "Tooltips", icon: MessageSquare, components: tooltips },
   { id: "dividers", label: "Dividers", icon: Minus, components: dividers },

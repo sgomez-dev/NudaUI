@@ -42,6 +42,10 @@ export const categoryDescriptions: Record<string, string> = {
     "Top-nav and inline nav patterns — underline slide, pill indicator, animated tabs, dropdown reveal. Pointer-driven navigation primitives.",
   "dropdowns-menus":
     "Dropdown and menu UI — fade/scale/slide menus, context menu, profile menu, split button, mega menu, nested submenu, styled select, checkbox menu, searchable and action menus. Accessible, framework-agnostic open/close patterns.",
+  breadcrumbs:
+    "Breadcrumb trails — chevron, slash, pill, arrow, collapsed, icon, gradient, numbered-step, underline, and glass styles. Hierarchical navigation that orients users and feeds breadcrumb rich results.",
+  pagination:
+    "Pagination controls — classic numbered, rounded, minimal pager, dots, load-more, compact with ellipsis, jump-to-page, progress, arrows, and underline. For paging lists, tables, search results, and carousels.",
   notifications:
     "Toasts, banners, snackbars, and inline alerts — transient, auto-dismissing system messages that slide in and out. For a persistent inbox of past notifications, see Notification Center.",
   tooltips:
