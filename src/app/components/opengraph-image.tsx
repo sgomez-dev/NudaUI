@@ -88,7 +88,7 @@ export default function OgImage() {
               lineHeight: 0.95,
             }}
           >
-            <span>650+ animations.</span>
+            <span>800+ animations.</span>
             <span style={{ color: site.theme.accent }}>Zero installs.</span>
           </div>
           <p

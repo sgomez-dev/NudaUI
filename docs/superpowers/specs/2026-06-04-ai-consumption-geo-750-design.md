@@ -297,3 +297,14 @@ the original design at the owner's request.
   categories**, 650 components, zero component-page URL changes. Build green
   (1318 pages), 22 tests green. Merged-category `#section-` fragments are
   client anchors on /components (not served URLs) → no 301 applicable.
+- **Phase 5 — DONE.** Grew the catalog **650 → 802** components / **66
+  categories** (target was ~800). Inline: new categories Dropdowns & Menus,
+  Breadcrumbs, Pagination (+32). Then a **12-agent parallel Workflow** authored
+  +120 more: new categories Tables & Data Grids, KPI & Dashboard Widgets,
+  Timelines, Cookie & Consent, Error & 404 Pages, Social Share, plus fills for
+  Countdowns, Scroll Effects, Modals, Navigation, Borders, Accordions & Tabs.
+  Each agent worked under a strict contract (unique id/class prefixes for global
+  uniqueness, preview+cssInline+HTML only so the CSS tab self-derives,
+  reduced-motion guards). Integrated centrally, audited green (no id/class
+  collisions, no incomplete CSS), build 1622 static pages, previews verified via
+  Playwright. The integrity guard made parallel authoring safe.
