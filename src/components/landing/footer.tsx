@@ -52,6 +52,23 @@ export function Footer() {
           &lt;/div&gt; &lt;!-- no webpack was harmed --&gt;
         </p>
       </div>
+
+      {/* Creator credit — bidirectional entity link to the maintainer's site.
+          rel="author" + a real, followable link tells search/LLM engines that
+          NudaUI and sgomez.dev are one identity, so NudaUI inherits its trust. */}
+      <div className="max-w-6xl mx-auto mt-6 pt-5 border-t border-border/60 text-[11px] text-text-muted">
+        Created &amp; maintained by{" "}
+        <a
+          href={site.creator.url}
+          rel="author"
+          target="_blank"
+          className="text-text-secondary hover:text-accent transition-colors"
+        >
+          {site.creator.name}
+        </a>{" "}
+        ({site.creator.url.replace(/^https?:\/\//, "")}). Component code is MIT
+        licensed — free for any project.
+      </div>
     </footer>
   );
 }

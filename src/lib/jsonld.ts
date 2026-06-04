@@ -102,10 +102,14 @@ export function organizationSchema(): JsonLd {
       "@type": "Person",
       "@id": `${site.url}/#founder`,
       name: site.creator.name,
+      givenName: "Santiago",
+      familyName: "Gómez de la Torre Romero",
       url: site.creator.url,
       email: site.creator.email,
       jobTitle: "Software Engineer",
       description: `${site.creator.role} of ${site.name}.`,
+      // sameAs binds this Person to the creator's higher-authority sites so the
+      // two domains resolve to one entity (NudaUI inherits the trust signal).
       sameAs: [site.creator.url, site.creator.github],
       knowsLanguage: ["English", "Spanish"],
     },
