@@ -289,3 +289,11 @@ the original design at the owner's request.
   OG 200, sitemap). Note: a stale `/components` OG ("28+") was corrected to
   "650+"; it stays on the edge runtime (importing the registry there tripped a
   Satori multi-child-div constraint at build).
+- **Phase 4 — DONE.** Conservative consolidation: merged Placeholders +
+  Skeleton Variants → **Skeletons** (id `skeletons`, 17 components); relabeled
+  Notifications → **Toasts & Alerts** (id kept `notifications`, so no anchor/URL
+  change), disambiguated from Notification Center; sharpened Badges & Tags
+  (display-only) vs Tags & Chips Input (interactive) descriptions. **61 → 60
+  categories**, 650 components, zero component-page URL changes. Build green
+  (1318 pages), 22 tests green. Merged-category `#section-` fragments are
+  client anchors on /components (not served URLs) → no 301 applicable.
