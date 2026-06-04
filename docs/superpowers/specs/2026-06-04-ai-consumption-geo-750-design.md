@@ -201,6 +201,42 @@ HTML contains the full code, valid JSON-LD, and is present in the sitemap.
   `awesome-*` lists, dev.to/blog posts per category, GitHub topics, ProductHunt —
   documented as a checklist, not implemented here.
 
+### Creator entity linking — sgomez.dev ↔ nudaui.dev (Phase 7)
+
+The creator's personal site (https://sgomez.dev) has more established authority
+than nudaui.dev. We want search/LLM engines to treat them as one entity graph so
+NudaUI inherits trust and both reinforce each other.
+
+- **`Person` ↔ `Organization`/`WebSite` schema with `sameAs`:** NudaUI's JSON-LD
+  `author`/`creator` (already Santiago Gómez) gets an explicit `Person` node whose
+  `url` is sgomez.dev and whose `sameAs` lists sgomez.dev + GitHub. Mirror a link
+  back from sgomez.dev (owner-applied) so the association is bidirectional.
+- **Bidirectional links:** a visible "Created by Santiago Gómez · sgomez.dev"
+  in the footer/about (rel=author, no `nofollow`); recommend a "Projects → NudaUI"
+  link on sgomez.dev (owner action, documented in the appendix).
+- **Consistent NAP/identity:** unify the creator name, URL, and avatar across
+  `site.ts`, humans.txt, ai.txt, and JSON-LD so engines resolve one identity.
+- Reuse sgomez.dev's proven keyword/meta patterns where they fit NudaUI without
+  diluting NudaUI's own topical focus (UI components/animations).
+
+## Phase 6 — Landing polish & fluidity
+
+A pass over the marketing landing (`src/components/landing/*`) for end-to-end
+fluidity and craft, without a redesign:
+
+- **Motion cohesion:** consistent easing/timing tokens, no janky or
+  reduced-motion-ignoring sections; respect `prefers-reduced-motion` everywhere.
+- **Performance/CLS:** lazy/deferred heavy sections, no layout shift, smooth
+  scroll and scroll-driven reveals.
+- **Consistency:** spacing rhythm, typography scale, and accent usage aligned
+  with the components aesthetic; mobile pass.
+- **Conversion + SEO:** clear hero value prop, the 750/61 stats accurate from the
+  registry, internal links to /components and key categories, creator credit
+  (ties into Phase 7).
+
+This is sequenced after the data/SEO foundation so the landing links to the new
+per-component pages and reflects accurate totals.
+
 ## Risks & mitigations
 
 - **URL/SEO regression from merges** → 301s + anchor aliases; verify in sitemap.
@@ -215,5 +251,20 @@ HTML contains the full code, valid JSON-LD, and is present in the sitemap.
 
 ## Sequencing
 
-Strictly 1 → 5. Phase 1 is mandatory first: it fixes the reported breakage and
-creates the guard that keeps Phases 2–5 honest.
+1 → 7. Phase 1 (done) fixes the reported breakage and creates the guard that
+keeps later phases honest. Phases 2–3 build the AI/SEO surface, 4–5 clean up and
+grow the catalog, 6 polishes the landing against the new surface, and 7 wires the
+creator entity link. Phase 6 (landing) and 7 (entity linking) were added after
+the original design at the owner's request.
+
+## Progress log
+
+- **Phase 1 — DONE.** Vitest harness added; integrity audit library
+  (`registry-audit.ts`) + pretty-printer (`css-format.ts`) + `reconcile.ts`
+  (cssInline is the single source of truth → copyable CSS derived from it).
+  Result: **158 components auto-healed** (copy CSS was incomplete), **13 duplicate
+  ids deduped**, and a **`<button>`-in-`<button>` hydration bug fixed** in the
+  gallery (cards are now `role=button` divs). Integrity test green over the whole
+  registry; build gated on it (`prebuild`). Verified via Playwright (modal shows
+  complete CSS, 0 nested buttons). Catalog confirmed at **650 components / 61
+  categories**.
