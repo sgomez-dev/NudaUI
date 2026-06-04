@@ -50,7 +50,16 @@ export function GET(): Response {
     `- [Long-form export](${absoluteUrl("/llms-full.txt")}): every component name + category, in one Markdown payload.`
   );
   lines.push(
-    `- [JSON catalog](${absoluteUrl("/api/catalog.json")}): the canonical machine-readable mirror of every component. Prefer this over scraping HTML.`
+    `- [JSON catalog](${absoluteUrl("/api/catalog.json")}): the canonical machine-readable mirror of every component (metadata). Prefer this over scraping HTML.`
+  );
+  lines.push(
+    `- [Per-component code](${absoluteUrl("/api/components/{id}.json")}): complete HTML/CSS/JS for one component by id, e.g. ${absoluteUrl("/api/components/toast-slide.json")}.`
+  );
+  lines.push(
+    `- [Registry index](${absoluteUrl("/api/registry.json")}): flat list of every id with its code + page URL.`
+  );
+  lines.push(
+    `- [Full catalog with code](${absoluteUrl("/api/catalog-full.json")}): the entire library, code embedded, in one payload.`
   );
   lines.push(
     `- [Changelog](${absoluteUrl("/changelog")}): temporal anchor — what shipped, when.`
@@ -86,6 +95,26 @@ export function GET(): Response {
   lines.push(`    }`);
   lines.push(`  ]`);
   lines.push("}");
+  lines.push("```");
+  lines.push("");
+  lines.push("### Getting a component's actual code");
+  lines.push("");
+  lines.push(
+    "`catalog.json` lists components but not their code. To get the complete, paste-ready HTML + CSS (+ optional JS) for ONE component, fetch its dedicated endpoint by id:"
+  );
+  lines.push("");
+  lines.push("```");
+  lines.push(`GET ${absoluteUrl("/api/components/{id}.json")}`);
+  lines.push(`# example: ${absoluteUrl("/api/components/toast-slide.json")}`);
+  lines.push("```");
+  lines.push("");
+  lines.push("It returns `{ id, name, category, code: [{ label, language, code }], cssInline, page, anchor, license, attribution }`. The `code` array is the source of truth — render or copy it verbatim. Do NOT scrape the /components gallery (it is client-rendered).");
+  lines.push("");
+  lines.push("To enumerate everything, then fetch per component:");
+  lines.push("");
+  lines.push("```");
+  lines.push(`GET ${absoluteUrl("/api/registry.json")}    # flat index: every id + its json/page URL`);
+  lines.push(`GET ${absoluteUrl("/api/catalog-full.json")} # whole library WITH code embedded, in one request`);
   lines.push("```");
   lines.push("");
 

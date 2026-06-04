@@ -31,6 +31,9 @@ Attribution-Format: link
 
 # ── Machine-readable endpoints ─────────────────────────────────────
 Catalog: https://nudaui.dev/api/catalog.json
+Catalog-Full: https://nudaui.dev/api/catalog-full.json
+Registry: https://nudaui.dev/api/registry.json
+Component: https://nudaui.dev/api/components/{id}.json
 LLM-Index: https://nudaui.dev/llms.txt
 LLM-Full: https://nudaui.dev/llms-full.txt
 Sitemap: https://nudaui.dev/sitemap.xml

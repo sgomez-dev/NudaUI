@@ -62,6 +62,9 @@ export function GET(): Response {
     })),
     links: {
       gallery: absoluteUrl("/components"),
+      registry: absoluteUrl("/api/registry.json"),
+      catalogFull: absoluteUrl("/api/catalog-full.json"),
+      component: absoluteUrl("/api/components/{id}.json"),
       sitemap: absoluteUrl("/sitemap.xml"),
       llms: absoluteUrl("/llms.txt"),
       llmsFull: absoluteUrl("/llms-full.txt"),
