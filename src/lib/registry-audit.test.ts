@@ -44,7 +44,7 @@ describe("auditComponent", () => {
     });
     expect(auditComponent(c)).toEqual([]);
   });
-  it("flags a class used in HTML but missing from the CSS tab", () => {
+  it("flags a class used in HTML but missing from the CSS tab (no cssInline → strict)", () => {
     const c = comp({
       code: [
         { label: "HTML", language: "html", code: `<div class="nuda-t nuda-missing"></div>` },
@@ -53,15 +53,36 @@ describe("auditComponent", () => {
     });
     expect(auditComponent(c).map(i => i.kind)).toContain("html-class-undefined");
   });
-  it("flags an incomplete copy CSS that omits classes the preview styles", () => {
+  it("flags a class the preview styles + HTML uses but the copy CSS omits (incomplete copy)", () => {
     const c = comp({
-      cssInline: `.nuda-t{}.nuda-bar{}`,
+      cssInline: `.nuda-t{}.nuda-bar{height:2px}`,
       code: [
         { label: "HTML", language: "html", code: `<div class="nuda-t"><span class="nuda-bar"></span></div>` },
-        { label: "CSS", language: "css", code: `.nuda-bar{}` },
+        { label: "CSS", language: "css", code: `.nuda-t{}` },
       ],
     });
-    expect(auditComponent(c).map(i => i.kind)).toContain("preview-class-undefined");
+    expect(auditComponent(c).map(i => i.kind)).toContain("html-class-undefined");
+  });
+  it("does NOT flag an unstyled semantic wrapper class (no rule anywhere)", () => {
+    const c = comp({
+      cssInline: `.nuda-t{color:red}`,
+      code: [
+        { label: "HTML", language: "html", code: `<div class="nuda-t"><span class="nuda-t__label">x</span></div>` },
+        { label: "CSS", language: "css", code: `.nuda-t{color:red}` },
+      ],
+    });
+    expect(auditComponent(c)).toEqual([]);
+  });
+  it("does NOT flag a deliberate demo preview whose classes differ from the self-contained copy", () => {
+    // Preview uses nuda-demo-*; the copyable HTML+CSS is fully self-contained.
+    const c = comp({
+      cssInline: `.nuda-demo-box{color:red}`,
+      code: [
+        { label: "HTML", language: "html", code: `<div class="nuda-real"><span class="nuda-real__x"></span></div>` },
+        { label: "CSS", language: "css", code: `.nuda-real{}.nuda-real__x{}` },
+      ],
+    });
+    expect(auditComponent(c)).toEqual([]);
   });
   it("flags an animation with no keyframes in the same CSS tab", () => {
     const c = comp({

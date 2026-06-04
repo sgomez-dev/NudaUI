@@ -237,7 +237,7 @@ export const watchFaces: NudaComponent[] = [
 
   /* ─────────────── 3. FLIP CLOCK ─────────────── */
   {
-    id: "flip-clock",
+    id: "flip-clock-face",
     name: "Flip Clock",
     category: "Watch Faces & Clocks",
     preview: (

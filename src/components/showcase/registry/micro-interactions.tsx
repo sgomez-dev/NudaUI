@@ -143,7 +143,7 @@ export const microInteractions: NudaComponent[] = [
 
   /* ─────────────── Copy Button ─────────────── */
   {
-    id: "copy-button",
+    id: "copy-button-tap",
     name: "Copy Button",
     category: "Micro-interactions",
     preview: (

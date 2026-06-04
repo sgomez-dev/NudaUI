@@ -73,6 +73,7 @@ import {
 } from "lucide-react";
 
 import type { NudaComponent } from "./types";
+import { reconcileComponents } from "./reconcile";
 
 import { loaders } from "./loaders";
 import { spinners } from "./spinners";
@@ -143,7 +144,7 @@ export interface CategoryConfig {
   components: NudaComponent[];
 }
 
-export const categories: CategoryConfig[] = [
+const rawCategories: CategoryConfig[] = [
   { id: "loaders", label: "Loaders", icon: Loader2, components: loaders },
   { id: "spinners", label: "Spinners", icon: RotateCw, components: spinners },
   { id: "progress", label: "Progress", icon: BarChart3, components: progress },
@@ -206,6 +207,17 @@ export const categories: CategoryConfig[] = [
   { id: "notification-center", label: "Notification Center", icon: InboxFull, components: notificationCenter },
   { id: "skeleton-variants", label: "Skeleton Variants", icon: CircleDashed, components: skeletonVariants },
 ];
+
+/**
+ * Public categories. Each component is reconciled so its copyable code is
+ * guaranteed self-contained (see `./reconcile`). Every downstream surface —
+ * gallery, JSON endpoints, per-component pages, llms.txt — reads from here, so
+ * the heal applies everywhere at once.
+ */
+export const categories: CategoryConfig[] = rawCategories.map((c) => ({
+  ...c,
+  components: reconcileComponents(c.components),
+}));
 
 /** Total number of components across every category. */
 export const totalCount = categories.reduce(

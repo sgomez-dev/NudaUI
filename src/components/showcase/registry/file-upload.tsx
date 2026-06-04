@@ -3,7 +3,7 @@ import type { NudaComponent } from "./types";
 export const fileUpload: NudaComponent[] = [
   /* ─────────────── DROP ZONE ─────────────── */
   {
-    id: "drop-zone",
+    id: "drop-zone-upload",
     name: "Drop Zone",
     category: "File Upload",
     preview: (

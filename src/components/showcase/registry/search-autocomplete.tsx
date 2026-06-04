@@ -205,7 +205,7 @@ input.addEventListener('blur', () => {
 
   /* ─────────────── 3. Match Highlight ─────────────── */
   {
-    id: "match-highlight",
+    id: "match-highlight-result",
     name: "Match Highlight",
     category: "Search & Autocomplete",
     preview: (

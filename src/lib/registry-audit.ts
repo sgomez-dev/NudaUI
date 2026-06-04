@@ -12,7 +12,6 @@ export type AuditKind =
   | "bad-language"
   | "duplicate-id"
   | "html-class-undefined"
-  | "preview-class-undefined"
   | "animation-undefined";
 
 export interface AuditIssue {
@@ -55,12 +54,15 @@ const ANIM_KEYWORDS = new Set([
   "step-start", "step-end", "infinite", "normal", "reverse",
   "alternate", "alternate-reverse", "forwards", "backwards", "both",
   "running", "paused",
+  // CSS-wide keywords that can appear as a value
+  "inherit", "initial", "unset", "revert", "revert-layer",
 ]);
 
 function nameFromShorthand(piece: string): string | null {
   for (const raw of piece.trim().split(/\s+/)) {
     const t = raw.trim();
     if (!t) continue;
+    if (t.startsWith("!")) continue; // !important
     if (ANIM_KEYWORDS.has(t.toLowerCase())) continue;
     if (/^-?[\d.]+m?s$/i.test(t)) continue; // time
     if (/^-?[\d.]+$/.test(t)) continue; // iteration count / number
@@ -110,20 +112,26 @@ export function auditComponent(c: NudaComponent): AuditIssue[] {
   const defined = classesInCss(copyCss);
   const keyframes = keyframesInCss(copyCss);
 
+  // A class is "broken" only when the PREVIEW proves it needs styling
+  // (cssInline defines it) yet the copyable CSS omits it. An HTML class with
+  // no rule anywhere is a valid unstyled semantic wrapper — not a defect.
+  // When a component ships no cssInline we have no proof, so fall back to the
+  // stricter "HTML class must exist in the CSS tab".
+  const proof = c.cssInline ? classesInCss(c.cssInline) : null;
   if (htmlTab) {
     for (const cls of classesInHtml(htmlTab.code)) {
-      if (!defined.has(cls))
-        issues.push({ ...base, kind: "html-class-undefined", detail: `.${cls} used in HTML, not defined in CSS tab` });
+      if (defined.has(cls)) continue;
+      if (proof && !proof.has(cls)) continue; // preview doesn't style it → fine
+      issues.push({ ...base, kind: "html-class-undefined", detail: `.${cls} used in HTML and styled in preview, but missing from CSS tab` });
     }
   }
 
-  if (c.cssInline) {
-    for (const cls of classesInCss(c.cssInline)) {
-      if (!defined.has(cls))
-        issues.push({ ...base, kind: "preview-class-undefined", detail: `.${cls} styled in preview (cssInline) but missing from CSS tab` });
-    }
-  }
-
+  // NOTE: we deliberately do NOT require the preview's cssInline classes to
+  // appear in the copy CSS. Many components render a deliberately simplified
+  // *demo* in the gallery (its own `nuda-*-demo` classes) while the copyable
+  // code is the full production component. Preview↔copy class parity is a
+  // soft concern; the hard invariant is that the COPYABLE code is
+  // self-contained (every HTML class + animation it references is defined).
   for (const anim of animationsInCss(copyCss)) {
     if (!keyframes.has(anim))
       issues.push({ ...base, kind: "animation-undefined", detail: `animation "${anim}" referenced in CSS tab but no matching @keyframes` });

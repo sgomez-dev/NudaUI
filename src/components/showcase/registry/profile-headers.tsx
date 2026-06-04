@@ -1231,7 +1231,7 @@ document.querySelectorAll('.nuda-follow__btn').forEach((btn) => {
 
   /* ─────────────── 13. PROFILE SKELETON LOADER ─────────────── */
   {
-    id: "profile-skeleton",
+    id: "profile-skeleton-card",
     name: "Profile Skeleton Loader",
     category: "Profile Headers",
     preview: (

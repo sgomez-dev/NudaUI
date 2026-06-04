@@ -421,7 +421,7 @@ export const navigation: NudaComponent[] = [
 
   /* ─────────────── SIDEBAR COLLAPSE ─────────────── */
   {
-    id: "sidebar-collapse",
+    id: "nav-sidebar-toggle",
     name: "Sidebar Collapse",
     category: "Navigation",
     preview: (
