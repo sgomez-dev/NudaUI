@@ -401,7 +401,7 @@ export const togglesInputs: NudaComponent[] = [
      4. Float Label
      ------------------------------------------------------- */
   {
-    id: "float-label",
+    id: "float-label-field",
     name: "Float Label",
     category: "Toggles & Inputs",
     preview: (
@@ -515,7 +515,7 @@ export const togglesInputs: NudaComponent[] = [
      5. Search Expand
      ------------------------------------------------------- */
   {
-    id: "search-expand",
+    id: "search-expand-field",
     name: "Search Expand",
     category: "Toggles & Inputs",
     preview: (

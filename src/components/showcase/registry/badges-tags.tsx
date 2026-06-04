@@ -387,7 +387,7 @@ export const badgesTags: NudaComponent[] = [
 
   /* ─────────────── Count Badge ─────────────── */
   {
-    id: "count-badge",
+    id: "icon-count-badge",
     name: "Count Badge",
     category: "Badges & Tags",
     preview: (

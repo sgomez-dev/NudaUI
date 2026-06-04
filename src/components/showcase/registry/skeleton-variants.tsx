@@ -5,7 +5,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-message",
     name: "Message Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skmsg">
         <span className="nuda-skmsg__avatar" />
@@ -64,7 +64,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-card",
     name: "Card Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skcard">
         <span className="nuda-skcard__img" />
@@ -112,7 +112,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-list",
     name: "List Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-sklist">
         {[0, 1, 2, 3].map((i) => (
@@ -166,7 +166,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-table",
     name: "Table Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-sktable">
         <div className="nuda-sktable__head">
@@ -233,7 +233,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-comment",
     name: "Comment Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skcomment">
         <span className="nuda-skcomment__avatar" />
@@ -290,7 +290,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-stat",
     name: "Stat Card Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skstat">
         <span className="nuda-skstat__label" />
@@ -330,7 +330,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-feed",
     name: "Feed Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skfeed">
         {[0, 1].map((i) => (
@@ -387,7 +387,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-video",
     name: "Video Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skvid">
         <span className="nuda-skvid__player">
@@ -446,7 +446,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-article",
     name: "Article Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skart">
         <span className="nuda-skart__title" />
@@ -492,7 +492,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-avatar-stack",
     name: "Avatar Stack Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skstack">
         {[0, 1, 2, 3].map((i) => (
@@ -535,7 +535,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-dashboard",
     name: "Dashboard Skeleton",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skdash">
         <div className="nuda-skdash__top">
@@ -582,7 +582,7 @@ export const skeletonVariants: NudaComponent[] = [
   {
     id: "skeleton-progressive",
     name: "Progressive Reveal",
-    category: "Skeleton Variants",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skrev">
         <span className="is-loaded">Hello</span>

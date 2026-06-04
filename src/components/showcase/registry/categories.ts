@@ -15,7 +15,6 @@ import {
   Type,
   MousePointer2,
   ToggleLeft,
-  Layers,
   Activity,
   Zap,
   Paintbrush,
@@ -23,6 +22,9 @@ import {
   Users,
   Tag,
   Navigation as NavigationIcon,
+  ChevronDown,
+  ChevronRight,
+  MoreHorizontal,
   Bell,
   MessageSquare,
   Minus,
@@ -69,10 +71,17 @@ import {
   Smartphone,
   Inbox as InboxFull,
   CircleDashed,
+  Table,
+  Cookie,
+  History,
+  LayoutDashboard,
+  TriangleAlert,
+  Share2,
   type LucideIcon,
 } from "lucide-react";
 
 import type { NudaComponent } from "./types";
+import { reconcileComponents } from "./reconcile";
 
 import { loaders } from "./loaders";
 import { spinners } from "./spinners";
@@ -135,6 +144,21 @@ import { multiChips } from "./multi-chips";
 import { mobilePatterns } from "./mobile-patterns";
 import { notificationCenter } from "./notification-center";
 import { skeletonVariants } from "./skeleton-variants";
+import { dropdownsMenus } from "./dropdowns-menus";
+import { pagination } from "./pagination";
+import { breadcrumbs } from "./breadcrumbs";
+import { tablesDataGrids } from "./tables-data-grids";
+import { cookieConsent } from "./cookie-consent";
+import { timelines } from "./timelines";
+import { kpiWidgets } from "./kpi-widgets";
+import { errorPages } from "./error-pages";
+import { socialShare } from "./social-share";
+import { countdownsExtra } from "./countdowns-extra";
+import { scrollEffectsExtra } from "./scroll-effects-extra";
+import { modalsOverlaysExtra } from "./modals-overlays-extra";
+import { navigationExtra } from "./navigation-extra";
+import { bordersOutlinesExtra } from "./borders-outlines-extra";
+import { accordionsTabsExtra } from "./accordions-tabs-extra";
 
 export interface CategoryConfig {
   id: string;
@@ -143,11 +167,13 @@ export interface CategoryConfig {
   components: NudaComponent[];
 }
 
-export const categories: CategoryConfig[] = [
+const rawCategories: CategoryConfig[] = [
   { id: "loaders", label: "Loaders", icon: Loader2, components: loaders },
   { id: "spinners", label: "Spinners", icon: RotateCw, components: spinners },
   { id: "progress", label: "Progress", icon: BarChart3, components: progress },
-  { id: "placeholders", label: "Placeholders", icon: Layers, components: placeholders },
+  // Skeletons: merged "Placeholders" + "Skeleton Variants" (they were the same
+  // thing under two names). Kept here in the loading-state cluster.
+  { id: "skeletons", label: "Skeletons", icon: CircleDashed, components: [...placeholders, ...skeletonVariants] },
   { id: "text-effects", label: "Text Effects", icon: Type, components: textEffects },
   { id: "buttons", label: "Buttons", icon: MousePointer2, components: buttons },
   { id: "toggles-inputs", label: "Toggles & Inputs", icon: ToggleLeft, components: togglesInputs },
@@ -155,19 +181,22 @@ export const categories: CategoryConfig[] = [
   { id: "indicators", label: "Indicators", icon: Activity, components: indicators },
   { id: "micro-interactions", label: "Micro-interactions", icon: Zap, components: microInteractions },
   { id: "backgrounds", label: "Backgrounds", icon: Paintbrush, components: backgrounds },
-  { id: "borders-outlines", label: "Borders & Outlines", icon: Square, components: bordersOutlines },
+  { id: "borders-outlines", label: "Borders & Outlines", icon: Square, components: [...bordersOutlines, ...bordersOutlinesExtra] },
   { id: "avatars", label: "Avatars", icon: Users, components: avatars },
   { id: "badges-tags", label: "Badges & Tags", icon: Tag, components: badgesTags },
-  { id: "navigation", label: "Navigation", icon: NavigationIcon, components: navigation },
-  { id: "notifications", label: "Notifications", icon: Bell, components: notifications },
+  { id: "navigation", label: "Navigation", icon: NavigationIcon, components: [...navigation, ...navigationExtra] },
+  { id: "dropdowns-menus", label: "Dropdowns & Menus", icon: ChevronDown, components: dropdownsMenus },
+  { id: "breadcrumbs", label: "Breadcrumbs", icon: ChevronRight, components: breadcrumbs },
+  { id: "pagination", label: "Pagination", icon: MoreHorizontal, components: pagination },
+  { id: "notifications", label: "Toasts & Alerts", icon: Bell, components: notifications },
   { id: "tooltips", label: "Tooltips", icon: MessageSquare, components: tooltips },
   { id: "dividers", label: "Dividers", icon: Minus, components: dividers },
   { id: "cursors", label: "Cursors", icon: MousePointer, components: cursors },
-  { id: "countdowns", label: "Countdowns", icon: Timer, components: countdowns },
-  { id: "scroll-effects", label: "Scroll Effects", icon: ArrowDown, components: scrollEffects },
+  { id: "countdowns", label: "Countdowns", icon: Timer, components: [...countdowns, ...countdownsExtra] },
+  { id: "scroll-effects", label: "Scroll Effects", icon: ArrowDown, components: [...scrollEffects, ...scrollEffectsExtra] },
   { id: "three-d", label: "3D Effects", icon: Box, components: threeDEffects },
-  { id: "modals-overlays", label: "Modals & Overlays", icon: PanelTop, components: modalsOverlays },
-  { id: "accordions-tabs", label: "Accordions & Tabs", icon: ChevronsUpDown, components: accordionsTabs },
+  { id: "modals-overlays", label: "Modals & Overlays", icon: PanelTop, components: [...modalsOverlays, ...modalsOverlaysExtra] },
+  { id: "accordions-tabs", label: "Accordions & Tabs", icon: ChevronsUpDown, components: [...accordionsTabs, ...accordionsTabsExtra] },
   { id: "marquees", label: "Marquees & Tickers", icon: MoveHorizontal, components: marquees },
   { id: "empty-states", label: "Empty States", icon: Inbox, components: emptyStates },
   { id: "charts", label: "Charts", icon: PieChart, components: charts },
@@ -204,8 +233,24 @@ export const categories: CategoryConfig[] = [
   { id: "multi-chips", label: "Tags & Chips Input", icon: Hash, components: multiChips },
   { id: "mobile-patterns", label: "Mobile Patterns", icon: Smartphone, components: mobilePatterns },
   { id: "notification-center", label: "Notification Center", icon: InboxFull, components: notificationCenter },
-  { id: "skeleton-variants", label: "Skeleton Variants", icon: CircleDashed, components: skeletonVariants },
+  { id: "tables-data-grids", label: "Tables & Data Grids", icon: Table, components: tablesDataGrids },
+  { id: "kpi-widgets", label: "KPI & Dashboard Widgets", icon: LayoutDashboard, components: kpiWidgets },
+  { id: "timelines", label: "Timelines", icon: History, components: timelines },
+  { id: "cookie-consent", label: "Cookie & Consent", icon: Cookie, components: cookieConsent },
+  { id: "error-pages", label: "Error & 404 Pages", icon: TriangleAlert, components: errorPages },
+  { id: "social-share", label: "Social Share", icon: Share2, components: socialShare },
 ];
+
+/**
+ * Public categories. Each component is reconciled so its copyable code is
+ * guaranteed self-contained (see `./reconcile`). Every downstream surface —
+ * gallery, JSON endpoints, per-component pages, llms.txt — reads from here, so
+ * the heal applies everywhere at once.
+ */
+export const categories: CategoryConfig[] = rawCategories.map((c) => ({
+  ...c,
+  components: reconcileComponents(c.components),
+}));
 
 /** Total number of components across every category. */
 export const totalCount = categories.reduce(

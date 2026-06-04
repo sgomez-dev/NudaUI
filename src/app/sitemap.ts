@@ -84,5 +84,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
   });
 
-  return [...top, ...perCategory];
+  // One entry per component — the per-component pages (/components/<id>) are
+  // the indexable, citable surface for "NudaUI <component>" queries. Priority
+  // sits just under the category pages.
+  const perComponent: MetadataRoute.Sitemap = categories.flatMap((cat) =>
+    cat.components.map((c) => {
+      const path = `/components/${c.id}`;
+      return {
+        url: absoluteUrl(path),
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+        alternates: { languages: { en: absoluteUrl(path) } },
+      };
+    })
+  );
+
+  return [...top, ...perCategory, ...perComponent];
 }

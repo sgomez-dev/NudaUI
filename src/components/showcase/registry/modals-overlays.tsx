@@ -478,7 +478,7 @@ export const modalsOverlays: NudaComponent[] = [
 
   /* ─────────────── BOTTOM SHEET ─────────────── */
   {
-    id: "bottom-sheet",
+    id: "bottom-sheet-modal",
     name: "Bottom Sheet",
     category: "Modals & Overlays",
     preview: (

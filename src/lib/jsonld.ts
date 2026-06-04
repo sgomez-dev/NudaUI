@@ -102,11 +102,15 @@ export function organizationSchema(): JsonLd {
       "@type": "Person",
       "@id": `${site.url}/#founder`,
       name: site.creator.name,
+      givenName: "Santiago",
+      familyName: "Gómez de la Torre Romero",
       url: site.creator.url,
       email: site.creator.email,
       jobTitle: "Software Engineer",
       description: `${site.creator.role} of ${site.name}.`,
-      sameAs: [site.creator.url, site.creator.github],
+      // sameAs binds this Person to the creator's higher-authority sites so the
+      // properties resolve to one entity (NudaUI inherits the trust signal).
+      sameAs: [...site.creator.sameAs],
       knowsLanguage: ["English", "Spanish"],
     },
   };
@@ -332,6 +336,76 @@ export function softwareSourceCodeSchema(c: JsonLdComponent): JsonLd {
     url: absoluteUrl("/components"),
     isPartOf: { "@id": `${site.url}/#software` },
     keywords: [c.category, c.name, "copy paste", "animation", "css"].join(", "),
+  };
+}
+
+/**
+ * Per-component SoftwareSourceCode for a dedicated `/components/[id]` page.
+ *
+ * Richer than the gallery-level `softwareSourceCodeSchema`: it carries the
+ * actual `text` (so search engines and LLMs index the real snippet), the page
+ * as canonical `url`, the MIT license, and the creator as `author` — wiring the
+ * component into the same identity graph as the homepage (#founder → sgomez.dev
+ * via its `sameAs`). This is the core GEO signal for "NudaUI <component>" queries.
+ */
+export function componentSourceCodeSchema(args: {
+  id: string;
+  name: string;
+  category: string;
+  pageUrl: string;
+  languages: string[];
+  codeText: string;
+  dateModified?: string;
+}): JsonLd {
+  const hasJS = args.languages.includes("javascript");
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "@id": `${args.pageUrl}#code`,
+    name: args.name,
+    description: `${args.name} — a copy-paste ${args.category} UI component for any framework (React, Vue, Svelte, Astro, Laravel, Django, Rails, plain HTML). Pure HTML + CSS${hasJS ? " + vanilla JS" : ""}, zero dependencies, zero build step.`,
+    codeSampleType: "snippet",
+    programmingLanguage: args.languages.map((l) => l.toUpperCase()),
+    url: args.pageUrl,
+    mainEntityOfPage: args.pageUrl,
+    text: args.codeText,
+    license: "https://opensource.org/licenses/MIT",
+    codeRepository: site.social.github,
+    isPartOf: { "@id": `${site.url}/#software` },
+    isAccessibleForFree: true,
+    inLanguage: site.language,
+    author: { "@id": `${site.url}/#founder` },
+    creator: { "@id": `${site.url}/#founder` },
+    copyrightHolder: { "@id": `${site.url}/#founder` },
+    keywords: [
+      args.category,
+      args.name,
+      "copy paste",
+      "css animation",
+      "ui component",
+      "framework agnostic",
+    ].join(", "),
+    ...(args.dateModified ? { dateModified: args.dateModified } : {}),
+  };
+}
+
+/**
+ * Minimal Person node for the creator, safe to embed on any page so the
+ * `#founder` @id referenced elsewhere always resolves and the sgomez.dev
+ * association travels with every component page (entity linking).
+ */
+export function founderSchema(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${site.url}/#founder`,
+    name: site.creator.name,
+    givenName: "Santiago",
+    familyName: "Gómez de la Torre Romero",
+    url: site.creator.url,
+    jobTitle: "Software Engineer",
+    description: `${site.creator.role} of ${site.name}.`,
+    sameAs: [...site.creator.sameAs],
   };
 }
 

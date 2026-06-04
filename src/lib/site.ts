@@ -53,6 +53,15 @@ export const site = {
     email: "contact@sgomez.dev",
     url: "https://sgomez.dev",
     github: "https://github.com/sgomez-dev",
+    // The creator's wider entity cluster — kept in sync with sgomez.dev so the
+    // Person resolves as one identity across all his properties.
+    sameAs: [
+      "https://sgomez.dev",
+      "https://blog.sgomez.dev",
+      "https://github.com/sgomez-dev",
+      "https://linkedin.com/in/sgomez-dev",
+      "https://www.npmjs.com/package/sgomez-cli",
+    ],
   },
   social: {
     github: "https://github.com/sgomez-dev/nudaui",

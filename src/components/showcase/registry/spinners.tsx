@@ -770,7 +770,7 @@ export const spinners: NudaComponent[] = [
 
   /* ─────────────── DNA Helix ─────────────── */
   {
-    id: "dna-helix",
+    id: "dna-helix-spinner",
     name: "DNA Helix",
     category: "Spinners",
     preview: (

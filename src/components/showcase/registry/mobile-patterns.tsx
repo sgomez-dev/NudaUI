@@ -486,7 +486,7 @@ export const mobilePatterns: NudaComponent[] = [
 
   /* ─────────────── SEGMENTED CONTROL ─────────────── */
   {
-    id: "segmented-control",
+    id: "segmented-control-mobile",
     name: "Segmented Control",
     category: "Mobile Patterns",
     preview: (

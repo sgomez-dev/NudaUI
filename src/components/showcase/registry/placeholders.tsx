@@ -5,7 +5,7 @@ export const placeholders: NudaComponent[] = [
   {
     id: "skeleton-shimmer",
     name: "Skeleton Shimmer",
-    category: "Placeholders",
+    category: "Skeletons",
     preview: (
       <div className="nuda-skeleton-shimmer" role="status" aria-label="Loading content" aria-busy="true">
         <div className="nuda-skeleton-shimmer__line" style={{ width: "90%" }} />
@@ -78,7 +78,7 @@ export const placeholders: NudaComponent[] = [
   {
     id: "card-skeleton",
     name: "Card Skeleton",
-    category: "Placeholders",
+    category: "Skeletons",
     preview: (
       <div className="nuda-card-skeleton" role="status" aria-label="Loading card" aria-busy="true">
         <div className="nuda-card-skeleton__header">
@@ -211,7 +211,7 @@ export const placeholders: NudaComponent[] = [
   {
     id: "image-skeleton",
     name: "Image Skeleton",
-    category: "Placeholders",
+    category: "Skeletons",
     preview: (
       <div className="nuda-image-skeleton" role="status" aria-label="Loading image" aria-busy="true">
         <div className="nuda-image-skeleton__box">
@@ -299,7 +299,7 @@ export const placeholders: NudaComponent[] = [
   {
     id: "table-skeleton",
     name: "Table Skeleton",
-    category: "Placeholders",
+    category: "Skeletons",
     preview: (
       <div className="nuda-table-skeleton" role="status" aria-label="Loading table" aria-busy="true">
         <div className="nuda-table-skeleton__row nuda-table-skeleton__row--header">
@@ -413,7 +413,7 @@ export const placeholders: NudaComponent[] = [
   {
     id: "profile-skeleton",
     name: "Profile Skeleton",
-    category: "Placeholders",
+    category: "Skeletons",
     preview: (
       <div className="nuda-profile-skeleton" role="status" aria-label="Loading profile" aria-busy="true">
         <div className="nuda-profile-skeleton__photo" />

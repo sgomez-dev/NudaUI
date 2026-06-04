@@ -3,7 +3,7 @@ import type { NudaComponent } from "./types";
 export const videoPlayer: NudaComponent[] = [
   /* ─────────────── 1. Play/Pause Morph ─────────────── */
   {
-    id: "play-pause-morph",
+    id: "play-pause-morph-video",
     name: "Play/Pause Morph",
     category: "Video Player UI",
     preview: (

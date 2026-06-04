@@ -27,6 +27,10 @@ export function GET(): Response {
     `This is the long-form export. ${totalCount} components across ${categories.length} categories. Each entry lists the human name, the registry id, and the framework-agnostic stack (HTML + CSS, plus optional JS). Live previews and code snippets are at ${absoluteUrl("/components")}.`
   );
   lines.push("");
+  lines.push(
+    `To fetch the actual code for any id below, GET ${absoluteUrl("/api/components/{id}.json")} (e.g. ${absoluteUrl("/api/components/toast-slide.json")}). For the whole library with code in one payload, GET ${absoluteUrl("/api/catalog-full.json")}.`
+  );
+  lines.push("");
   lines.push("---");
   lines.push("");
 

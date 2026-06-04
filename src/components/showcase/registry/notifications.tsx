@@ -5,7 +5,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "toast-slide",
     name: "Toast Slide",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-toast" role="alert" aria-live="polite">
         <div className="nuda-toast__icon">&#10003;</div>
@@ -125,7 +125,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "alert-shake",
     name: "Alert Shake",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-alert-shake" role="alert">
         <span className="nuda-alert-shake__icon">&#9888;</span>
@@ -197,7 +197,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "success-check",
     name: "Success Check",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-success-check" role="status" aria-label="Success">
         <svg className="nuda-success-check__svg" viewBox="0 0 52 52" width="48" height="48">
@@ -293,7 +293,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "banner-slide",
     name: "Banner Slide",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-banner" role="alert">
         <p className="nuda-banner__text">
@@ -398,7 +398,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "snackbar",
     name: "Snackbar",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-snackbar" role="status" aria-live="polite">
         <span className="nuda-snackbar__text">Message archived</span>
@@ -512,7 +512,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "achievement-unlock",
     name: "Achievement Unlock",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-achiev">
         <div className="nuda-achiev__shine" />
@@ -608,7 +608,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "undo-toast",
     name: "Undo Toast",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-undotoast">
         <span className="nuda-undotoast__icon">
@@ -680,7 +680,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "level-up",
     name: "Level Up",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-levelup">
         <div className="nuda-levelup__rays" />
@@ -745,7 +745,7 @@ export const notifications: NudaComponent[] = [
   {
     id: "system-alert",
     name: "System Alert",
-    category: "Notifications",
+    category: "Toasts & Alerts",
     preview: (
       <div className="nuda-sysalert">
         <div className="nuda-sysalert__icon">
