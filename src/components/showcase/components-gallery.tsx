@@ -348,10 +348,21 @@ export function ComponentsGallery() {
               <LazyGrid count={cat.components.length}>
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
                   {cat.components.map((comp) => (
-                    <button
+                    // role=button (not <button>) because component previews may
+                    // themselves contain <button> elements — a button inside a
+                    // button is invalid HTML and breaks hydration + click handling.
+                    <div
                       key={comp.id}
+                      role="button"
+                      tabIndex={0}
                       onClick={() => setSelected(comp)}
-                      className="group w-full relative flex flex-col items-center justify-center gap-2 sm:gap-3 p-4 sm:p-6 md:p-8 rounded-xl border border-border bg-surface-light/30 hover:bg-surface-light hover:border-accent/20 transition-all duration-300 aspect-square text-left overflow-hidden"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setSelected(comp);
+                        }
+                      }}
+                      className="group w-full relative flex flex-col items-center justify-center gap-2 sm:gap-3 p-4 sm:p-6 md:p-8 rounded-xl border border-border bg-surface-light/30 hover:bg-surface-light hover:border-accent/20 transition-all duration-300 aspect-square text-left overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
                     >
                       <div className="flex items-center justify-center flex-1">
                         {comp.preview}
@@ -378,7 +389,7 @@ export function ComponentsGallery() {
                         </span>
                       )}
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-accent/[0.03] to-transparent" />
-                    </button>
+                    </div>
                   ))}
                 </div>
               </LazyGrid>
