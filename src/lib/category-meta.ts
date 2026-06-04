@@ -40,6 +40,8 @@ export const categoryDescriptions: Record<string, string> = {
     "Display-only pill labels and status tags — New, Beta, count, gradient, animated pulse. Read-only chips for versioning, feature flags, and taxonomy. For a text input that lets users add/remove their own tags, see Tags & Chips Input.",
   navigation:
     "Top-nav and inline nav patterns — underline slide, pill indicator, animated tabs, dropdown reveal. Pointer-driven navigation primitives.",
+  "dropdowns-menus":
+    "Dropdown and menu UI — fade/scale/slide menus, context menu, profile menu, split button, mega menu, nested submenu, styled select, checkbox menu, searchable and action menus. Accessible, framework-agnostic open/close patterns.",
   notifications:
     "Toasts, banners, snackbars, and inline alerts — transient, auto-dismissing system messages that slide in and out. For a persistent inbox of past notifications, see Notification Center.",
   tooltips:
