@@ -15,7 +15,6 @@ import {
   Type,
   MousePointer2,
   ToggleLeft,
-  Layers,
   Activity,
   Zap,
   Paintbrush,
@@ -148,7 +147,9 @@ const rawCategories: CategoryConfig[] = [
   { id: "loaders", label: "Loaders", icon: Loader2, components: loaders },
   { id: "spinners", label: "Spinners", icon: RotateCw, components: spinners },
   { id: "progress", label: "Progress", icon: BarChart3, components: progress },
-  { id: "placeholders", label: "Placeholders", icon: Layers, components: placeholders },
+  // Skeletons: merged "Placeholders" + "Skeleton Variants" (they were the same
+  // thing under two names). Kept here in the loading-state cluster.
+  { id: "skeletons", label: "Skeletons", icon: CircleDashed, components: [...placeholders, ...skeletonVariants] },
   { id: "text-effects", label: "Text Effects", icon: Type, components: textEffects },
   { id: "buttons", label: "Buttons", icon: MousePointer2, components: buttons },
   { id: "toggles-inputs", label: "Toggles & Inputs", icon: ToggleLeft, components: togglesInputs },
@@ -160,7 +161,7 @@ const rawCategories: CategoryConfig[] = [
   { id: "avatars", label: "Avatars", icon: Users, components: avatars },
   { id: "badges-tags", label: "Badges & Tags", icon: Tag, components: badgesTags },
   { id: "navigation", label: "Navigation", icon: NavigationIcon, components: navigation },
-  { id: "notifications", label: "Notifications", icon: Bell, components: notifications },
+  { id: "notifications", label: "Toasts & Alerts", icon: Bell, components: notifications },
   { id: "tooltips", label: "Tooltips", icon: MessageSquare, components: tooltips },
   { id: "dividers", label: "Dividers", icon: Minus, components: dividers },
   { id: "cursors", label: "Cursors", icon: MousePointer, components: cursors },
@@ -205,7 +206,6 @@ const rawCategories: CategoryConfig[] = [
   { id: "multi-chips", label: "Tags & Chips Input", icon: Hash, components: multiChips },
   { id: "mobile-patterns", label: "Mobile Patterns", icon: Smartphone, components: mobilePatterns },
   { id: "notification-center", label: "Notification Center", icon: InboxFull, components: notificationCenter },
-  { id: "skeleton-variants", label: "Skeleton Variants", icon: CircleDashed, components: skeletonVariants },
 ];
 
 /**

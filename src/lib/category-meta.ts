@@ -16,8 +16,8 @@ export const categoryDescriptions: Record<string, string> = {
     "Pure-CSS spinner variants — ring, dual ring, conic, segmented, gradient. Lightweight indeterminate progress for buttons, dialogs, and inline contexts.",
   progress:
     "Determinate progress indicators — linear, radial, segmented, striped, gradient fill. Use when you can express completion as a percentage.",
-  placeholders:
-    "Skeleton placeholders and shimmer effects. Reserve layout while data loads to eliminate layout shift and avoid empty white screens.",
+  skeletons:
+    "Skeleton placeholders and shimmer loaders — generic blocks plus domain-specific shapes (message, card, list row, table, comment, feed, article, dashboard). Reserve layout while data loads to kill layout shift and avoid empty white screens.",
   "text-effects":
     "Typography-driven animations — scramble, typewriter, letter reveal, gradient sweep, glitch. Hero headlines, on-scroll reveals, marketing copy.",
   buttons:
@@ -37,11 +37,11 @@ export const categoryDescriptions: Record<string, string> = {
   avatars:
     "User avatar treatments — status rings, presence dots, stacked groups, shimmer placeholders. Inline user identity at any size.",
   "badges-tags":
-    "Pill labels and tags — New, Beta, count, gradient, animated pulse. Versioning chips, feature flags, taxonomy tags.",
+    "Display-only pill labels and status tags — New, Beta, count, gradient, animated pulse. Read-only chips for versioning, feature flags, and taxonomy. For a text input that lets users add/remove their own tags, see Tags & Chips Input.",
   navigation:
     "Top-nav and inline nav patterns — underline slide, pill indicator, animated tabs, dropdown reveal. Pointer-driven navigation primitives.",
   notifications:
-    "Toast, banner, and inline alert systems — slide in, stacked, dismissable, progress-timed. System messaging with motion that respects reduced-motion.",
+    "Toasts, banners, snackbars, and inline alerts — transient, auto-dismissing system messages that slide in and out. For a persistent inbox of past notifications, see Notification Center.",
   tooltips:
     "Hover and focus tooltips — arrow, fade, slide, glass effect. Contextual help that appears on demand and disappears cleanly.",
   dividers:
@@ -125,13 +125,11 @@ export const categoryDescriptions: Record<string, string> = {
   "file-upload":
     "File upload lifecycle UI — drop zone idle and active states, file list item, upload progress bar, file type icons, image thumbnail preview, error state, multi-file count pill, file size pill, success checkmark, cancel upload, total progress, validation error, click-to-browse, paste hint, upload queue, file replaced, empty state.",
   "multi-chips":
-    "Input-driven tag and chip UI — chip input add, chip remove animation, chip autocomplete dropdown, chip group, max-count counter, color variants, chip with icon, drag reorder, suggested tags, overflow more, multi-select combobox, removable filter chips, avatar chip, pop-in, validation error, group toggle, saved filter pills, counter badge.",
+    "Interactive tag/chip INPUT — users type to add chips and click to remove them: chip input add, remove animation, autocomplete dropdown, max-count, multi-select combobox, removable filter chips, drag reorder, validation. For read-only display badges, see Badges & Tags.",
   "mobile-patterns":
     "Mobile-first interaction patterns — bottom sheet, pull-to-refresh, swipe-to-delete, action sheet, segmented control, mobile tab bar, FAB, ripple touch, momentum scroll, swipe card, status bar, top toast, long-press menu, drawer hamburger, pull-down search, mobile modal, onboarding dots, pinch-to-zoom hint.",
   "notification-center":
-    "Inbox and notification center UI — notification item, inbox header with count, time-group separator, filter tabs, swipe-to-dismiss, inbox zero empty state, bulk action bar, notification setting row, mention notification, inbox search, build status notification, bell with badge.",
-  "skeleton-variants":
-    "Domain-specific skeleton loaders — message, card, list row, table, comment, stat card, feed, video player, article, avatar stack, dashboard, progressive text reveal.",
+    "Persistent notification inbox — the panel of past notifications behind a bell icon: notification item, inbox header with count, time-group separator, filter tabs, swipe-to-dismiss, inbox-zero empty state, bulk actions, mention, bell with badge. For transient pop-up toasts, see Toasts & Alerts.",
 };
 
 /** Convenience: get a description by id, falling back to a generic line. */
