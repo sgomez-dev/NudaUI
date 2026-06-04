@@ -71,6 +71,12 @@ import {
   Smartphone,
   Inbox as InboxFull,
   CircleDashed,
+  Table,
+  Cookie,
+  History,
+  LayoutDashboard,
+  TriangleAlert,
+  Share2,
   type LucideIcon,
 } from "lucide-react";
 
@@ -141,6 +147,18 @@ import { skeletonVariants } from "./skeleton-variants";
 import { dropdownsMenus } from "./dropdowns-menus";
 import { pagination } from "./pagination";
 import { breadcrumbs } from "./breadcrumbs";
+import { tablesDataGrids } from "./tables-data-grids";
+import { cookieConsent } from "./cookie-consent";
+import { timelines } from "./timelines";
+import { kpiWidgets } from "./kpi-widgets";
+import { errorPages } from "./error-pages";
+import { socialShare } from "./social-share";
+import { countdownsExtra } from "./countdowns-extra";
+import { scrollEffectsExtra } from "./scroll-effects-extra";
+import { modalsOverlaysExtra } from "./modals-overlays-extra";
+import { navigationExtra } from "./navigation-extra";
+import { bordersOutlinesExtra } from "./borders-outlines-extra";
+import { accordionsTabsExtra } from "./accordions-tabs-extra";
 
 export interface CategoryConfig {
   id: string;
@@ -163,10 +181,10 @@ const rawCategories: CategoryConfig[] = [
   { id: "indicators", label: "Indicators", icon: Activity, components: indicators },
   { id: "micro-interactions", label: "Micro-interactions", icon: Zap, components: microInteractions },
   { id: "backgrounds", label: "Backgrounds", icon: Paintbrush, components: backgrounds },
-  { id: "borders-outlines", label: "Borders & Outlines", icon: Square, components: bordersOutlines },
+  { id: "borders-outlines", label: "Borders & Outlines", icon: Square, components: [...bordersOutlines, ...bordersOutlinesExtra] },
   { id: "avatars", label: "Avatars", icon: Users, components: avatars },
   { id: "badges-tags", label: "Badges & Tags", icon: Tag, components: badgesTags },
-  { id: "navigation", label: "Navigation", icon: NavigationIcon, components: navigation },
+  { id: "navigation", label: "Navigation", icon: NavigationIcon, components: [...navigation, ...navigationExtra] },
   { id: "dropdowns-menus", label: "Dropdowns & Menus", icon: ChevronDown, components: dropdownsMenus },
   { id: "breadcrumbs", label: "Breadcrumbs", icon: ChevronRight, components: breadcrumbs },
   { id: "pagination", label: "Pagination", icon: MoreHorizontal, components: pagination },
@@ -174,11 +192,11 @@ const rawCategories: CategoryConfig[] = [
   { id: "tooltips", label: "Tooltips", icon: MessageSquare, components: tooltips },
   { id: "dividers", label: "Dividers", icon: Minus, components: dividers },
   { id: "cursors", label: "Cursors", icon: MousePointer, components: cursors },
-  { id: "countdowns", label: "Countdowns", icon: Timer, components: countdowns },
-  { id: "scroll-effects", label: "Scroll Effects", icon: ArrowDown, components: scrollEffects },
+  { id: "countdowns", label: "Countdowns", icon: Timer, components: [...countdowns, ...countdownsExtra] },
+  { id: "scroll-effects", label: "Scroll Effects", icon: ArrowDown, components: [...scrollEffects, ...scrollEffectsExtra] },
   { id: "three-d", label: "3D Effects", icon: Box, components: threeDEffects },
-  { id: "modals-overlays", label: "Modals & Overlays", icon: PanelTop, components: modalsOverlays },
-  { id: "accordions-tabs", label: "Accordions & Tabs", icon: ChevronsUpDown, components: accordionsTabs },
+  { id: "modals-overlays", label: "Modals & Overlays", icon: PanelTop, components: [...modalsOverlays, ...modalsOverlaysExtra] },
+  { id: "accordions-tabs", label: "Accordions & Tabs", icon: ChevronsUpDown, components: [...accordionsTabs, ...accordionsTabsExtra] },
   { id: "marquees", label: "Marquees & Tickers", icon: MoveHorizontal, components: marquees },
   { id: "empty-states", label: "Empty States", icon: Inbox, components: emptyStates },
   { id: "charts", label: "Charts", icon: PieChart, components: charts },
@@ -215,6 +233,12 @@ const rawCategories: CategoryConfig[] = [
   { id: "multi-chips", label: "Tags & Chips Input", icon: Hash, components: multiChips },
   { id: "mobile-patterns", label: "Mobile Patterns", icon: Smartphone, components: mobilePatterns },
   { id: "notification-center", label: "Notification Center", icon: InboxFull, components: notificationCenter },
+  { id: "tables-data-grids", label: "Tables & Data Grids", icon: Table, components: tablesDataGrids },
+  { id: "kpi-widgets", label: "KPI & Dashboard Widgets", icon: LayoutDashboard, components: kpiWidgets },
+  { id: "timelines", label: "Timelines", icon: History, components: timelines },
+  { id: "cookie-consent", label: "Cookie & Consent", icon: Cookie, components: cookieConsent },
+  { id: "error-pages", label: "Error & 404 Pages", icon: TriangleAlert, components: errorPages },
+  { id: "social-share", label: "Social Share", icon: Share2, components: socialShare },
 ];
 
 /**

@@ -46,6 +46,18 @@ export const categoryDescriptions: Record<string, string> = {
     "Breadcrumb trails — chevron, slash, pill, arrow, collapsed, icon, gradient, numbered-step, underline, and glass styles. Hierarchical navigation that orients users and feeds breadcrumb rich results.",
   pagination:
     "Pagination controls — classic numbered, rounded, minimal pager, dots, load-more, compact with ellipsis, jump-to-page, progress, arrows, and underline. For paging lists, tables, search results, and carousels.",
+  "tables-data-grids":
+    "Tables and data grids — striped, sortable and sticky headers, selectable and expandable rows, status pills, dense layouts, inline-edit cells, toolbars, footer totals, empty and loading states. Pure CSS, framework-agnostic.",
+  "kpi-widgets":
+    "KPI and dashboard widgets — stat cards with trend deltas, sparklines, progress rings, big-number tiles, goal bars, donut and gauge metrics, live counters, uptime tiles. Drop-in dashboard building blocks.",
+  timelines:
+    "Timelines — vertical, horizontal, alternating, activity feeds, roadmaps, git-commit style, numbered milestones, animated draw-in lines. For histories, changelogs, processes, and event sequences.",
+  "cookie-consent":
+    "Cookie and consent UI — bottom bars, corner cards, centered modals, slide-up banners, granular toggle panels, accept/reject and GDPR settings. Privacy notices that don't wreck the page.",
+  "error-pages":
+    "Error and 404 pages — centered 404, 500 server error, glitch text, maintenance mode, offline state, empty-search, access-denied 403, retry cards. Friendly dead-ends that keep users oriented.",
+  "social-share":
+    "Social share UI — horizontal rows, floating bars, copy-link pills, share counts, popover menus, native-style sheets, QR cards, like/share/bookmark bars. Inline-SVG glyphs, no external scripts.",
   notifications:
     "Toasts, banners, snackbars, and inline alerts — transient, auto-dismissing system messages that slide in and out. For a persistent inbox of past notifications, see Notification Center.",
   tooltips:
