@@ -1141,7 +1141,7 @@ export const confettiCelebration: NudaComponent[] = [
       .nuda-confetti-badge__piece{position:absolute;width:6px;height:6px;border-radius:1px;background:var(--c);opacity:0;transform:rotate(var(--a)) translateY(0) scale(.4)}
       .nuda-confetti-badge--go .nuda-confetti-badge__piece{animation:nuda-confetti-badge-fly .8s .25s cubic-bezier(.2,.6,.4,1) forwards}
       @keyframes nuda-confetti-badge-pop{0%{transform:scale(.6);opacity:.4}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
-      @keyframes nuda-confetti-badge-shine{0%{left:-60%}100%{left:120%}}
+      @keyframes nuda-confetti-badge-shine{0%{transform:translateX(0) skewX(-18deg)}100%{transform:translateX(450%) skewX(-18deg)}}
       @keyframes nuda-confetti-badge-fly{0%{opacity:0;transform:rotate(var(--a)) translateY(0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(-44px) scale(1)}}
       @media (prefers-reduced-motion:reduce){.nuda-confetti-badge__medal{transform:scale(1);opacity:1}.nuda-confetti-badge--go .nuda-confetti-badge__medal,.nuda-confetti-badge--go .nuda-confetti-badge__shine,.nuda-confetti-badge--go .nuda-confetti-badge__piece{animation:none}.nuda-confetti-badge__shine{opacity:0}.nuda-confetti-badge__piece{opacity:0}}
     `,
@@ -1262,8 +1262,8 @@ export const confettiCelebration: NudaComponent[] = [
 }
 
 @keyframes nuda-confetti-badge-shine {
-  0%   { left: -60%; }
-  100% { left: 120%; }
+  0%   { transform: translateX(0) skewX(-18deg); }
+  100% { transform: translateX(450%) skewX(-18deg); }
 }
 
 @keyframes nuda-confetti-badge-fly {
