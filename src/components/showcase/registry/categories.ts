@@ -77,6 +77,7 @@ import {
   LayoutDashboard,
   TriangleAlert,
   Share2,
+  Layers,
   type LucideIcon,
 } from "lucide-react";
 
@@ -159,6 +160,7 @@ import { modalsOverlaysExtra } from "./modals-overlays-extra";
 import { navigationExtra } from "./navigation-extra";
 import { bordersOutlinesExtra } from "./borders-outlines-extra";
 import { accordionsTabsExtra } from "./accordions-tabs-extra";
+import { glassmorphism } from "./glassmorphism";
 
 export interface CategoryConfig {
   id: string;
@@ -201,6 +203,7 @@ const rawCategories: CategoryConfig[] = [
   { id: "empty-states", label: "Empty States", icon: Inbox, components: emptyStates },
   { id: "charts", label: "Charts", icon: PieChart, components: charts },
   { id: "particles", label: "Particles & Effects", icon: Sparkles, components: particles },
+  { id: "glassmorphism", label: "Glassmorphism", icon: Layers, components: glassmorphism },
   { id: "stats-counters", label: "Stats & Counters", icon: TrendingUp, components: statsCounters },
   { id: "form-states", label: "Form States", icon: FormInput, components: formStates },
   { id: "image-effects", label: "Image Effects", icon: ImageIcon, components: imageEffects },
