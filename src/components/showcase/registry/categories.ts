@@ -78,6 +78,17 @@ import {
   TriangleAlert,
   Share2,
   Layers,
+  Blend,
+  Grip,
+  ArrowDownUp,
+  Replace,
+  Pointer,
+  ZapOff,
+  Lightbulb,
+  Shapes,
+  PartyPopper,
+  Wand2,
+  CloudRain,
   type LucideIcon,
 } from "lucide-react";
 
@@ -161,6 +172,17 @@ import { navigationExtra } from "./navigation-extra";
 import { bordersOutlinesExtra } from "./borders-outlines-extra";
 import { accordionsTabsExtra } from "./accordions-tabs-extra";
 import { glassmorphism } from "./glassmorphism";
+import { gradientAnimations } from "./gradient-animations";
+import { noiseGrain } from "./noise-grain";
+import { scrollDriven } from "./scroll-driven";
+import { viewTransitions } from "./view-transitions";
+import { cssOnlyInteractions } from "./css-only-interactions";
+import { glitchDistortion } from "./glitch-distortion";
+import { neonGlow } from "./neon-glow";
+import { morphingShapes } from "./morphing-shapes";
+import { confettiCelebration } from "./confetti-celebration";
+import { animatedIcons } from "./animated-icons";
+import { weatherAmbient } from "./weather-ambient";
 
 export interface CategoryConfig {
   id: string;
@@ -204,6 +226,17 @@ const rawCategories: CategoryConfig[] = [
   { id: "charts", label: "Charts", icon: PieChart, components: charts },
   { id: "particles", label: "Particles & Effects", icon: Sparkles, components: particles },
   { id: "glassmorphism", label: "Glassmorphism", icon: Layers, components: glassmorphism },
+  { id: "gradient-animations", label: "Animated Gradients", icon: Blend, components: gradientAnimations },
+  { id: "noise-grain", label: "Noise & Grain", icon: Grip, components: noiseGrain },
+  { id: "scroll-driven", label: "Scroll-Driven", icon: ArrowDownUp, components: scrollDriven },
+  { id: "view-transitions", label: "View Transitions", icon: Replace, components: viewTransitions },
+  { id: "css-only-interactions", label: "CSS-Only Interactions", icon: Pointer, components: cssOnlyInteractions },
+  { id: "glitch-distortion", label: "Glitch & Distortion", icon: ZapOff, components: glitchDistortion },
+  { id: "neon-glow", label: "Neon & Glow", icon: Lightbulb, components: neonGlow },
+  { id: "morphing-shapes", label: "Morphing Shapes", icon: Shapes, components: morphingShapes },
+  { id: "confetti-celebration", label: "Confetti & Celebration", icon: PartyPopper, components: confettiCelebration },
+  { id: "animated-icons", label: "Animated Icons", icon: Wand2, components: animatedIcons },
+  { id: "weather-ambient", label: "Weather & Ambient", icon: CloudRain, components: weatherAmbient },
   { id: "stats-counters", label: "Stats & Counters", icon: TrendingUp, components: statsCounters },
   { id: "form-states", label: "Form States", icon: FormInput, components: formStates },
   { id: "image-effects", label: "Image Effects", icon: ImageIcon, components: imageEffects },
