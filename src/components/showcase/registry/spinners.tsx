@@ -970,4 +970,604 @@ export const spinners: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Dual Ring Glow ─────────────── */
+  {
+    id: "dual-ring-glow",
+    name: "Dual Ring Glow",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-dualglow" role="status" aria-label="Loading">
+        <span /><span />
+      </div>
+    ),
+    cssInline: `
+      .nuda-dualglow{position:relative;width:40px;height:40px;margin:8px}
+      .nuda-dualglow span{position:absolute;border-radius:50%;border:2px solid transparent}
+      .nuda-dualglow span:nth-child(1){inset:0;border-top-color:#e4ff54;border-right-color:#e4ff54;filter:drop-shadow(0 0 4px rgba(228,255,84,.6));animation:_dualglowA 1.1s linear infinite}
+      .nuda-dualglow span:nth-child(2){inset:7px;border-bottom-color:#e4ff54;border-left-color:#e4ff54;filter:drop-shadow(0 0 3px rgba(228,255,84,.4));animation:_dualglowB 1.1s linear infinite reverse}
+      @keyframes _dualglowA{to{transform:rotate(360deg)}}
+      @keyframes _dualglowB{to{transform:rotate(360deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-dualglow span{animation:none;opacity:.6}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Dual Ring Glow Spinner -->
+<div class="nuda-dualglow" role="status" aria-label="Loading">
+  <span></span>
+  <span></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Dual Ring Glow Spinner
+   Two counter-rotating glowing rings.
+   Customize: --dualglow-color */
+
+.nuda-dualglow {
+  --dualglow-color: #e4ff54;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.nuda-dualglow span {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  will-change: transform;
+}
+
+.nuda-dualglow span:nth-child(1) {
+  inset: 0;
+  border-top-color: var(--dualglow-color);
+  border-right-color: var(--dualglow-color);
+  filter: drop-shadow(0 0 4px rgba(228, 255, 84, 0.6));
+  animation: nuda-dualglow-a 1.1s linear infinite;
+}
+
+.nuda-dualglow span:nth-child(2) {
+  inset: 7px;
+  border-bottom-color: var(--dualglow-color);
+  border-left-color: var(--dualglow-color);
+  filter: drop-shadow(0 0 3px rgba(228, 255, 84, 0.4));
+  animation: nuda-dualglow-b 1.1s linear infinite reverse;
+}
+
+@keyframes nuda-dualglow-a { to { transform: rotate(360deg); } }
+@keyframes nuda-dualglow-b { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-dualglow span { animation: none; opacity: 0.6; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Segment Spinner ─────────────── */
+  {
+    id: "segment-spinner",
+    name: "Segment Spinner",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-segspin" role="status" aria-label="Loading">
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+          <span key={i} style={{ transform: `rotate(${i * 45}deg) translateY(-14px)`, animationDelay: `${i * 0.1}s` }} />
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-segspin{position:relative;width:36px;height:36px;margin:8px}
+      .nuda-segspin span{position:absolute;top:50%;left:50%;width:3px;height:9px;margin:-4.5px -1.5px;border-radius:2px;background:#e4ff54;transform-origin:center;animation:_segspin .8s linear infinite}
+      @keyframes _segspin{0%{opacity:1}100%{opacity:.15}}
+      @media(prefers-reduced-motion:reduce){.nuda-segspin span{animation:none;opacity:.5}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Segment Spinner (iOS style) -->
+<div class="nuda-segspin" role="status" aria-label="Loading">
+  <span style="transform:rotate(0deg)   translateY(-14px);animation-delay:0s"></span>
+  <span style="transform:rotate(45deg)  translateY(-14px);animation-delay:.1s"></span>
+  <span style="transform:rotate(90deg)  translateY(-14px);animation-delay:.2s"></span>
+  <span style="transform:rotate(135deg) translateY(-14px);animation-delay:.3s"></span>
+  <span style="transform:rotate(180deg) translateY(-14px);animation-delay:.4s"></span>
+  <span style="transform:rotate(225deg) translateY(-14px);animation-delay:.5s"></span>
+  <span style="transform:rotate(270deg) translateY(-14px);animation-delay:.6s"></span>
+  <span style="transform:rotate(315deg) translateY(-14px);animation-delay:.7s"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Segment Spinner
+   Eight segments fading in sequence around a circle (iOS-style).
+   Each segment is positioned via an inline transform; opacity is animated.
+   Customize: --segspin-color */
+
+.nuda-segspin {
+  --segspin-color: #e4ff54;
+  position: relative;
+  width: 36px;
+  height: 36px;
+}
+
+.nuda-segspin span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 9px;
+  margin: -4.5px -1.5px;
+  border-radius: 2px;
+  background: var(--segspin-color);
+  transform-origin: center;
+  animation: nuda-segspin 0.8s linear infinite;
+  will-change: opacity;
+}
+
+@keyframes nuda-segspin {
+  0%   { opacity: 1; }
+  100% { opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-segspin span { animation: none; opacity: 0.5; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Conic Spin ─────────────── */
+  {
+    id: "conic-spin-loader",
+    name: "Conic Spin",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-conicspin" role="status" aria-label="Loading" />
+    ),
+    cssInline: `
+      .nuda-conicspin{width:40px;height:40px;border-radius:50%;margin:8px;background:conic-gradient(from 0deg,#09090b,#e4ff54);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));animation:_conicspin 1.1s linear infinite}
+      @keyframes _conicspin{to{transform:rotate(360deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-conicspin{animation:none;opacity:.6}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Conic Spin Spinner -->
+<div class="nuda-conicspin" role="status" aria-label="Loading"></div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Conic Spin Spinner
+   A full conic-gradient sweep masked into a ring.
+   Customize: --conicspin-color, --conicspin-size */
+
+.nuda-conicspin {
+  --conicspin-color: #e4ff54;
+  --conicspin-size: 40px;
+  width: var(--conicspin-size);
+  height: var(--conicspin-size);
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #09090b, var(--conicspin-color));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+  animation: nuda-conicspin 1.1s linear infinite;
+  will-change: transform;
+}
+
+@keyframes nuda-conicspin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-conicspin { animation: none; opacity: 0.6; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Dots Circle ─────────────── */
+  {
+    id: "dots-circle-spin",
+    name: "Dots Circle",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-dotscircle" role="status" aria-label="Loading">
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+          <span key={i} style={{ transform: `rotate(${i * 45}deg) translateY(-15px)`, animationDelay: `${i * 0.125}s` }} />
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-dotscircle{position:relative;width:40px;height:40px;margin:8px}
+      .nuda-dotscircle span{position:absolute;top:50%;left:50%;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:#e4ff54;animation:_dotscircle 1s ease-in-out infinite}
+      @keyframes _dotscircle{0%,100%{transform:scale(.3)}50%{transform:scale(1)}}
+      @media(prefers-reduced-motion:reduce){.nuda-dotscircle span{animation:none;opacity:.5}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Dots Circle Spinner -->
+<div class="nuda-dotscircle" role="status" aria-label="Loading">
+  <span style="transform:rotate(0deg)   translateY(-15px);animation-delay:0s"></span>
+  <span style="transform:rotate(45deg)  translateY(-15px);animation-delay:.125s"></span>
+  <span style="transform:rotate(90deg)  translateY(-15px);animation-delay:.25s"></span>
+  <span style="transform:rotate(135deg) translateY(-15px);animation-delay:.375s"></span>
+  <span style="transform:rotate(180deg) translateY(-15px);animation-delay:.5s"></span>
+  <span style="transform:rotate(225deg) translateY(-15px);animation-delay:.625s"></span>
+  <span style="transform:rotate(270deg) translateY(-15px);animation-delay:.75s"></span>
+  <span style="transform:rotate(315deg) translateY(-15px);animation-delay:.875s"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Dots Circle Spinner
+   Dots arranged in a circle, scaling up/down in sequence.
+   NOTE: each dot's circular position comes from the inline transform;
+   the keyframe only animates scale so positions are preserved.
+   Customize: --dotscircle-color */
+
+.nuda-dotscircle {
+  --dotscircle-color: #e4ff54;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.nuda-dotscircle span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px;
+  border-radius: 50%;
+  background: var(--dotscircle-color);
+  animation: nuda-dotscircle 1s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes nuda-dotscircle {
+  0%, 100% { transform: scale(0.3); }
+  50%      { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-dotscircle span { animation: none; opacity: 0.5; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Square Flip ─────────────── */
+  {
+    id: "square-flip-spin",
+    name: "Square Flip",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-sqflip" role="status" aria-label="Loading">
+        <div className="nuda-sqflip__face" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-sqflip{perspective:200px;padding:14px;display:flex;align-items:center;justify-content:center}
+      .nuda-sqflip__face{width:28px;height:28px;background:#e4ff54;border-radius:4px;animation:_sqflip 1.6s ease-in-out infinite}
+      @keyframes _sqflip{0%{transform:rotateY(0) rotateX(0)}50%{transform:rotateY(180deg) rotateX(0)}100%{transform:rotateY(180deg) rotateX(180deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-sqflip__face{animation:none;opacity:.7}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Square Flip Spinner -->
+<div class="nuda-sqflip" role="status" aria-label="Loading">
+  <div class="nuda-sqflip__face"></div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Square Flip Spinner
+   A 3D flipping square alternating axes.
+   Customize: --sqflip-color, --sqflip-size */
+
+.nuda-sqflip {
+  --sqflip-color: #e4ff54;
+  --sqflip-size: 28px;
+  perspective: 200px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nuda-sqflip__face {
+  width: var(--sqflip-size);
+  height: var(--sqflip-size);
+  background: var(--sqflip-color);
+  border-radius: 4px;
+  animation: nuda-sqflip 1.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes nuda-sqflip {
+  0%   { transform: rotateY(0)      rotateX(0); }
+  50%  { transform: rotateY(180deg) rotateX(0); }
+  100% { transform: rotateY(180deg) rotateX(180deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-sqflip__face { animation: none; opacity: 0.7; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Arc Pulse ─────────────── */
+  {
+    id: "arc-pulse-spin",
+    name: "Arc Pulse",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-arcpulse" role="status" aria-label="Loading">
+        <svg viewBox="0 0 50 50" width="40" height="40" className="nuda-arcpulse__svg">
+          <circle className="nuda-arcpulse__arc" cx="25" cy="25" r="20" fill="none" strokeWidth="4" strokeLinecap="round" />
+        </svg>
+      </div>
+    ),
+    cssInline: `
+      .nuda-arcpulse{padding:8px;display:flex;align-items:center;justify-content:center}
+      .nuda-arcpulse__svg{animation:_arcpulseRot 1.4s linear infinite}
+      .nuda-arcpulse__arc{stroke:#e4ff54;stroke-dasharray:126;animation:_arcpulseDash 1.4s ease-in-out infinite}
+      @keyframes _arcpulseRot{to{transform:rotate(360deg)}}
+      @keyframes _arcpulseDash{0%{stroke-dashoffset:120}50%{stroke-dashoffset:30}100%{stroke-dashoffset:120}}
+      @media(prefers-reduced-motion:reduce){.nuda-arcpulse__svg,.nuda-arcpulse__arc{animation:none}.nuda-arcpulse__arc{stroke-dashoffset:60}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Arc Pulse Spinner -->
+<div class="nuda-arcpulse" role="status" aria-label="Loading">
+  <svg viewBox="0 0 50 50" width="40" height="40" class="nuda-arcpulse__svg">
+    <circle class="nuda-arcpulse__arc" cx="25" cy="25" r="20"
+      fill="none" stroke-width="4" stroke-linecap="round" />
+  </svg>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Arc Pulse Spinner
+   A rotating arc that also grows/shrinks via stroke-dashoffset.
+   Customize: --arcpulse-color */
+
+.nuda-arcpulse {
+  --arcpulse-color: #e4ff54;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nuda-arcpulse__svg {
+  animation: nuda-arcpulse-rot 1.4s linear infinite;
+  will-change: transform;
+}
+
+.nuda-arcpulse__arc {
+  stroke: var(--arcpulse-color);
+  stroke-dasharray: 126;
+  animation: nuda-arcpulse-dash 1.4s ease-in-out infinite;
+}
+
+@keyframes nuda-arcpulse-rot {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes nuda-arcpulse-dash {
+  0%   { stroke-dashoffset: 120; }
+  50%  { stroke-dashoffset: 30; }
+  100% { stroke-dashoffset: 120; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-arcpulse__svg,
+  .nuda-arcpulse__arc { animation: none; }
+  .nuda-arcpulse__arc { stroke-dashoffset: 60; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Pinwheel ─────────────── */
+  {
+    id: "pinwheel-spin",
+    name: "Pinwheel",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-pinwheel" role="status" aria-label="Loading">
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <span key={i} style={{ transform: `rotate(${i * 60}deg)` }} />
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-pinwheel{position:relative;width:40px;height:40px;margin:8px;animation:_pinwheel 1.2s linear infinite}
+      .nuda-pinwheel span{position:absolute;top:0;left:50%;width:0;height:0;margin-left:-7px;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:20px solid #e4ff54;transform-origin:50% 20px;opacity:.85}
+      .nuda-pinwheel span:nth-child(even){border-bottom-color:rgba(228,255,84,.45)}
+      @keyframes _pinwheel{to{transform:rotate(360deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-pinwheel{animation:none;opacity:.6}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Pinwheel Spinner -->
+<div class="nuda-pinwheel" role="status" aria-label="Loading">
+  <span style="transform:rotate(0deg)"></span>
+  <span style="transform:rotate(60deg)"></span>
+  <span style="transform:rotate(120deg)"></span>
+  <span style="transform:rotate(180deg)"></span>
+  <span style="transform:rotate(240deg)"></span>
+  <span style="transform:rotate(300deg)"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Pinwheel Spinner
+   Triangular blades arranged radially; the whole wheel rotates.
+   Each blade's angle comes from its inline transform.
+   Customize: --pinwheel-color */
+
+.nuda-pinwheel {
+  --pinwheel-color: #e4ff54;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  animation: nuda-pinwheel 1.2s linear infinite;
+  will-change: transform;
+}
+
+.nuda-pinwheel span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -7px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 20px solid var(--pinwheel-color);
+  transform-origin: 50% 20px;
+  opacity: 0.85;
+}
+
+.nuda-pinwheel span:nth-child(even) {
+  border-bottom-color: rgba(228, 255, 84, 0.45);
+}
+
+@keyframes nuda-pinwheel {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-pinwheel { animation: none; opacity: 0.6; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Gooey Spinner ─────────────── */
+  {
+    id: "gooey-spin",
+    name: "Gooey Spinner",
+    category: "Spinners",
+    preview: (
+      <div className="nuda-gooey" role="status" aria-label="Loading">
+        <svg width="0" height="0" aria-hidden="true">
+          <filter id="nuda-gooey-filter">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" />
+          </filter>
+        </svg>
+        <div className="nuda-gooey__rot">
+          <span /><span />
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-gooey{position:relative;width:48px;height:48px;margin:8px;filter:url(#nuda-gooey-filter)}
+      .nuda-gooey__rot{position:absolute;inset:0;animation:_gooeyRot 1.6s linear infinite}
+      .nuda-gooey__rot span{position:absolute;top:50%;left:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:#e4ff54}
+      .nuda-gooey__rot span:nth-child(1){animation:_gooeyA 1.6s ease-in-out infinite}
+      .nuda-gooey__rot span:nth-child(2){animation:_gooeyB 1.6s ease-in-out infinite}
+      @keyframes _gooeyRot{to{transform:rotate(360deg)}}
+      @keyframes _gooeyA{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
+      @keyframes _gooeyB{0%,100%{transform:translateX(12px)}50%{transform:translateX(-12px)}}
+      @media(prefers-reduced-motion:reduce){.nuda-gooey__rot,.nuda-gooey__rot span{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Gooey Spinner (SVG filter merges the dots) -->
+<div class="nuda-gooey" role="status" aria-label="Loading">
+  <svg width="0" height="0" aria-hidden="true">
+    <filter id="nuda-gooey-filter">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" />
+    </filter>
+  </svg>
+  <div class="nuda-gooey__rot">
+    <span></span>
+    <span></span>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Gooey Spinner
+   Two dots merge/separate (SVG gooey filter) while the pair rotates.
+   Customize: --gooey-color */
+
+.nuda-gooey {
+  --gooey-color: #e4ff54;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  filter: url(#nuda-gooey-filter);
+}
+
+.nuda-gooey__rot {
+  position: absolute;
+  inset: 0;
+  animation: nuda-gooey-rot 1.6s linear infinite;
+  will-change: transform;
+}
+
+.nuda-gooey__rot span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px;
+  border-radius: 50%;
+  background: var(--gooey-color);
+  will-change: transform;
+}
+
+.nuda-gooey__rot span:nth-child(1) { animation: nuda-gooey-a 1.6s ease-in-out infinite; }
+.nuda-gooey__rot span:nth-child(2) { animation: nuda-gooey-b 1.6s ease-in-out infinite; }
+
+@keyframes nuda-gooey-rot { to { transform: rotate(360deg); } }
+@keyframes nuda-gooey-a {
+  0%, 100% { transform: translateX(-12px); }
+  50%      { transform: translateX(12px); }
+}
+@keyframes nuda-gooey-b {
+  0%, 100% { transform: translateX(12px); }
+  50%      { transform: translateX(-12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-gooey__rot,
+  .nuda-gooey__rot span { animation: none; }
+}`,
+      },
+    ],
+  },
 ];

@@ -59,6 +59,15 @@ const milestones: {
     count: "50",
   },
   {
+    quarter: "05",
+    date: "Effects & surfaces",
+    title: "Crossing 1,000.",
+    body:
+      "Glassmorphism, animated gradients, scroll-driven & view-transition demos, CSS-only interactions, glitch, neon, morphing shapes, confetti, animated icons, and weather/ambient scenes — plus deeper loaders, buttons, text, and cards. The catalog passes 1,000 animations, every one GPU-only and reduced-motion safe.",
+    status: "shipped",
+    count: "220",
+  },
+  {
     quarter: "Next",
     date: "Looking ahead",
     title: "A CLI and theme tokens.",
@@ -85,10 +94,10 @@ export function Roadmap() {
   });
 
   // Translate the whole track: from 0 → -( tracks width - viewport )
-  // Track contains 5 cards side-by-side, each roughly 82vw incl gap, plus
-  // intro card, so we move a little more than 5x. We use a CSS calc to
+  // Track contains 6 cards side-by-side, each roughly 82vw incl gap, plus
+  // intro card, so we move a little more than 6x. We use a CSS calc to
   // make it adapt to viewport width.
-  const trackX = useTransform(smoothProgress, [0, 1], ["0vw", "-420vw"]);
+  const trackX = useTransform(smoothProgress, [0, 1], ["0vw", "-504vw"]);
 
   // Progress bar at top
   const progressScale = useTransform(smoothProgress, [0, 1], [0, 1]);
@@ -98,7 +107,7 @@ export function Roadmap() {
       ref={outerRef}
       aria-labelledby="roadmap-heading"
       className="relative"
-      style={{ height: "420vh" }} // tall outer for hijack; tune for feel
+      style={{ height: "504vh" }} // tall outer for hijack; tune for feel
     >
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen flex flex-col overflow-hidden bg-surface">

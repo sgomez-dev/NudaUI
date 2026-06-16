@@ -1450,4 +1450,653 @@ btn.addEventListener('pointerleave', cancel);`,
       },
     ],
   },
+
+  /* ─────────────── 16. Magnetic Pull ─────────────── */
+  {
+    id: "btn-magnetic-pull",
+    name: "Magnetic Pull",
+    category: "Buttons",
+    preview: (
+      <button
+        className="nuda-btn-magnetic-pull"
+        onMouseMove={(e) => {
+          const b = e.currentTarget;
+          const r = b.getBoundingClientRect();
+          b.style.setProperty("--mpx", `${(e.clientX - r.left - r.width / 2) * 0.4}px`);
+          b.style.setProperty("--mpy", `${(e.clientY - r.top - r.height / 2) * 0.4}px`);
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.setProperty("--mpx", "0px");
+          e.currentTarget.style.setProperty("--mpy", "0px");
+        }}
+      >
+        <span className="nuda-btn-magnetic-pull__label">Pull me</span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-btn-magnetic-pull{--mpx:0px;--mpy:0px;position:relative;padding:12px 30px;background:#e4ff54;color:#09090b;border:0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transform:translate(var(--mpx),var(--mpy));transition:transform .25s cubic-bezier(.23,1,.32,1),box-shadow .25s;will-change:transform}
+      .nuda-btn-magnetic-pull:hover{box-shadow:0 12px 30px -10px rgba(228,255,84,.6)}
+      .nuda-btn-magnetic-pull__label{display:inline-block;transform:translate(calc(var(--mpx) * .4),calc(var(--mpy) * .4));transition:transform .25s cubic-bezier(.23,1,.32,1)}
+      .nuda-btn-magnetic-pull:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-magnetic-pull,.nuda-btn-magnetic-pull__label{transform:none!important;transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-magnetic-pull">
+  <span class="nuda-btn-magnetic-pull__label">Pull me</span>
+</button>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* Magnetic Pull — content leans toward the cursor via CSS vars.
+   Respects prefers-reduced-motion. */
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var strength = 0.4;
+  document.querySelectorAll(".nuda-btn-magnetic-pull").forEach(function (btn) {
+    btn.addEventListener("mousemove", function (e) {
+      var r = btn.getBoundingClientRect();
+      btn.style.setProperty("--mpx", (e.clientX - r.left - r.width / 2) * strength + "px");
+      btn.style.setProperty("--mpy", (e.clientY - r.top - r.height / 2) * strength + "px");
+    });
+    btn.addEventListener("mouseleave", function () {
+      btn.style.setProperty("--mpx", "0px");
+      btn.style.setProperty("--mpy", "0px");
+    });
+  });
+})();`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `.nuda-btn-magnetic-pull {
+  --mpx: 0px;
+  --mpy: 0px;
+  position: relative;
+  padding: 12px 30px;
+  background: #e4ff54;
+  color: #09090b;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transform: translate(var(--mpx), var(--mpy));
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.25s;
+  will-change: transform;
+}
+
+.nuda-btn-magnetic-pull:hover {
+  box-shadow: 0 12px 30px -10px rgba(228, 255, 84, 0.6);
+}
+
+.nuda-btn-magnetic-pull__label {
+  display: inline-block;
+  /* label leans a little further than the button itself */
+  transform: translate(calc(var(--mpx) * 0.4), calc(var(--mpy) * 0.4));
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nuda-btn-magnetic-pull:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-magnetic-pull,
+  .nuda-btn-magnetic-pull__label {
+    transform: none !important;
+    transition: none;
+  }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 17. Liquid Fill Hover ─────────────── */
+  {
+    id: "btn-liquid-fill",
+    name: "Liquid Fill Hover",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-btn-liquid-fill">
+        <span className="nuda-btn-liquid-fill__label">Liquid Fill</span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-btn-liquid-fill{position:relative;padding:12px 30px;background:transparent;color:#e4ff54;border:1px solid #e4ff54;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;overflow:hidden;isolation:isolate;transition:color .35s ease}
+      .nuda-btn-liquid-fill::before{content:'';position:absolute;left:0;right:0;bottom:0;height:100%;background:#e4ff54;border-radius:42% 42% 0 0/14px 14px 0 0;transform:translateY(101%);transition:transform .45s cubic-bezier(.65,0,.35,1);z-index:-1}
+      .nuda-btn-liquid-fill:hover{color:#09090b}
+      .nuda-btn-liquid-fill:hover::before{transform:translateY(0)}
+      .nuda-btn-liquid-fill__label{position:relative;z-index:1}
+      .nuda-btn-liquid-fill:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-liquid-fill::before{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-liquid-fill">
+  <span class="nuda-btn-liquid-fill__label">Liquid Fill</span>
+</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Liquid Fill Hover — a curved liquid surface rises to fill the button. */
+.nuda-btn-liquid-fill {
+  position: relative;
+  padding: 12px 30px;
+  background: transparent;
+  color: #e4ff54;
+  border: 1px solid #e4ff54;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s ease;
+}
+
+.nuda-btn-liquid-fill::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background: #e4ff54;
+  /* curved top edge gives the "liquid" feel */
+  border-radius: 42% 42% 0 0 / 14px 14px 0 0;
+  transform: translateY(101%);
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
+}
+
+.nuda-btn-liquid-fill:hover { color: #09090b; }
+.nuda-btn-liquid-fill:hover::before { transform: translateY(0); }
+
+.nuda-btn-liquid-fill__label {
+  position: relative;
+  z-index: 1;
+}
+
+.nuda-btn-liquid-fill:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-liquid-fill::before { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 18. Border Draw ─────────────── */
+  {
+    id: "btn-border-draw",
+    name: "Border Draw",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-btn-border-draw">
+        <span>Border Draw</span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-btn-border-draw{position:relative;padding:12px 30px;background:#0c0c10;color:#fafafa;border:0;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+      .nuda-btn-border-draw::before,.nuda-btn-border-draw::after{content:'';position:absolute;inset:0;border-radius:8px;pointer-events:none}
+      .nuda-btn-border-draw::before{border-top:2px solid #e4ff54;border-right:2px solid #e4ff54;clip-path:inset(0 0 100% 100%);transition:clip-path .3s ease .15s}
+      .nuda-btn-border-draw::after{border-bottom:2px solid #e4ff54;border-left:2px solid #e4ff54;clip-path:inset(100% 100% 0 0);transition:clip-path .3s ease}
+      .nuda-btn-border-draw:hover::before{clip-path:inset(0 0 0 0)}
+      .nuda-btn-border-draw:hover::after{clip-path:inset(0 0 0 0)}
+      .nuda-btn-border-draw:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-border-draw::before,.nuda-btn-border-draw::after{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-border-draw">
+  <span>Border Draw</span>
+</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Border Draw — two L-shaped pseudo-borders unveil via clip-path on hover. */
+.nuda-btn-border-draw {
+  position: relative;
+  padding: 12px 30px;
+  background: #0c0c10;
+  color: #fafafa;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nuda-btn-border-draw::before,
+.nuda-btn-border-draw::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* top + right corner, revealed first */
+.nuda-btn-border-draw::before {
+  border-top: 2px solid #e4ff54;
+  border-right: 2px solid #e4ff54;
+  clip-path: inset(0 0 100% 100%);
+  transition: clip-path 0.3s ease 0.15s;
+}
+
+/* bottom + left corner */
+.nuda-btn-border-draw::after {
+  border-bottom: 2px solid #e4ff54;
+  border-left: 2px solid #e4ff54;
+  clip-path: inset(100% 100% 0 0);
+  transition: clip-path 0.3s ease;
+}
+
+.nuda-btn-border-draw:hover::before,
+.nuda-btn-border-draw:hover::after {
+  clip-path: inset(0 0 0 0);
+}
+
+.nuda-btn-border-draw:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-border-draw::before,
+  .nuda-btn-border-draw::after { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 19. Icon Slide ─────────────── */
+  {
+    id: "btn-icon-slide",
+    name: "Icon Slide",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-btn-icon-slide">
+        <span className="nuda-btn-icon-slide__label">Continue</span>
+        <span className="nuda-btn-icon-slide__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14" /><path d="M13 6l6 6-6 6" />
+          </svg>
+        </span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-btn-icon-slide{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:12px 30px;background:#e4ff54;color:#09090b;border:0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;overflow:hidden}
+      .nuda-btn-icon-slide__label{display:inline-block;transition:transform .3s cubic-bezier(.23,1,.32,1)}
+      .nuda-btn-icon-slide__icon{position:absolute;right:14px;display:inline-flex;opacity:0;transform:translateX(-10px);transition:transform .3s cubic-bezier(.23,1,.32,1),opacity .3s ease}
+      .nuda-btn-icon-slide__icon svg{width:16px;height:16px}
+      .nuda-btn-icon-slide:hover .nuda-btn-icon-slide__label{transform:translateX(-10px)}
+      .nuda-btn-icon-slide:hover .nuda-btn-icon-slide__icon{opacity:1;transform:translateX(0)}
+      .nuda-btn-icon-slide:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-icon-slide__label,.nuda-btn-icon-slide__icon{transition:none}.nuda-btn-icon-slide__icon{opacity:1;transform:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-icon-slide">
+  <span class="nuda-btn-icon-slide__label">Continue</span>
+  <span class="nuda-btn-icon-slide__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>
+    </svg>
+  </span>
+</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Icon Slide — label nudges left and an arrow slides in on hover. */
+.nuda-btn-icon-slide {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 30px;
+  background: #e4ff54;
+  color: #09090b;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.nuda-btn-icon-slide__label {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nuda-btn-icon-slide__icon {
+  position: absolute;
+  right: 14px;
+  display: inline-flex;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
+}
+
+.nuda-btn-icon-slide__icon svg { width: 16px; height: 16px; }
+
+.nuda-btn-icon-slide:hover .nuda-btn-icon-slide__label { transform: translateX(-10px); }
+.nuda-btn-icon-slide:hover .nuda-btn-icon-slide__icon { opacity: 1; transform: translateX(0); }
+
+.nuda-btn-icon-slide:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-icon-slide__label,
+  .nuda-btn-icon-slide__icon { transition: none; }
+  .nuda-btn-icon-slide__icon { opacity: 1; transform: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 20. Gradient Sweep ─────────────── */
+  {
+    id: "btn-gradient-sweep",
+    name: "Gradient Sweep",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-btn-gradient-sweep">Gradient Sweep</button>
+    ),
+    cssInline: `
+      .nuda-btn-gradient-sweep{padding:12px 30px;color:#09090b;border:0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;background:linear-gradient(90deg,#e4ff54,#6ee7b7,#e4ff54);background-size:200% 100%;background-position:100% 0;transition:background-position .5s ease,box-shadow .3s}
+      .nuda-btn-gradient-sweep:hover{background-position:0 0;box-shadow:0 10px 26px -10px rgba(228,255,84,.6)}
+      .nuda-btn-gradient-sweep:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-gradient-sweep{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-gradient-sweep">Gradient Sweep</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Gradient Sweep — an oversized gradient slides across via background-position. */
+.nuda-btn-gradient-sweep {
+  padding: 12px 30px;
+  color: #09090b;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(90deg, #e4ff54, #6ee7b7, #e4ff54);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  transition: background-position 0.5s ease, box-shadow 0.3s;
+}
+
+.nuda-btn-gradient-sweep:hover {
+  background-position: 0 0;
+  box-shadow: 0 10px 26px -10px rgba(228, 255, 84, 0.6);
+}
+
+.nuda-btn-gradient-sweep:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-gradient-sweep { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 21. 3D Press ─────────────── */
+  {
+    id: "btn-press-3d",
+    name: "3D Press",
+    category: "Buttons",
+    preview: <button className="nuda-btn-press-3d">Press</button>,
+    cssInline: `
+      .nuda-btn-press-3d{padding:12px 30px;background:#e4ff54;color:#09090b;border:0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transform:translateY(-4px);box-shadow:0 4px 0 #9bb02e,0 8px 16px -6px rgba(0,0,0,.6);transition:transform .12s ease,box-shadow .12s ease}
+      .nuda-btn-press-3d:hover{transform:translateY(-5px);box-shadow:0 5px 0 #9bb02e,0 10px 18px -6px rgba(0,0,0,.6)}
+      .nuda-btn-press-3d:active{transform:translateY(0);box-shadow:0 0 0 #9bb02e,0 3px 8px -4px rgba(0,0,0,.5)}
+      .nuda-btn-press-3d:focus-visible{outline:2px solid #e4ff54;outline-offset:4px}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-press-3d{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-press-3d">Press</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* 3D Press — a pushable button: the offset shadow collapses as it travels down. */
+.nuda-btn-press-3d {
+  padding: 12px 30px;
+  background: #e4ff54;
+  color: #09090b;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 0 #9bb02e, 0 8px 16px -6px rgba(0, 0, 0, 0.6);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.nuda-btn-press-3d:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 0 #9bb02e, 0 10px 18px -6px rgba(0, 0, 0, 0.6);
+}
+
+.nuda-btn-press-3d:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 #9bb02e, 0 3px 8px -4px rgba(0, 0, 0, 0.5);
+}
+
+.nuda-btn-press-3d:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-press-3d { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 22. Shine Sweep ─────────────── */
+  {
+    id: "btn-shine-sweep",
+    name: "Shine Sweep",
+    category: "Buttons",
+    preview: (
+      <button className="nuda-btn-shine-sweep">
+        <span>Shine Sweep</span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-btn-shine-sweep{position:relative;padding:12px 30px;background:#0c0c10;color:#e4ff54;border:1px solid rgba(228,255,84,.4);border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;overflow:hidden}
+      .nuda-btn-shine-sweep span{position:relative;z-index:1}
+      .nuda-btn-shine-sweep::before{content:'';position:absolute;top:0;bottom:0;left:0;width:60%;background:linear-gradient(110deg,transparent 20%,rgba(228,255,84,.35) 50%,transparent 80%);transform:translateX(-180%) skewX(-20deg);transition:transform .6s ease}
+      .nuda-btn-shine-sweep:hover::before{transform:translateX(280%) skewX(-20deg)}
+      .nuda-btn-shine-sweep:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-shine-sweep::before{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-shine-sweep">
+  <span>Shine Sweep</span>
+</button>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Shine Sweep — a diagonal highlight sweeps across the button on hover. */
+.nuda-btn-shine-sweep {
+  position: relative;
+  padding: 12px 30px;
+  background: #0c0c10;
+  color: #e4ff54;
+  border: 1px solid rgba(228, 255, 84, 0.4);
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.nuda-btn-shine-sweep span { position: relative; z-index: 1; }
+
+.nuda-btn-shine-sweep::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  background: linear-gradient(110deg, transparent 20%, rgba(228, 255, 84, 0.35) 50%, transparent 80%);
+  transform: translateX(-180%) skewX(-20deg);
+  transition: transform 0.6s ease;
+}
+
+.nuda-btn-shine-sweep:hover::before {
+  transform: translateX(280%) skewX(-20deg);
+}
+
+.nuda-btn-shine-sweep:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-shine-sweep::before { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 23. Ink Ripple ─────────────── */
+  {
+    id: "btn-ripple-ink",
+    name: "Ink Ripple",
+    category: "Buttons",
+    preview: (
+      <button
+        className="nuda-btn-ripple-ink"
+        onClick={(e) => {
+          const b = e.currentTarget;
+          const r = b.getBoundingClientRect();
+          const ink = document.createElement("span");
+          ink.className = "nuda-btn-ripple-ink__ink";
+          ink.style.left = `${e.clientX - r.left}px`;
+          ink.style.top = `${e.clientY - r.top}px`;
+          b.appendChild(ink);
+          ink.addEventListener("animationend", () => ink.remove());
+        }}
+      >
+        <span className="nuda-btn-ripple-ink__label">Ink Ripple</span>
+      </button>
+    ),
+    cssInline: `
+      .nuda-btn-ripple-ink{position:relative;padding:12px 30px;background:#e4ff54;color:#09090b;border:0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;overflow:hidden}
+      .nuda-btn-ripple-ink__label{position:relative;z-index:1}
+      .nuda-btn-ripple-ink__ink{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:rgba(9,9,11,.35);transform:scale(0);animation:_inkRipple .6s ease-out forwards;pointer-events:none}
+      .nuda-btn-ripple-ink:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      @keyframes _inkRipple{to{transform:scale(14);opacity:0}}
+      @media(prefers-reduced-motion:reduce){.nuda-btn-ripple-ink__ink{animation:none;display:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<button class="nuda-btn-ripple-ink">
+  <span class="nuda-btn-ripple-ink__label">Ink Ripple</span>
+</button>`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* Ink Ripple — spawns an expanding ink dot at the click point.
+   Respects prefers-reduced-motion. */
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll(".nuda-btn-ripple-ink").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      var r = btn.getBoundingClientRect();
+      var ink = document.createElement("span");
+      ink.className = "nuda-btn-ripple-ink__ink";
+      ink.style.left = (e.clientX - r.left) + "px";
+      ink.style.top = (e.clientY - r.top) + "px";
+      btn.appendChild(ink);
+      ink.addEventListener("animationend", function () { ink.remove(); });
+    });
+  });
+})();`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Ink Ripple — material-style ink burst from the click point. */
+.nuda-btn-ripple-ink {
+  position: relative;
+  padding: 12px 30px;
+  background: #e4ff54;
+  color: #09090b;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.nuda-btn-ripple-ink__label { position: relative; z-index: 1; }
+
+.nuda-btn-ripple-ink__ink {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: rgba(9, 9, 11, 0.35);
+  transform: scale(0);
+  animation: nuda-ink-ripple 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes nuda-ink-ripple {
+  to { transform: scale(14); opacity: 0; }
+}
+
+.nuda-btn-ripple-ink:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-btn-ripple-ink__ink { animation: none; display: none; }
+}`,
+      },
+    ],
+  },
 ];

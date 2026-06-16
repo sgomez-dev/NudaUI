@@ -761,4 +761,166 @@ export const backgrounds: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Animated Grid ─────────────── */
+  {
+    id: "animated-grid-bg",
+    name: "Animated Grid",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-anim-grid" aria-hidden="true" style={{ width: "100%", height: 180, borderRadius: 12 }}>
+        <span className="nuda-anim-grid__plane" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-anim-grid{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(228,255,84,.12),transparent 60%),#09090b;perspective:240px}
+      .nuda-anim-grid__plane{position:absolute;left:-50%;right:-50%;top:-20%;bottom:-60%;background-image:linear-gradient(90deg,rgba(228,255,84,.28) 1px,transparent 1px),linear-gradient(0deg,rgba(228,255,84,.28) 1px,transparent 1px);background-size:32px 32px;transform:rotateX(62deg);transform-origin:50% 100%;animation:_animGridScroll 2s linear infinite;will-change:background-position}
+      @keyframes _animGridScroll{from{background-position:0 0}to{background-position:0 32px}}
+      @media(prefers-reduced-motion:reduce){.nuda-anim-grid__plane{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-anim-grid" aria-hidden="true">
+  <span class="nuda-anim-grid__plane"></span>
+</div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Floating Orbs ─────────────── */
+  {
+    id: "floating-orbs-bg",
+    name: "Floating Orbs",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-float-orbs" aria-hidden="true" style={{ width: "100%", height: 180, borderRadius: 12 }}>
+        <span className="nuda-float-orbs__o nuda-float-orbs__o--1" />
+        <span className="nuda-float-orbs__o nuda-float-orbs__o--2" />
+        <span className="nuda-float-orbs__o nuda-float-orbs__o--3" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-float-orbs{position:relative;overflow:hidden;background:#09090b;isolation:isolate}
+      .nuda-float-orbs__o{position:absolute;width:120px;height:120px;border-radius:50%;filter:blur(34px);opacity:.5;mix-blend-mode:screen;will-change:transform}
+      .nuda-float-orbs__o--1{background:#e4ff54;top:-20px;left:8%;animation:_floatOrb 9s ease-in-out infinite alternate}
+      .nuda-float-orbs__o--2{background:#62b6ff;bottom:-30px;left:40%;animation:_floatOrb 12s ease-in-out infinite alternate-reverse;animation-delay:-3s}
+      .nuda-float-orbs__o--3{background:#9d6dff;top:10%;right:-10px;animation:_floatOrb 14s ease-in-out infinite alternate;animation-delay:-6s}
+      @keyframes _floatOrb{0%{transform:translate(0,0) scale(1)}100%{transform:translate(24px,-20px) scale(1.25)}}
+      @media(prefers-reduced-motion:reduce){.nuda-float-orbs__o{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-float-orbs" aria-hidden="true">
+  <span class="nuda-float-orbs__o nuda-float-orbs__o--1"></span>
+  <span class="nuda-float-orbs__o nuda-float-orbs__o--2"></span>
+  <span class="nuda-float-orbs__o nuda-float-orbs__o--3"></span>
+</div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Dot Drift ─────────────── */
+  {
+    id: "dot-drift-bg",
+    name: "Dot Drift",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-dot-drift" aria-hidden="true" style={{ width: "100%", height: 180, borderRadius: 12 }} />
+    ),
+    cssInline: `
+      .nuda-dot-drift{position:relative;overflow:hidden;background-color:#09090b;background-image:radial-gradient(circle,rgba(228,255,84,.22) 1.4px,transparent 1.4px),radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:28px 28px,18px 18px;animation:_dotDrift 18s linear infinite;will-change:background-position}
+      .nuda-dot-drift::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,transparent 30%,#09090b 100%)}
+      @keyframes _dotDrift{to{background-position:28px 56px,-18px 36px}}
+      @media(prefers-reduced-motion:reduce){.nuda-dot-drift{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-dot-drift" aria-hidden="true"></div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Gradient Wave ─────────────── */
+  {
+    id: "gradient-wave-bg",
+    name: "Gradient Wave",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-grad-wave" aria-hidden="true" style={{ width: "100%", height: 180, borderRadius: 12 }} />
+    ),
+    cssInline: `
+      .nuda-grad-wave{position:relative;overflow:hidden;background:linear-gradient(120deg,#09090b 0%,#13160b 25%,#e4ff5433 45%,#13160b 65%,#09090b 100%);background-size:300% 300%;animation:_gradWave 12s ease-in-out infinite;will-change:background-position}
+      .nuda-grad-wave::after{content:'';position:absolute;inset:0;background:linear-gradient(60deg,transparent 0%,rgba(98,182,255,.12) 50%,transparent 100%);background-size:300% 300%;animation:_gradWave 16s ease-in-out infinite reverse;mix-blend-mode:screen}
+      @keyframes _gradWave{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+      @media(prefers-reduced-motion:reduce){.nuda-grad-wave,.nuda-grad-wave::after{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-grad-wave" aria-hidden="true"></div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Noise Field ─────────────── */
+  {
+    id: "noise-field-bg",
+    name: "Noise Field",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-noise-field" aria-hidden="true" style={{ width: "100%", height: 180, borderRadius: 12 }} />
+    ),
+    cssInline: `
+      .nuda-noise-field{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#181808,#09090b 70%)}
+      .nuda-noise-field::before{content:'';position:absolute;inset:-50%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='nf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23nf)'/%3E%3C/svg%3E");opacity:.14;mix-blend-mode:overlay;animation:_noiseField .4s steps(4) infinite;will-change:transform}
+      .nuda-noise-field::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(228,255,84,.14),transparent 55%)}
+      @keyframes _noiseField{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(-6px,4px,0)}50%{transform:translate3d(5px,-3px,0)}75%{transform:translate3d(-3px,-5px,0)}100%{transform:translate3d(4px,3px,0)}}
+      @media(prefers-reduced-motion:reduce){.nuda-noise-field::before{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-noise-field" aria-hidden="true"></div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Beam Sweep ─────────────── */
+  {
+    id: "beam-sweep-bg",
+    name: "Beam Sweep",
+    category: "Backgrounds",
+    preview: (
+      <div className="nuda-beam-sweep" aria-hidden="true" style={{ width: "100%", height: 180, borderRadius: 12 }}>
+        <span className="nuda-beam-sweep__b nuda-beam-sweep__b--1" />
+        <span className="nuda-beam-sweep__b nuda-beam-sweep__b--2" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-beam-sweep{position:relative;overflow:hidden;background:#09090b}
+      .nuda-beam-sweep__b{position:absolute;top:-40%;bottom:-40%;width:60px;transform:rotate(18deg);filter:blur(8px);will-change:transform,opacity}
+      .nuda-beam-sweep__b--1{left:-20%;background:linear-gradient(90deg,transparent,rgba(228,255,84,.32),transparent);animation:_beamSweep 5s ease-in-out infinite}
+      .nuda-beam-sweep__b--2{left:-20%;background:linear-gradient(90deg,transparent,rgba(98,182,255,.22),transparent);animation:_beamSweep 7s ease-in-out infinite;animation-delay:-2.5s}
+      @keyframes _beamSweep{0%{transform:translateX(0) rotate(18deg);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(600px) rotate(18deg);opacity:0}}
+      @media(prefers-reduced-motion:reduce){.nuda-beam-sweep__b{animation:none;opacity:.3;transform:rotate(18deg)}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-beam-sweep" aria-hidden="true">
+  <span class="nuda-beam-sweep__b nuda-beam-sweep__b--1"></span>
+  <span class="nuda-beam-sweep__b nuda-beam-sweep__b--2"></span>
+</div>`,
+      },
+    ],
+  },
 ];

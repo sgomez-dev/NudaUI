@@ -16,10 +16,20 @@ const pageUrl = absoluteUrl("/changelog");
 // is a date + a short bullet of what shipped. Keep newest first.
 const entries: { date: string; iso: string; bullets: string[] }[] = [
   {
+    date: "June 2026",
+    iso: "2026-06-16",
+    bullets: [
+      `Crossed 1,000 — the catalog now spans ${totalCount} components across ${categories.length} categories.`,
+      "Added 12 categories: Glassmorphism, Animated Gradients, Noise & Grain, Scroll-Driven, View Transitions, CSS-Only Interactions, Glitch & Distortion, Neon & Glow, Morphing Shapes, Confetti & Celebration, Animated Icons, Weather & Ambient.",
+      "Deepened Loaders, Spinners, Progress, Skeletons, Buttons, Micro-interactions, Toggles & Inputs, Text Effects, Cards & Hover, Badges, Backgrounds, Borders, Dividers, Hero Sections, Tooltips.",
+      "Every new animation ships GPU-only motion, prefers-reduced-motion fallbacks, and WCAG-safe flicker (≤3 flashes/sec).",
+    ],
+  },
+  {
     date: "May 2026",
     iso: "2026-05-08",
     bullets: [
-      `Catalog grew to ${totalCount} components across ${categories.length} categories.`,
+      "Catalog grew to 802 components across 70 categories.",
       "Added Watch Faces, Quotes & Testimonials, Comments & Reactions, Profile Headers, Settings, File Upload, Tags & Chips Input, Mobile Patterns, Notification Center, and Skeleton Variants.",
       "Expanded Spinners, Dividers, Avatars, Badges, Indicators, Marquees, Empty States.",
       "Shipped /api/catalog.json — machine-readable mirror of the entire registry for AI agents, MCP servers, and RAG.",

@@ -908,4 +908,734 @@ export const textEffects: NudaComponent[] = [
       },
     ],
   },
+
+  /* -------------------------------------------------------
+     11. Scramble Decode
+     ------------------------------------------------------- */
+  {
+    id: "scramble-decode",
+    name: "Scramble Decode",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-scramble-decode{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:1.8rem;font-weight:700;letter-spacing:0.08em;color:#e4ff54;display:inline-block;text-shadow:0 0 18px rgba(228,255,84,0.35)}
+    `,
+    preview: (
+      <span
+        style={{
+          fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+          fontSize: "1.8rem",
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          color: "#e4ff54",
+          textShadow: "0 0 18px rgba(228,255,84,0.35)",
+        }}
+        data-nuda-decode="DECODE"
+      >
+        DECODE
+      </span>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Scramble Decode — text decodes from random chars (vanilla JS) -->
+<span class="nuda-scramble-decode" data-nuda-decode="DECODE">DECODE</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Scramble Decode ─────────────────────────────────────────
+   JS-driven decode reveal; CSS handles the base styling.
+   Customize:
+     --nuda-sd-clr   : text color
+     --nuda-sd-size  : font size
+   ──────────────────────────────────────────────────────────── */
+.nuda-scramble-decode {
+  --nuda-sd-clr: #e4ff54;
+  --nuda-sd-size: 1.8rem;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--nuda-sd-size);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--nuda-sd-clr);
+  display: inline-block;
+  text-shadow: 0 0 18px rgba(228, 255, 84, 0.35);
+}`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* ── Scramble Decode — vanilla JS ────────────────────────────
+   Each character scrambles through random glyphs, locking in
+   left-to-right until the final word is revealed.
+   Respects prefers-reduced-motion.
+   ──────────────────────────────────────────────────────────── */
+;(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#%&*";
+
+  document.querySelectorAll("[data-nuda-decode]").forEach(function (el) {
+    var finalText = el.getAttribute("data-nuda-decode") || el.textContent;
+
+    if (reduce) {
+      el.textContent = finalText;
+      return;
+    }
+
+    var frame = 0;
+    var perChar = 3; /* frames before a char locks */
+    var timer = setInterval(function () {
+      var locked = Math.floor(frame / perChar);
+      el.textContent = finalText
+        .split("")
+        .map(function (ch, i) {
+          if (i < locked || ch === " ") return finalText[i];
+          return glyphs[Math.floor(Math.random() * glyphs.length)];
+        })
+        .join("");
+      frame++;
+      if (locked >= finalText.length) clearInterval(timer);
+    }, 45);
+  });
+})();`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     12. Gradient Wave
+     ------------------------------------------------------- */
+  {
+    id: "gradient-wave-text",
+    name: "Gradient Wave",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-gradient-wave{font-size:2rem;font-weight:800;background:linear-gradient(90deg,#e4ff54,#fafafa,#e4ff54,#a3b800,#e4ff54);background-size:300% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:_gwWave 4s linear infinite}
+      @keyframes _gwWave{to{background-position:-300% center}}
+      @media (prefers-reduced-motion:reduce){.nuda-gradient-wave{animation:none}}
+    `,
+    preview: (
+      <span
+        style={{
+          fontSize: "2rem",
+          fontWeight: 800,
+          background:
+            "linear-gradient(90deg,#e4ff54,#fafafa,#e4ff54,#a3b800,#e4ff54)",
+          backgroundSize: "300% auto",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          color: "transparent",
+          animation: "_gwWave 4s linear infinite",
+        }}
+      >
+        Gradient Wave
+      </span>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Gradient Wave — animated gradient sweep over text -->
+<span class="nuda-gradient-wave">Gradient Wave</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Gradient Wave ───────────────────────────────────────────
+   Customize:
+     --nuda-gw-gradient : the sweeping gradient
+     --nuda-gw-speed    : sweep duration
+   ──────────────────────────────────────────────────────────── */
+.nuda-gradient-wave {
+  --nuda-gw-gradient: linear-gradient(
+    90deg,
+    #e4ff54,
+    #fafafa,
+    #e4ff54,
+    #a3b800,
+    #e4ff54
+  );
+  --nuda-gw-speed: 4s;
+
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--nuda-gw-gradient);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* fallback */
+  animation: nuda-gradient-wave var(--nuda-gw-speed) linear infinite;
+}
+
+@keyframes nuda-gradient-wave {
+  to { background-position: -300% center; }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-gradient-wave {
+    animation: none;
+  }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     13. Typewriter Caret
+     ------------------------------------------------------- */
+  {
+    id: "typewriter-caret",
+    name: "Typewriter Caret",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-tw-caret{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:1.5rem;font-weight:600;color:#fafafa;display:inline-block;overflow:hidden;white-space:nowrap;border-right:3px solid #e4ff54;width:0;animation:_twcType 3s steps(20) forwards,_twcBlink 0.7s step-end infinite}
+      @keyframes _twcType{to{width:100%}}
+      @keyframes _twcBlink{50%{border-color:transparent}}
+      @media (prefers-reduced-motion:reduce){.nuda-tw-caret{animation:none;width:100%;border-right-color:#e4ff54}}
+    `,
+    preview: (
+      <div style={{ fontFamily: "ui-monospace, monospace", fontSize: "1.5rem" }}>
+        <span
+          style={{
+            display: "inline-block",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            fontWeight: 600,
+            color: "#fafafa",
+            borderRight: "3px solid #e4ff54",
+            width: 0,
+            animation:
+              "_twcType 3s steps(20) forwards, _twcBlink 0.7s step-end infinite",
+          }}
+        >
+          Hello, operator.
+        </span>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Typewriter Caret — typing effect with blinking caret -->
+<span class="nuda-tw-caret">Hello, operator.</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Typewriter Caret ────────────────────────────────────────
+   Customize:
+     --nuda-twc-steps   : number of characters in your text
+     --nuda-twc-speed   : total typing duration
+     --nuda-twc-caret   : caret color
+   ──────────────────────────────────────────────────────────── */
+.nuda-tw-caret {
+  --nuda-twc-steps: 16;   /* update to match character count */
+  --nuda-twc-speed: 3s;
+  --nuda-twc-caret: #e4ff54;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fafafa;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--nuda-twc-caret);
+  width: 0;
+  animation:
+    nuda-tw-caret-type var(--nuda-twc-speed) steps(var(--nuda-twc-steps)) forwards,
+    nuda-tw-caret-blink 0.7s step-end infinite;
+}
+
+@keyframes nuda-tw-caret-type {
+  to { width: 100%; }
+}
+
+@keyframes nuda-tw-caret-blink {
+  50% { border-color: transparent; }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-tw-caret {
+    animation: none;
+    width: 100%;
+    border-right-color: var(--nuda-twc-caret);
+  }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     14. Char Stagger Rise
+     ------------------------------------------------------- */
+  {
+    id: "char-stagger-rise",
+    name: "Char Stagger Rise",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-char-rise{display:inline-flex;font-size:2rem;font-weight:800;color:#fafafa}
+      .nuda-char-rise__char{display:inline-block;white-space:pre;opacity:0;transform:translateY(0.6em);animation:_crRise 0.5s cubic-bezier(0.22,1,0.36,1) forwards;animation-delay:calc(var(--i,0) * 0.06s)}
+      @keyframes _crRise{to{opacity:1;transform:translateY(0)}}
+      @media (prefers-reduced-motion:reduce){.nuda-char-rise__char{animation:none;opacity:1;transform:none}}
+    `,
+    preview: (
+      <div
+        style={{ display: "inline-flex", fontSize: "2rem", fontWeight: 800, color: "#fafafa" }}
+        aria-label="Rise up"
+      >
+        {"Rise up".split("").map((ch, i) => (
+          <span
+            key={i}
+            aria-hidden="true"
+            style={{
+              display: "inline-block",
+              whiteSpace: "pre",
+              opacity: 0,
+              transform: "translateY(0.6em)",
+              animation: `_crRise 0.5s ${i * 0.06}s cubic-bezier(0.22,1,0.36,1) forwards`,
+            }}
+          >
+            {ch}
+          </span>
+        ))}
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Char Stagger Rise — characters rise in sequence
+     Each char gets a stagger delay via the --i custom property. -->
+<span class="nuda-char-rise" aria-label="Rise up">
+  <span class="nuda-char-rise__char" style="--i:0" aria-hidden="true">R</span>
+  <span class="nuda-char-rise__char" style="--i:1" aria-hidden="true">i</span>
+  <span class="nuda-char-rise__char" style="--i:2" aria-hidden="true">s</span>
+  <span class="nuda-char-rise__char" style="--i:3" aria-hidden="true">e</span>
+  <span class="nuda-char-rise__char" style="--i:4" aria-hidden="true">&nbsp;</span>
+  <span class="nuda-char-rise__char" style="--i:5" aria-hidden="true">u</span>
+  <span class="nuda-char-rise__char" style="--i:6" aria-hidden="true">p</span>
+</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Char Stagger Rise ───────────────────────────────────────
+   Customize:
+     --nuda-cr-offset   : starting vertical offset
+     --nuda-cr-speed    : per-character duration
+     --nuda-cr-stagger  : delay between characters
+   ──────────────────────────────────────────────────────────── */
+.nuda-char-rise {
+  --nuda-cr-offset: 0.6em;
+  --nuda-cr-speed: 0.5s;
+  --nuda-cr-stagger: 0.06s;
+
+  display: inline-flex;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fafafa;
+}
+
+.nuda-char-rise__char {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  transform: translateY(var(--nuda-cr-offset));
+  animation: nuda-char-rise var(--nuda-cr-speed)
+    cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i, 0) * var(--nuda-cr-stagger));
+}
+
+@keyframes nuda-char-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-char-rise__char {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     15. Glitch Hover Text
+     ------------------------------------------------------- */
+  {
+    id: "glitch-hover-text",
+    name: "Glitch Hover Text",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-glitch-hover-text{position:relative;display:inline-block;font-size:2rem;font-weight:800;letter-spacing:0.04em;color:#fafafa;cursor:pointer}
+      .nuda-glitch-hover-text__layer{position:absolute;inset:0;opacity:0;pointer-events:none}
+      .nuda-glitch-hover-text:hover .nuda-glitch-hover-text__layer,.nuda-glitch-hover-text:focus-visible .nuda-glitch-hover-text__layer{opacity:0.85}
+      .nuda-glitch-hover-text:focus-visible{outline:2px solid #e4ff54;outline-offset:4px}
+      .nuda-glitch-hover-text__layer--a{color:#e4ff54}
+      .nuda-glitch-hover-text__layer--b{color:#ff6dd4}
+      .nuda-glitch-hover-text:hover .nuda-glitch-hover-text__layer--a,.nuda-glitch-hover-text:focus-visible .nuda-glitch-hover-text__layer--a{animation:_ghA 0.4s steps(2) 2}
+      .nuda-glitch-hover-text:hover .nuda-glitch-hover-text__layer--b,.nuda-glitch-hover-text:focus-visible .nuda-glitch-hover-text__layer--b{animation:_ghB 0.4s steps(2) 2}
+      @keyframes _ghA{0%{transform:translate(0)}50%{transform:translate(-2px,1px)}100%{transform:translate(2px,-1px)}}
+      @keyframes _ghB{0%{transform:translate(0)}50%{transform:translate(2px,-1px)}100%{transform:translate(-2px,1px)}}
+      @media (prefers-reduced-motion:reduce){.nuda-glitch-hover-text__layer{display:none}}
+    `,
+    preview: (
+      <span
+        tabIndex={0}
+        style={{
+          position: "relative",
+          display: "inline-block",
+          fontSize: "2rem",
+          fontWeight: 800,
+          letterSpacing: "0.04em",
+          color: "#fafafa",
+          cursor: "pointer",
+        }}
+      >
+        GLITCH
+        <span
+          aria-hidden="true"
+          style={{ position: "absolute", inset: 0, color: "#e4ff54", opacity: 0.35 }}
+        >
+          GLITCH
+        </span>
+      </span>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Glitch Hover Text — subtle RGB glitch on hover/focus (seizure-safe) -->
+<span class="nuda-glitch-hover-text" tabindex="0">
+  GLITCH
+  <span class="nuda-glitch-hover-text__layer nuda-glitch-hover-text__layer--a" aria-hidden="true">GLITCH</span>
+  <span class="nuda-glitch-hover-text__layer nuda-glitch-hover-text__layer--b" aria-hidden="true">GLITCH</span>
+</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Glitch Hover Text ───────────────────────────────────────
+   Two offset color layers flicker briefly on hover/focus.
+   Capped at two short cycles (≤3 flashes/sec) — seizure-safe.
+   Customize:
+     --nuda-gh-clr-a / --nuda-gh-clr-b : the two channel colors
+   ──────────────────────────────────────────────────────────── */
+.nuda-glitch-hover-text {
+  --nuda-gh-clr-a: #e4ff54;
+  --nuda-gh-clr-b: #ff6dd4;
+
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fafafa;
+  cursor: pointer;
+}
+
+.nuda-glitch-hover-text:focus-visible {
+  outline: 2px solid var(--nuda-gh-clr-a);
+  outline-offset: 4px;
+}
+
+.nuda-glitch-hover-text__layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nuda-glitch-hover-text__layer--a { color: var(--nuda-gh-clr-a); }
+.nuda-glitch-hover-text__layer--b { color: var(--nuda-gh-clr-b); }
+
+.nuda-glitch-hover-text:hover .nuda-glitch-hover-text__layer,
+.nuda-glitch-hover-text:focus-visible .nuda-glitch-hover-text__layer {
+  opacity: 0.85;
+}
+
+.nuda-glitch-hover-text:hover .nuda-glitch-hover-text__layer--a,
+.nuda-glitch-hover-text:focus-visible .nuda-glitch-hover-text__layer--a {
+  animation: nuda-glitch-hover-text-a 0.4s steps(2) 2;
+}
+
+.nuda-glitch-hover-text:hover .nuda-glitch-hover-text__layer--b,
+.nuda-glitch-hover-text:focus-visible .nuda-glitch-hover-text__layer--b {
+  animation: nuda-glitch-hover-text-b 0.4s steps(2) 2;
+}
+
+@keyframes nuda-glitch-hover-text-a {
+  0%   { transform: translate(0); }
+  50%  { transform: translate(-2px, 1px); }
+  100% { transform: translate(2px, -1px); }
+}
+
+@keyframes nuda-glitch-hover-text-b {
+  0%   { transform: translate(0); }
+  50%  { transform: translate(2px, -1px); }
+  100% { transform: translate(-2px, 1px); }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-glitch-hover-text__layer { display: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     16. Neon Flicker Text
+     ------------------------------------------------------- */
+  {
+    id: "neon-flicker-text",
+    name: "Neon Flicker Text",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-neon-flicker{font-size:2rem;font-weight:700;color:#fafafa;animation:_nfFlicker 4s linear infinite}
+      @keyframes _nfFlicker{0%,18%,22%,25%,53%,57%,100%{text-shadow:0 0 4px #fafafa,0 0 12px #e4ff54,0 0 32px #e4ff54,0 0 64px #a3b800}20%,24%,55%{text-shadow:none}}
+      @media (prefers-reduced-motion:reduce){.nuda-neon-flicker{animation:none;text-shadow:0 0 4px #fafafa,0 0 18px #e4ff54}}
+    `,
+    preview: (
+      <span
+        style={{
+          fontSize: "2rem",
+          fontWeight: 700,
+          color: "#fafafa",
+          animation: "_nfFlicker 4s linear infinite",
+        }}
+      >
+        Neon Flicker
+      </span>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Neon Flicker Text — subtle neon flicker (≤3 flashes/sec) -->
+<span class="nuda-neon-flicker">Neon Flicker</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Neon Flicker Text ───────────────────────────────────────
+   Flicker keyframes are sparse (a few short drops over 4s) to
+   stay well under 3 flashes/sec. Disabled under reduced-motion.
+   Customize:
+     --nuda-nf-clr   : neon glow color
+     --nuda-nf-text  : base text color
+   ──────────────────────────────────────────────────────────── */
+.nuda-neon-flicker {
+  --nuda-nf-clr: #e4ff54;
+  --nuda-nf-text: #fafafa;
+
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--nuda-nf-text);
+  animation: nuda-neon-flicker 4s linear infinite;
+}
+
+@keyframes nuda-neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 4px  var(--nuda-nf-text),
+      0 0 12px var(--nuda-nf-clr),
+      0 0 32px var(--nuda-nf-clr),
+      0 0 64px #a3b800;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-neon-flicker {
+    animation: none;
+    text-shadow:
+      0 0 4px  var(--nuda-nf-text),
+      0 0 18px var(--nuda-nf-clr);
+  }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     17. Blur In
+     ------------------------------------------------------- */
+  {
+    id: "blur-in-text",
+    name: "Blur In",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-blur-in{display:inline-block;font-size:2rem;font-weight:700;color:#fafafa;animation:_biIn 1.1s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
+      @keyframes _biIn{from{filter:blur(14px);opacity:0}to{filter:blur(0);opacity:1}}
+      @media (prefers-reduced-motion:reduce){.nuda-blur-in{animation:none;filter:none;opacity:1}}
+    `,
+    preview: (
+      <span
+        style={{
+          display: "inline-block",
+          fontSize: "2rem",
+          fontWeight: 700,
+          color: "#fafafa",
+          animation: "_biIn 1.1s cubic-bezier(0.25,0.46,0.45,0.94) forwards",
+        }}
+      >
+        Blur In
+      </span>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Blur In — text resolves from blur -->
+<span class="nuda-blur-in">Blur In</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Blur In ─────────────────────────────────────────────────
+   Customize:
+     --nuda-bi-blur   : starting blur amount
+     --nuda-bi-speed  : resolve duration
+   ──────────────────────────────────────────────────────────── */
+.nuda-blur-in {
+  --nuda-bi-blur: 14px;
+  --nuda-bi-speed: 1.1s;
+
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fafafa;
+  animation: nuda-blur-in var(--nuda-bi-speed)
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes nuda-blur-in {
+  from { filter: blur(var(--nuda-bi-blur)); opacity: 0; }
+  to   { filter: blur(0); opacity: 1; }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-blur-in {
+    animation: none;
+    filter: none;
+    opacity: 1;
+  }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     18. Underline Grow
+     ------------------------------------------------------- */
+  {
+    id: "underline-grow-text",
+    name: "Underline Grow",
+    category: "Text Effects",
+    cssInline: `
+      .nuda-underline-grow{position:relative;display:inline-block;font-size:1.6rem;font-weight:700;color:#fafafa;text-decoration:none;cursor:pointer}
+      .nuda-underline-grow::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:#e4ff54;transform:scaleX(0);transform-origin:left center;transition:transform 0.32s cubic-bezier(0.22,1,0.36,1)}
+      .nuda-underline-grow:hover::after,.nuda-underline-grow:focus-visible::after{transform:scaleX(1)}
+      .nuda-underline-grow:focus-visible{outline:2px solid #e4ff54;outline-offset:4px}
+      @media (prefers-reduced-motion:reduce){.nuda-underline-grow::after{transition:none}}
+    `,
+    preview: (
+      <a
+        href="#"
+        onClick={(e) => e.preventDefault()}
+        style={{
+          position: "relative",
+          display: "inline-block",
+          fontSize: "1.6rem",
+          fontWeight: 700,
+          color: "#fafafa",
+          textDecoration: "none",
+          cursor: "pointer",
+          paddingBottom: "4px",
+          borderBottom: "2px solid rgba(228,255,84,0.25)",
+        }}
+      >
+        Hover me
+      </a>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Underline Grow — underline grows on hover/focus -->
+<a href="#" class="nuda-underline-grow">Hover me</a>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Underline Grow ──────────────────────────────────────────
+   Underline scales in from the left on hover/focus.
+   Customize:
+     --nuda-ug-clr    : underline color
+     --nuda-ug-thick  : underline thickness
+     --nuda-ug-speed  : grow duration
+   ──────────────────────────────────────────────────────────── */
+.nuda-underline-grow {
+  --nuda-ug-clr: #e4ff54;
+  --nuda-ug-thick: 2px;
+  --nuda-ug-speed: 0.32s;
+
+  position: relative;
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fafafa;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nuda-underline-grow::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: var(--nuda-ug-thick);
+  background: var(--nuda-ug-clr);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--nuda-ug-speed) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nuda-underline-grow:hover::after,
+.nuda-underline-grow:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.nuda-underline-grow:focus-visible {
+  outline: 2px solid var(--nuda-ug-clr);
+  outline-offset: 4px;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-underline-grow::after {
+    transition: none;
+  }
+}`,
+      },
+    ],
+  },
 ];
