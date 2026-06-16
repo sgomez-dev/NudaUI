@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import type { NudaComponent } from "./types";
 
 /* ============================================================
@@ -19,60 +18,49 @@ import type { NudaComponent } from "./types";
    ============================================================ */
 
 /* Corrupt Text — vanilla JS char-swap.
-   Runs only on the live preview; respects reduced-motion via
-   matchMedia. The copyable JS tab carries the production version. */
+   Runs only on the live preview; respects reduced-motion via matchMedia.
+   Driven by a callback ref (no React hooks, so this registry module stays
+   importable from Server Components). The loop self-stops once the node
+   leaves the DOM (el.isConnected). The copyable JS tab carries the
+   production version. */
+function startGlitchCorrupt(el: HTMLSpanElement | null) {
+  if (!el || typeof window === "undefined") return;
+  const node = el as HTMLSpanElement & { _nudaCorrupt?: boolean };
+  if (node._nudaCorrupt) return; // guard against double-start on re-render
+  node._nudaCorrupt = true;
+
+  const finalText = "NUDAUI";
+  el.textContent = finalText;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const glyphs = "!<>-_\\/[]{}=+*^?#01";
+  const reveal = 4; // frames each char stays scrambled
+  let frame = 0;
+
+  const tick = () => {
+    if (!el.isConnected) return; // node removed from DOM → stop the loop
+    const out: string[] = [];
+    for (let i = 0; i < finalText.length; i++) {
+      if (i < Math.floor(frame / reveal)) out.push(finalText[i]);
+      else out.push(glyphs[(Math.random() * glyphs.length) | 0]);
+    }
+    el.textContent = out.join("");
+    frame++;
+    if (frame > finalText.length * reveal + 8) {
+      el.textContent = finalText;
+      frame = 0;
+      window.setTimeout(tick, 1800); // intermittent: pause, then corrupt again
+      return;
+    }
+    window.setTimeout(tick, 55);
+  };
+  window.setTimeout(tick, 600);
+}
+
 function GlitchCorruptPreview() {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const reduce = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const finalText = "NUDAUI";
-    el.textContent = finalText;
-    if (reduce) return; // settle to clean text, no corruption
-
-    const glyphs = "!<>-_\\/[]{}=+*^?#01";
-    let raf = 0;
-    let frame = 0;
-    const reveal = 4; // frames each char stays scrambled
-    let active = true;
-
-    const tick = () => {
-      if (!active) return;
-      const out: string[] = [];
-      for (let i = 0; i < finalText.length; i++) {
-        if (i < Math.floor(frame / reveal)) out.push(finalText[i]);
-        else out.push(glyphs[(Math.random() * glyphs.length) | 0]);
-      }
-      el.textContent = out.join("");
-      frame++;
-      if (frame > finalText.length * reveal + 8) {
-        el.textContent = finalText;
-        frame = 0;
-        // intermittent: pause, then corrupt again (subtle, ~once/2.4s)
-        window.setTimeout(() => {
-          if (active) raf = requestAnimationFrame(tick);
-        }, 1800);
-        return;
-      }
-      window.setTimeout(() => {
-        if (active) raf = requestAnimationFrame(tick);
-      }, 55);
-    };
-    raf = requestAnimationFrame(tick);
-
-    return () => {
-      active = false;
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
   return (
     <span
-      ref={ref}
+      ref={startGlitchCorrupt}
       style={{
         fontFamily: "monospace",
         fontSize: "2rem",
