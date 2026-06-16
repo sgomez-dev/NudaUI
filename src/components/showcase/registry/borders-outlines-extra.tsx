@@ -244,4 +244,208 @@ export const bordersOutlinesExtra: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Rotating Gradient Border ─────────────── */
+  {
+    id: "rotating-gradient-border",
+    name: "Rotating Gradient Border",
+    category: CAT,
+    preview: (
+      <div className="nuda-rgb-border">
+        <span className="nuda-rgb-border__inner">Rotating Gradient</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-rgb-border{position:relative;display:inline-flex;border-radius:14px;padding:2px;background:conic-gradient(from var(--nuda-rgb-angle,0deg),#e4ff54,#62b6ff,#9d6dff,#e4ff54);animation:_nuda-rgbSpin 4s linear infinite}
+      .nuda-rgb-border__inner{display:block;background:#09090b;border-radius:12px;padding:18px 32px;color:#fafafa;font-size:.85rem;font-weight:500;letter-spacing:.02em;white-space:nowrap}
+      @property --nuda-rgb-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+      @keyframes _nuda-rgbSpin{to{--nuda-rgb-angle:360deg}}
+      @media(prefers-reduced-motion:reduce){.nuda-rgb-border{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-rgb-border">
+  <span class="nuda-rgb-border__inner">Rotating Gradient</span>
+</div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Marching Ants ─────────────── */
+  {
+    id: "dashed-march-border",
+    name: "Marching Ants",
+    category: CAT,
+    preview: (
+      <div className="nuda-dmb-border">
+        <svg className="nuda-dmb-border__svg" viewBox="0 0 200 80" fill="none" preserveAspectRatio="none" aria-hidden="true">
+          <rect className="nuda-dmb-border__rect" x="2" y="2" width="196" height="76" rx="10" stroke="#e4ff54" strokeWidth="2" pathLength="100" />
+        </svg>
+        <span className="nuda-dmb-border__label">Marching Ants</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-dmb-border{position:relative;display:inline-flex;align-items:center;justify-content:center;background:#1a1a1a;border-radius:10px;padding:22px 36px;min-width:160px}
+      .nuda-dmb-border__svg{position:absolute;inset:0;width:100%;height:100%}
+      .nuda-dmb-border__rect{stroke-dasharray:4 4;animation:_nuda-dmbMarch 1s linear infinite}
+      .nuda-dmb-border__label{color:#cfcfcf;font-size:.85rem;position:relative}
+      @keyframes _nuda-dmbMarch{to{stroke-dashoffset:-8}}
+      @media(prefers-reduced-motion:reduce){.nuda-dmb-border__rect{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-dmb-border">
+  <svg class="nuda-dmb-border__svg" viewBox="0 0 200 80" fill="none" preserveAspectRatio="none" aria-hidden="true">
+    <rect class="nuda-dmb-border__rect" x="2" y="2" width="196" height="76" rx="10"
+          stroke="#e4ff54" stroke-width="2" pathLength="100" />
+  </svg>
+  <span class="nuda-dmb-border__label">Marching Ants</span>
+</div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Glow Trace ─────────────── */
+  {
+    id: "glow-trace-border",
+    name: "Glow Trace",
+    category: CAT,
+    preview: (
+      <div className="nuda-gtb-border">
+        <svg className="nuda-gtb-border__svg" viewBox="0 0 200 80" fill="none" preserveAspectRatio="none" aria-hidden="true">
+          <rect className="nuda-gtb-border__base" x="2" y="2" width="196" height="76" rx="10" stroke="rgba(228,255,84,.18)" strokeWidth="1.5" />
+          <rect className="nuda-gtb-border__trace" x="2" y="2" width="196" height="76" rx="10" stroke="#e4ff54" strokeWidth="2.5" pathLength="100" />
+        </svg>
+        <span className="nuda-gtb-border__label">Glow Trace</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-gtb-border{position:relative;display:inline-flex;align-items:center;justify-content:center;background:#0f0f0f;border-radius:10px;padding:22px 36px;min-width:160px}
+      .nuda-gtb-border__svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 0 4px rgba(228,255,84,.8))}
+      .nuda-gtb-border__trace{stroke-dasharray:18 82;stroke-linecap:round;animation:_nuda-gtbTrace 3s linear infinite}
+      .nuda-gtb-border__label{color:#fafafa;font-size:.85rem;font-weight:500;position:relative}
+      @keyframes _nuda-gtbTrace{to{stroke-dashoffset:-100}}
+      @media(prefers-reduced-motion:reduce){.nuda-gtb-border__trace{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-gtb-border">
+  <svg class="nuda-gtb-border__svg" viewBox="0 0 200 80" fill="none" preserveAspectRatio="none" aria-hidden="true">
+    <rect class="nuda-gtb-border__base" x="2" y="2" width="196" height="76" rx="10"
+          stroke="rgba(228,255,84,.18)" stroke-width="1.5" />
+    <rect class="nuda-gtb-border__trace" x="2" y="2" width="196" height="76" rx="10"
+          stroke="#e4ff54" stroke-width="2.5" pathLength="100" />
+  </svg>
+  <span class="nuda-gtb-border__label">Glow Trace</span>
+</div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Corner Draw ─────────────── */
+  {
+    id: "corner-draw-border",
+    name: "Corner Draw",
+    category: CAT,
+    preview: (
+      <div className="nuda-cdb-border">
+        <span className="nuda-cdb-border__c nuda-cdb-border__c--tl" />
+        <span className="nuda-cdb-border__c nuda-cdb-border__c--tr" />
+        <span className="nuda-cdb-border__c nuda-cdb-border__c--bl" />
+        <span className="nuda-cdb-border__c nuda-cdb-border__c--br" />
+        <p className="nuda-cdb-border__content">Hover to Draw</p>
+      </div>
+    ),
+    cssInline: `
+      .nuda-cdb-border{position:relative;display:inline-flex;align-items:center;justify-content:center;background:#141414;padding:22px 40px;min-width:170px;border-radius:6px}
+      .nuda-cdb-border__c{position:absolute;width:18px;height:18px;border-color:#e4ff54;border-style:solid;border-width:0;transition:transform .35s ease}
+      .nuda-cdb-border__c--tl{top:6px;left:6px;border-width:2px 0 0 2px;transform-origin:top left;transform:scale(0)}
+      .nuda-cdb-border__c--tr{top:6px;right:6px;border-width:2px 2px 0 0;transform-origin:top right;transform:scale(0)}
+      .nuda-cdb-border__c--bl{bottom:6px;left:6px;border-width:0 0 2px 2px;transform-origin:bottom left;transform:scale(0)}
+      .nuda-cdb-border__c--br{bottom:6px;right:6px;border-width:0 2px 2px 0;transform-origin:bottom right;transform:scale(0)}
+      .nuda-cdb-border:hover .nuda-cdb-border__c{transform:scale(1)}
+      .nuda-cdb-border__content{color:#cfcfcf;font-size:.85rem;margin:0;font-family:monospace;letter-spacing:.04em}
+      @media(prefers-reduced-motion:reduce){.nuda-cdb-border__c{transition:none;transform:scale(1)}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-cdb-border">
+  <span class="nuda-cdb-border__c nuda-cdb-border__c--tl"></span>
+  <span class="nuda-cdb-border__c nuda-cdb-border__c--tr"></span>
+  <span class="nuda-cdb-border__c nuda-cdb-border__c--bl"></span>
+  <span class="nuda-cdb-border__c nuda-cdb-border__c--br"></span>
+  <p class="nuda-cdb-border__content">Hover to Draw</p>
+</div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Double Pulse ─────────────── */
+  {
+    id: "double-pulse-border",
+    name: "Double Pulse",
+    category: CAT,
+    preview: (
+      <div className="nuda-dpb-border">
+        <span className="nuda-dpb-border__ring nuda-dpb-border__ring--1" />
+        <span className="nuda-dpb-border__ring nuda-dpb-border__ring--2" />
+        <span className="nuda-dpb-border__core">Live</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-dpb-border{position:relative;display:inline-flex;align-items:center;justify-content:center;width:120px;height:64px}
+      .nuda-dpb-border__ring{position:absolute;inset:0;border:1.5px solid #e4ff54;border-radius:12px;opacity:0;will-change:transform,opacity}
+      .nuda-dpb-border__ring--1{animation:_nuda-dpbPulse 2.4s ease-out infinite}
+      .nuda-dpb-border__ring--2{animation:_nuda-dpbPulse 2.4s ease-out infinite;animation-delay:1.2s}
+      .nuda-dpb-border__core{position:relative;background:#141414;border:1px solid rgba(228,255,84,.4);border-radius:10px;padding:10px 22px;color:#e4ff54;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+      @keyframes _nuda-dpbPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+      @media(prefers-reduced-motion:reduce){.nuda-dpb-border__ring{animation:none;opacity:.4}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-dpb-border">
+  <span class="nuda-dpb-border__ring nuda-dpb-border__ring--1"></span>
+  <span class="nuda-dpb-border__ring nuda-dpb-border__ring--2"></span>
+  <span class="nuda-dpb-border__core">Live</span>
+</div>`,
+      },
+    ],
+  },
+
+  /* ─────────────── Neon Frame ─────────────── */
+  {
+    id: "neon-frame-border",
+    name: "Neon Frame",
+    category: CAT,
+    preview: (
+      <div className="nuda-nfb-border">
+        <span className="nuda-nfb-border__label">Neon Frame</span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-nfb-border{display:inline-flex;align-items:center;justify-content:center;background:#0a0a0a;border:1.5px solid #e4ff54;border-radius:12px;padding:18px 34px;animation:_nuda-nfbBreathe 2.4s ease-in-out infinite alternate}
+      .nuda-nfb-border__label{color:#e4ff54;font-size:.85rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-shadow:0 0 8px rgba(228,255,84,.6)}
+      @keyframes _nuda-nfbBreathe{from{box-shadow:0 0 6px rgba(228,255,84,.25),0 0 14px rgba(228,255,84,.12),inset 0 0 6px rgba(228,255,84,.15)}to{box-shadow:0 0 16px rgba(228,255,84,.6),0 0 38px rgba(228,255,84,.3),inset 0 0 12px rgba(228,255,84,.3)}}
+      @media(prefers-reduced-motion:reduce){.nuda-nfb-border{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-nfb-border">
+  <span class="nuda-nfb-border__label">Neon Frame</span>
+</div>`,
+      },
+    ],
+  },
 ];

@@ -871,4 +871,893 @@ export const togglesInputs: NudaComponent[] = [
       },
     ],
   },
+
+  /* -------------------------------------------------------
+     7. iOS Switch Glow
+     ------------------------------------------------------- */
+  {
+    id: "ios-switch-glow",
+    name: "iOS Switch Glow",
+    category: "Toggles & Inputs",
+    preview: (
+      <label className="nuda-ios-switch-glow" aria-label="Toggle">
+        <input type="checkbox" defaultChecked />
+        <span className="nuda-ios-switch-glow__track">
+          <span className="nuda-ios-switch-glow__thumb" />
+        </span>
+      </label>
+    ),
+    cssInline: `
+      .nuda-ios-switch-glow{display:inline-flex;cursor:pointer}
+      .nuda-ios-switch-glow input{position:absolute;width:1px;height:1px;margin:-1px;clip:rect(0,0,0,0);overflow:hidden}
+      .nuda-ios-switch-glow__track{position:relative;display:inline-block;width:54px;height:30px;border-radius:99px;background:#2a2a32;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);transition:background .3s ease,box-shadow .3s ease}
+      .nuda-ios-switch-glow__thumb{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fafafa;transform:translateX(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+      .nuda-ios-switch-glow input:checked+.nuda-ios-switch-glow__track{background:#e4ff54;box-shadow:0 0 14px rgba(228,255,84,.6),0 0 30px rgba(228,255,84,.3)}
+      .nuda-ios-switch-glow input:checked+.nuda-ios-switch-glow__track .nuda-ios-switch-glow__thumb{transform:translateX(24px);background:#09090b}
+      .nuda-ios-switch-glow input:focus-visible+.nuda-ios-switch-glow__track{outline:2px solid #e4ff54;outline-offset:3px}
+      @media(prefers-reduced-motion:reduce){.nuda-ios-switch-glow__track,.nuda-ios-switch-glow__thumb{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- iOS Switch Glow — iOS-style switch that glows lime when on -->
+<label class="nuda-ios-switch-glow" aria-label="Toggle">
+  <input type="checkbox" />
+  <span class="nuda-ios-switch-glow__track">
+    <span class="nuda-ios-switch-glow__thumb"></span>
+  </span>
+</label>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── iOS Switch Glow ─────────────────────────────────────────
+   Customize:
+     --nuda-isg-on   : on-state track color
+     --nuda-isg-glow : glow color
+   ──────────────────────────────────────────────────────────── */
+.nuda-ios-switch-glow {
+  --nuda-isg-on: #e4ff54;
+  --nuda-isg-glow: rgba(228, 255, 84, 0.6);
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.nuda-ios-switch-glow input {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+.nuda-ios-switch-glow__track {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 30px;
+  border-radius: 99px;
+  background: #2a2a32;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nuda-ios-switch-glow__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fafafa;
+  transform: translateX(0);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nuda-ios-switch-glow input:checked + .nuda-ios-switch-glow__track {
+  background: var(--nuda-isg-on);
+  box-shadow: 0 0 14px var(--nuda-isg-glow), 0 0 30px rgba(228, 255, 84, 0.3);
+}
+
+.nuda-ios-switch-glow input:checked + .nuda-ios-switch-glow__track .nuda-ios-switch-glow__thumb {
+  transform: translateX(24px);
+  background: #09090b;
+}
+
+.nuda-ios-switch-glow input:focus-visible + .nuda-ios-switch-glow__track {
+  outline: 2px solid var(--nuda-isg-on);
+  outline-offset: 3px;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-ios-switch-glow__track,
+  .nuda-ios-switch-glow__thumb { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     8. Segmented Toggle
+     ------------------------------------------------------- */
+  {
+    id: "segmented-toggle",
+    name: "Segmented Toggle",
+    category: "Toggles & Inputs",
+    preview: (
+      <div className="nuda-segmented" data-active="0">
+        <span className="nuda-segmented__indicator" />
+        <button className="nuda-segmented__btn" data-i="0" aria-pressed="true">Day</button>
+        <button
+          className="nuda-segmented__btn"
+          data-i="1"
+          aria-pressed="false"
+          onClick={(e) => {
+            const root = e.currentTarget.parentElement!;
+            root.setAttribute("data-active", "1");
+            root.querySelectorAll(".nuda-segmented__btn").forEach((b, i) =>
+              b.setAttribute("aria-pressed", String(i === 1))
+            );
+          }}
+        >
+          Week
+        </button>
+        <button
+          className="nuda-segmented__btn"
+          data-i="2"
+          aria-pressed="false"
+          onClick={(e) => {
+            const root = e.currentTarget.parentElement!;
+            root.setAttribute("data-active", "2");
+            root.querySelectorAll(".nuda-segmented__btn").forEach((b, i) =>
+              b.setAttribute("aria-pressed", String(i === 2))
+            );
+          }}
+        >
+          Month
+        </button>
+      </div>
+    ),
+    cssInline: `
+      .nuda-segmented{position:relative;display:inline-flex;padding:4px;background:#16161c;border:1px solid rgba(255,255,255,.08);border-radius:12px}
+      .nuda-segmented__indicator{position:absolute;top:4px;left:4px;width:calc((100% - 8px) / 3);height:calc(100% - 8px);border-radius:8px;background:#e4ff54;transform:translateX(0);transition:transform .35s cubic-bezier(.34,1.4,.64,1)}
+      .nuda-segmented[data-active="1"] .nuda-segmented__indicator{transform:translateX(100%)}
+      .nuda-segmented[data-active="2"] .nuda-segmented__indicator{transform:translateX(200%)}
+      .nuda-segmented__btn{position:relative;z-index:1;flex:1;min-width:64px;padding:8px 0;background:none;border:0;color:#a0a0a8;font-size:13px;font-weight:600;cursor:pointer;transition:color .3s ease}
+      .nuda-segmented__btn[aria-pressed="true"]{color:#09090b}
+      .nuda-segmented__btn:focus-visible{outline:2px solid #e4ff54;outline-offset:2px;border-radius:8px}
+      @media(prefers-reduced-motion:reduce){.nuda-segmented__indicator,.nuda-segmented__btn{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Segmented Toggle — sliding indicator follows the active segment -->
+<div class="nuda-segmented" data-active="0">
+  <span class="nuda-segmented__indicator"></span>
+  <button class="nuda-segmented__btn" data-i="0" aria-pressed="true">Day</button>
+  <button class="nuda-segmented__btn" data-i="1" aria-pressed="false">Week</button>
+  <button class="nuda-segmented__btn" data-i="2" aria-pressed="false">Month</button>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Segmented Toggle ────────────────────────────────────────
+   3 equal segments; indicator slides via translateX by 100% per slot.
+   Customize: --nuda-seg-active for the indicator color.
+   ──────────────────────────────────────────────────────────── */
+.nuda-segmented {
+  --nuda-seg-active: #e4ff54;
+  position: relative;
+  display: inline-flex;
+  padding: 4px;
+  background: #16161c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.nuda-segmented__indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 3);
+  height: calc(100% - 8px);
+  border-radius: 8px;
+  background: var(--nuda-seg-active);
+  transform: translateX(0);
+  transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.nuda-segmented[data-active="1"] .nuda-segmented__indicator { transform: translateX(100%); }
+.nuda-segmented[data-active="2"] .nuda-segmented__indicator { transform: translateX(200%); }
+
+.nuda-segmented__btn {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 64px;
+  padding: 8px 0;
+  background: none;
+  border: 0;
+  color: #a0a0a8;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nuda-segmented__btn[aria-pressed="true"] { color: #09090b; }
+
+.nuda-segmented__btn:focus-visible {
+  outline: 2px solid var(--nuda-seg-active);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-segmented__indicator,
+  .nuda-segmented__btn { transition: none; }
+}`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* ── Segmented Toggle — vanilla JS ───────────────────────────
+   Sets data-active on the container and aria-pressed per button.
+   ──────────────────────────────────────────────────────────── */
+(function () {
+  document.querySelectorAll(".nuda-segmented").forEach(function (root) {
+    var btns = root.querySelectorAll(".nuda-segmented__btn");
+    btns.forEach(function (btn, idx) {
+      btn.addEventListener("click", function () {
+        root.setAttribute("data-active", String(idx));
+        btns.forEach(function (b, i) {
+          b.setAttribute("aria-pressed", String(i === idx));
+        });
+      });
+    });
+  });
+})();`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     9. Floating Label
+     ------------------------------------------------------- */
+  {
+    id: "floating-label-input",
+    name: "Floating Label",
+    category: "Toggles & Inputs",
+    preview: (
+      <div className="nuda-floating-label">
+        <input className="nuda-floating-label__input" type="text" id="nuda-fli-demo" placeholder=" " />
+        <label className="nuda-floating-label__label" htmlFor="nuda-fli-demo">Email address</label>
+      </div>
+    ),
+    cssInline: `
+      .nuda-floating-label{position:relative;width:240px}
+      .nuda-floating-label__input{width:100%;padding:18px 14px 8px;background:#0c0c10;color:#fafafa;border:1px solid rgba(255,255,255,.15);border-radius:10px;font-size:14px;outline:none;transition:border-color .25s ease,box-shadow .25s ease}
+      .nuda-floating-label__input:focus{border-color:#e4ff54;box-shadow:0 0 0 3px rgba(228,255,84,.18)}
+      .nuda-floating-label__label{position:absolute;left:14px;top:15px;color:#777;font-size:14px;pointer-events:none;transform-origin:left top;transition:transform .2s ease,color .2s ease}
+      .nuda-floating-label__input:focus+.nuda-floating-label__label,.nuda-floating-label__input:not(:placeholder-shown)+.nuda-floating-label__label{transform:translateY(-9px) scale(.74);color:#e4ff54}
+      @media(prefers-reduced-motion:reduce){.nuda-floating-label__label,.nuda-floating-label__input{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Floating Label — label floats up on focus / when filled
+     The placeholder=" " (a single space) drives the CSS state. -->
+<div class="nuda-floating-label">
+  <input class="nuda-floating-label__input" type="text" id="email" placeholder=" " />
+  <label class="nuda-floating-label__label" for="email">Email address</label>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Floating Label ──────────────────────────────────────────
+   Uses :placeholder-shown + :focus to float the label up.
+   Customize: --nuda-fli-clr for the accent color.
+   ──────────────────────────────────────────────────────────── */
+.nuda-floating-label {
+  --nuda-fli-clr: #e4ff54;
+  position: relative;
+  width: 240px;
+}
+
+.nuda-floating-label__input {
+  width: 100%;
+  padding: 18px 14px 8px;
+  background: #0c0c10;
+  color: #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nuda-floating-label__input:focus {
+  border-color: var(--nuda-fli-clr);
+  box-shadow: 0 0 0 3px rgba(228, 255, 84, 0.18);
+}
+
+.nuda-floating-label__label {
+  position: absolute;
+  left: 14px;
+  top: 15px;
+  color: #777;
+  font-size: 14px;
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nuda-floating-label__input:focus + .nuda-floating-label__label,
+.nuda-floating-label__input:not(:placeholder-shown) + .nuda-floating-label__label {
+  transform: translateY(-9px) scale(0.74);
+  color: var(--nuda-fli-clr);
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-floating-label__label,
+  .nuda-floating-label__input { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     10. Focus Underline
+     ------------------------------------------------------- */
+  {
+    id: "focus-underline-input",
+    name: "Focus Underline",
+    category: "Toggles & Inputs",
+    preview: (
+      <div className="nuda-focus-underline">
+        <input className="nuda-focus-underline__input" type="text" placeholder="Type here..." />
+        <span className="nuda-focus-underline__bar" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-focus-underline{position:relative;width:240px}
+      .nuda-focus-underline__input{width:100%;padding:10px 2px;background:transparent;color:#fafafa;border:0;border-bottom:1px solid rgba(255,255,255,.2);font-size:14px;outline:none}
+      .nuda-focus-underline__input::placeholder{color:#666}
+      .nuda-focus-underline__bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:#e4ff54;transform:scaleX(0);transform-origin:center;transition:transform .3s cubic-bezier(.65,0,.35,1)}
+      .nuda-focus-underline__input:focus~.nuda-focus-underline__bar{transform:scaleX(1)}
+      @media(prefers-reduced-motion:reduce){.nuda-focus-underline__bar{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Focus Underline — underline grows from the center on focus -->
+<div class="nuda-focus-underline">
+  <input class="nuda-focus-underline__input" type="text" placeholder="Type here..." />
+  <span class="nuda-focus-underline__bar"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Focus Underline ─────────────────────────────────────────
+   A scaleX(0)->scaleX(1) bar centred under the field.
+   Customize: --nuda-fu-clr for the underline color.
+   ──────────────────────────────────────────────────────────── */
+.nuda-focus-underline {
+  --nuda-fu-clr: #e4ff54;
+  position: relative;
+  width: 240px;
+}
+
+.nuda-focus-underline__input {
+  width: 100%;
+  padding: 10px 2px;
+  background: transparent;
+  color: #fafafa;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+  outline: none;
+}
+
+.nuda-focus-underline__input::placeholder { color: #666; }
+
+.nuda-focus-underline__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--nuda-fu-clr);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.nuda-focus-underline__input:focus ~ .nuda-focus-underline__bar {
+  transform: scaleX(1);
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-focus-underline__bar { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     11. Checkbox Draw
+     ------------------------------------------------------- */
+  {
+    id: "checkbox-draw",
+    name: "Checkbox Draw",
+    category: "Toggles & Inputs",
+    preview: (
+      <label className="nuda-checkbox-draw">
+        <input type="checkbox" defaultChecked />
+        <span className="nuda-checkbox-draw__box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </span>
+        <span className="nuda-checkbox-draw__label">I agree</span>
+      </label>
+    ),
+    cssInline: `
+      .nuda-checkbox-draw{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+      .nuda-checkbox-draw input{position:absolute;width:1px;height:1px;margin:-1px;clip:rect(0,0,0,0);overflow:hidden}
+      .nuda-checkbox-draw__box{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border:2px solid #555;border-radius:7px;color:#e4ff54;transition:border-color .25s ease,background .25s ease}
+      .nuda-checkbox-draw__box svg{width:15px;height:15px;stroke-dasharray:30;stroke-dashoffset:30;transition:stroke-dashoffset .4s cubic-bezier(.65,0,.35,1)}
+      .nuda-checkbox-draw input:checked+.nuda-checkbox-draw__box{border-color:#e4ff54}
+      .nuda-checkbox-draw input:checked+.nuda-checkbox-draw__box svg{stroke-dashoffset:0}
+      .nuda-checkbox-draw input:focus-visible+.nuda-checkbox-draw__box{outline:2px solid #e4ff54;outline-offset:3px}
+      .nuda-checkbox-draw__label{color:#fafafa;font-size:14px}
+      @media(prefers-reduced-motion:reduce){.nuda-checkbox-draw__box,.nuda-checkbox-draw__box svg{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Checkbox Draw — the checkmark draws itself in via stroke-dashoffset -->
+<label class="nuda-checkbox-draw">
+  <input type="checkbox" />
+  <span class="nuda-checkbox-draw__box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </span>
+  <span class="nuda-checkbox-draw__label">I agree</span>
+</label>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Checkbox Draw ───────────────────────────────────────────
+   The tick is a dashed path revealed by animating stroke-dashoffset.
+   Customize: --nuda-cd-clr for the accent color.
+   ──────────────────────────────────────────────────────────── */
+.nuda-checkbox-draw {
+  --nuda-cd-clr: #e4ff54;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nuda-checkbox-draw input {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+.nuda-checkbox-draw__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #555;
+  border-radius: 7px;
+  color: var(--nuda-cd-clr);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.nuda-checkbox-draw__box svg {
+  width: 15px;
+  height: 15px;
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  transition: stroke-dashoffset 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.nuda-checkbox-draw input:checked + .nuda-checkbox-draw__box {
+  border-color: var(--nuda-cd-clr);
+}
+
+.nuda-checkbox-draw input:checked + .nuda-checkbox-draw__box svg {
+  stroke-dashoffset: 0;
+}
+
+.nuda-checkbox-draw input:focus-visible + .nuda-checkbox-draw__box {
+  outline: 2px solid var(--nuda-cd-clr);
+  outline-offset: 3px;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-checkbox-draw__box,
+  .nuda-checkbox-draw__box svg { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     12. Radio Pop
+     ------------------------------------------------------- */
+  {
+    id: "radio-pop",
+    name: "Radio Pop",
+    category: "Toggles & Inputs",
+    preview: (
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <label className="nuda-radio-pop">
+          <input type="radio" name="nuda-radio-pop-demo" defaultChecked />
+          <span className="nuda-radio-pop__circle" />
+          <span className="nuda-radio-pop__label">Standard</span>
+        </label>
+        <label className="nuda-radio-pop">
+          <input type="radio" name="nuda-radio-pop-demo" />
+          <span className="nuda-radio-pop__circle" />
+          <span className="nuda-radio-pop__label">Express</span>
+        </label>
+      </div>
+    ),
+    cssInline: `
+      .nuda-radio-pop{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+      .nuda-radio-pop input{position:absolute;width:1px;height:1px;margin:-1px;clip:rect(0,0,0,0);overflow:hidden}
+      .nuda-radio-pop__circle{position:relative;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:2px solid #555;border-radius:50%;transition:border-color .25s ease}
+      .nuda-radio-pop__circle::after{content:'';width:11px;height:11px;border-radius:50%;background:#e4ff54;transform:scale(0);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+      .nuda-radio-pop input:checked+.nuda-radio-pop__circle{border-color:#e4ff54}
+      .nuda-radio-pop input:checked+.nuda-radio-pop__circle::after{transform:scale(1)}
+      .nuda-radio-pop input:focus-visible+.nuda-radio-pop__circle{outline:2px solid #e4ff54;outline-offset:3px}
+      .nuda-radio-pop__label{color:#fafafa;font-size:14px}
+      @media(prefers-reduced-motion:reduce){.nuda-radio-pop__circle,.nuda-radio-pop__circle::after{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Radio Pop — inner dot pops in with a spring on select -->
+<label class="nuda-radio-pop">
+  <input type="radio" name="ship" checked />
+  <span class="nuda-radio-pop__circle"></span>
+  <span class="nuda-radio-pop__label">Standard</span>
+</label>
+<label class="nuda-radio-pop">
+  <input type="radio" name="ship" />
+  <span class="nuda-radio-pop__circle"></span>
+  <span class="nuda-radio-pop__label">Express</span>
+</label>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Radio Pop ───────────────────────────────────────────────
+   Inner dot scales 0 -> 1 with a springy bezier on :checked.
+   Customize: --nuda-rdp-clr for the accent color.
+   ──────────────────────────────────────────────────────────── */
+.nuda-radio-pop {
+  --nuda-rdp-clr: #e4ff54;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nuda-radio-pop input {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+.nuda-radio-pop__circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #555;
+  border-radius: 50%;
+  transition: border-color 0.25s ease;
+}
+
+.nuda-radio-pop__circle::after {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--nuda-rdp-clr);
+  transform: scale(0);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nuda-radio-pop input:checked + .nuda-radio-pop__circle { border-color: var(--nuda-rdp-clr); }
+.nuda-radio-pop input:checked + .nuda-radio-pop__circle::after { transform: scale(1); }
+
+.nuda-radio-pop input:focus-visible + .nuda-radio-pop__circle {
+  outline: 2px solid var(--nuda-rdp-clr);
+  outline-offset: 3px;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-radio-pop__circle,
+  .nuda-radio-pop__circle::after { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     13. OTP Inputs
+     ------------------------------------------------------- */
+  {
+    id: "otp-inputs",
+    name: "OTP Inputs",
+    category: "Toggles & Inputs",
+    preview: (
+      <div className="nuda-otp" role="group" aria-label="One-time code">
+        {[0, 1, 2, 3].map((i) => (
+          <input
+            key={i}
+            className="nuda-otp__box"
+            type="text"
+            inputMode="numeric"
+            maxLength={1}
+            aria-label={`Digit ${i + 1}`}
+            defaultValue={i === 0 ? "7" : ""}
+            onInput={(e) => {
+              const el = e.currentTarget;
+              if (el.value && el.nextElementSibling) {
+                (el.nextElementSibling as HTMLElement).focus();
+              }
+            }}
+          />
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-otp{display:inline-flex;gap:10px}
+      .nuda-otp__box{width:46px;height:54px;text-align:center;background:#0c0c10;color:#fafafa;border:1px solid rgba(255,255,255,.18);border-radius:10px;font-size:20px;font-weight:700;outline:none;transition:border-color .25s ease,box-shadow .25s ease,transform .2s cubic-bezier(.34,1.56,.64,1)}
+      .nuda-otp__box:focus{border-color:#e4ff54;box-shadow:0 0 0 3px rgba(228,255,84,.2);transform:translateY(-2px)}
+      @media(prefers-reduced-motion:reduce){.nuda-otp__box{transition:border-color .25s ease,box-shadow .25s ease}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- OTP Inputs — four single-digit boxes that glow + advance on entry -->
+<div class="nuda-otp" role="group" aria-label="One-time code">
+  <input class="nuda-otp__box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1" />
+  <input class="nuda-otp__box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2" />
+  <input class="nuda-otp__box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3" />
+  <input class="nuda-otp__box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4" />
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── OTP Inputs ──────────────────────────────────────────────
+   Each box glows and lifts on focus.
+   Customize: --nuda-otp-clr for the focus accent.
+   ──────────────────────────────────────────────────────────── */
+.nuda-otp {
+  --nuda-otp-clr: #e4ff54;
+  display: inline-flex;
+  gap: 10px;
+}
+
+.nuda-otp__box {
+  width: 46px;
+  height: 54px;
+  text-align: center;
+  background: #0c0c10;
+  color: #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nuda-otp__box:focus {
+  border-color: var(--nuda-otp-clr);
+  box-shadow: 0 0 0 3px rgba(228, 255, 84, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-otp__box {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+}`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* ── OTP Inputs — vanilla JS ─────────────────────────────────
+   Auto-advances on entry and steps back on Backspace.
+   ──────────────────────────────────────────────────────────── */
+(function () {
+  document.querySelectorAll(".nuda-otp").forEach(function (group) {
+    var boxes = group.querySelectorAll(".nuda-otp__box");
+    boxes.forEach(function (box, i) {
+      box.addEventListener("input", function () {
+        box.value = box.value.replace(/[^0-9]/g, "").slice(0, 1);
+        if (box.value && boxes[i + 1]) boxes[i + 1].focus();
+      });
+      box.addEventListener("keydown", function (e) {
+        if (e.key === "Backspace" && !box.value && boxes[i - 1]) {
+          boxes[i - 1].focus();
+        }
+      });
+    });
+  });
+})();`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     14. Password Meter
+     ------------------------------------------------------- */
+  {
+    id: "password-meter",
+    name: "Password Meter",
+    category: "Toggles & Inputs",
+    preview: (
+      <div className="nuda-pwd-meter" data-strength="2" style={{ width: "240px" }}>
+        <input
+          className="nuda-pwd-meter__input"
+          type="password"
+          placeholder="Password"
+          defaultValue="abc123"
+          onInput={(e) => {
+            const v = e.currentTarget.value;
+            let s = 0;
+            if (v.length >= 6) s++;
+            if (/[A-Z]/.test(v) || /[0-9]/.test(v)) s++;
+            if (/[^A-Za-z0-9]/.test(v) && v.length >= 10) s++;
+            e.currentTarget.parentElement!.setAttribute("data-strength", String(s));
+          }}
+        />
+        <span className="nuda-pwd-meter__track">
+          <span className="nuda-pwd-meter__fill" />
+        </span>
+      </div>
+    ),
+    cssInline: `
+      .nuda-pwd-meter{display:flex;flex-direction:column;gap:8px;width:240px}
+      .nuda-pwd-meter__input{width:100%;padding:10px 14px;background:#0c0c10;color:#fafafa;border:1px solid rgba(255,255,255,.18);border-radius:10px;font-size:14px;outline:none;transition:border-color .25s ease}
+      .nuda-pwd-meter__input:focus{border-color:#e4ff54}
+      .nuda-pwd-meter__track{position:relative;height:6px;border-radius:99px;background:#2a2a32;overflow:hidden}
+      .nuda-pwd-meter__fill{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:99px;transform:scaleX(0);transform-origin:left;background:#ff5e7a;transition:transform .35s cubic-bezier(.65,0,.35,1),background .35s ease}
+      .nuda-pwd-meter[data-strength="1"] .nuda-pwd-meter__fill{transform:scaleX(.34);background:#ff5e7a}
+      .nuda-pwd-meter[data-strength="2"] .nuda-pwd-meter__fill{transform:scaleX(.67);background:#ffb45e}
+      .nuda-pwd-meter[data-strength="3"] .nuda-pwd-meter__fill{transform:scaleX(1);background:#e4ff54}
+      @media(prefers-reduced-motion:reduce){.nuda-pwd-meter__fill,.nuda-pwd-meter__input{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Password Meter — bar fills (scaleX) and shifts color by strength -->
+<div class="nuda-pwd-meter" data-strength="0">
+  <input class="nuda-pwd-meter__input" type="password" placeholder="Password" />
+  <span class="nuda-pwd-meter__track">
+    <span class="nuda-pwd-meter__fill"></span>
+  </span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Password Meter ──────────────────────────────────────────
+   data-strength (0–3) drives both the scaleX fill and the color.
+   ──────────────────────────────────────────────────────────── */
+.nuda-pwd-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 240px;
+}
+
+.nuda-pwd-meter__input {
+  width: 100%;
+  padding: 10px 14px;
+  background: #0c0c10;
+  color: #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.nuda-pwd-meter__input:focus { border-color: #e4ff54; }
+
+.nuda-pwd-meter__track {
+  position: relative;
+  height: 6px;
+  border-radius: 99px;
+  background: #2a2a32;
+  overflow: hidden;
+}
+
+.nuda-pwd-meter__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  border-radius: 99px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: #ff5e7a;
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1), background 0.35s ease;
+}
+
+.nuda-pwd-meter[data-strength="1"] .nuda-pwd-meter__fill { transform: scaleX(0.34); background: #ff5e7a; }
+.nuda-pwd-meter[data-strength="2"] .nuda-pwd-meter__fill { transform: scaleX(0.67); background: #ffb45e; }
+.nuda-pwd-meter[data-strength="3"] .nuda-pwd-meter__fill { transform: scaleX(1); background: #e4ff54; }
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-pwd-meter__fill,
+  .nuda-pwd-meter__input { transition: none; }
+}`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* ── Password Meter — vanilla JS ─────────────────────────────
+   Scores the password and sets data-strength (0–3) on the wrapper.
+   ──────────────────────────────────────────────────────────── */
+(function () {
+  document.querySelectorAll(".nuda-pwd-meter").forEach(function (meter) {
+    var input = meter.querySelector(".nuda-pwd-meter__input");
+    if (!input) return;
+    input.addEventListener("input", function () {
+      var v = input.value;
+      var s = 0;
+      if (v.length >= 6) s++;
+      if (/[A-Z]/.test(v) || /[0-9]/.test(v)) s++;
+      if (/[^A-Za-z0-9]/.test(v) && v.length >= 10) s++;
+      meter.setAttribute("data-strength", String(s));
+    });
+  });
+})();`,
+      },
+    ],
+  },
 ];

@@ -598,4 +598,277 @@ export const badgesTags: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── Live Pulse ─────────────── */
+  {
+    id: "pulse-live-badge",
+    name: "Live Pulse",
+    category: "Badges & Tags",
+    preview: (
+      <span className="nuda-live-pulse-badge" aria-label="Live">
+        <span className="nuda-live-pulse-badge__dot" />
+        LIVE
+      </span>
+    ),
+    cssInline: `
+      .nuda-live-pulse-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;background:rgba(228,255,84,0.08);border:1px solid rgba(228,255,84,0.3);color:#e4ff54;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.12em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+      .nuda-live-pulse-badge__dot{position:relative;width:7px;height:7px;border-radius:50%;background:#e4ff54}
+      .nuda-live-pulse-badge__dot::after{content:'';position:absolute;inset:0;border-radius:50%;background:#e4ff54;animation:_lpPing 1.8s ease-out infinite}
+      @keyframes _lpPing{0%{transform:scale(1);opacity:.7}100%{transform:scale(3);opacity:0}}
+      @media(prefers-reduced-motion:reduce){.nuda-live-pulse-badge__dot::after{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<span class="nuda-live-pulse-badge" aria-label="Live">
+  <span class="nuda-live-pulse-badge__dot"></span>
+  LIVE
+</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Live Pulse
+   "LIVE" badge with a pulsing dot. */
+
+.nuda-live-pulse-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  background: rgba(228, 255, 84, 0.08);
+  border: 1px solid rgba(228, 255, 84, 0.3);
+  color: #e4ff54;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.nuda-live-pulse-badge__dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e4ff54;
+}
+
+.nuda-live-pulse-badge__dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #e4ff54;
+  animation: nuda-live-pulse-ping 1.8s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes nuda-live-pulse-ping {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-live-pulse-badge__dot::after { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Gradient Shine ─────────────── */
+  {
+    id: "gradient-shine-badge",
+    name: "Gradient Shine",
+    category: "Badges & Tags",
+    preview: (
+      <span className="nuda-grad-shine">UPGRADE</span>
+    ),
+    cssInline: `
+      .nuda-grad-shine{position:relative;display:inline-flex;align-items:center;padding:4px 14px;background:linear-gradient(135deg,#e4ff54,#a3b800);color:#09090b;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.08em;overflow:hidden}
+      .nuda-grad-shine::after{content:'';position:absolute;top:0;left:0;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.55),transparent);transform:translateX(-160%) skewX(-18deg);animation:_gsShine 3s ease-in-out infinite}
+      @keyframes _gsShine{0%{transform:translateX(-160%) skewX(-18deg)}45%,100%{transform:translateX(360%) skewX(-18deg)}}
+      @media(prefers-reduced-motion:reduce){.nuda-grad-shine::after{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<span class="nuda-grad-shine">UPGRADE</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Gradient Shine
+   Lime gradient badge with a recurring shine sweep. */
+
+.nuda-grad-shine {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #e4ff54, #a3b800);
+  color: #09090b;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  overflow: hidden;
+}
+
+.nuda-grad-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: translateX(-160%) skewX(-18deg);
+  animation: nuda-grad-shine 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes nuda-grad-shine {
+  0%        { transform: translateX(-160%) skewX(-18deg); }
+  45%, 100% { transform: translateX(360%) skewX(-18deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-grad-shine::after { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Count Pop ─────────────── */
+  {
+    id: "count-pop-badge",
+    name: "Count Pop",
+    category: "Badges & Tags",
+    preview: (
+      <span className="nuda-count-pop">7</span>
+    ),
+    cssInline: `
+      .nuda-count-pop{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 7px;background:#e4ff54;color:#09090b;border-radius:99px;font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;animation:_cpPop 0.45s cubic-bezier(0.34,1.56,0.64,1)}
+      @keyframes _cpPop{0%{transform:scale(0.4);opacity:0}60%{transform:scale(1.25);opacity:1}100%{transform:scale(1)}}
+      @media(prefers-reduced-motion:reduce){.nuda-count-pop{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Count Pop — number badge pops on change.
+     Re-trigger the animation by replacing the node or
+     toggling the class when the count updates. -->
+<span class="nuda-count-pop">7</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Count Pop
+   Number badge that pops in (scale) on change.
+   To replay on update, remove + re-add the class, or
+   replace the element so the animation restarts. */
+
+.nuda-count-pop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  background: #e4ff54;
+  color: #09090b;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  animation: nuda-count-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+@keyframes nuda-count-pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-count-pop { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── Status Breathing ─────────────── */
+  {
+    id: "status-breathing-badge",
+    name: "Status Breathing",
+    category: "Badges & Tags",
+    preview: (
+      <span className="nuda-status-breathe" aria-label="Operational">
+        <span className="nuda-status-breathe__dot" />
+        Operational
+      </span>
+    ),
+    cssInline: `
+      .nuda-status-breathe{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:rgba(228,255,84,0.06);border:1px solid rgba(228,255,84,0.22);color:#e4ff54;border-radius:99px;font-size:12px;font-weight:600;animation:_sbBreath 3s ease-in-out infinite}
+      .nuda-status-breathe__dot{width:8px;height:8px;border-radius:50%;background:#e4ff54}
+      @keyframes _sbBreath{0%,100%{box-shadow:0 0 6px rgba(228,255,84,0.25)}50%{box-shadow:0 0 16px rgba(228,255,84,0.55)}}
+      @media(prefers-reduced-motion:reduce){.nuda-status-breathe{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<span class="nuda-status-breathe" aria-label="Operational">
+  <span class="nuda-status-breathe__dot"></span>
+  Operational
+</span>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Status Breathing
+   Status chip with a slow breathing glow. */
+
+.nuda-status-breathe {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  background: rgba(228, 255, 84, 0.06);
+  border: 1px solid rgba(228, 255, 84, 0.22);
+  color: #e4ff54;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  animation: nuda-status-breathe 3s ease-in-out infinite;
+}
+
+.nuda-status-breathe__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e4ff54;
+}
+
+@keyframes nuda-status-breathe {
+  0%, 100% { box-shadow: 0 0 6px  rgba(228, 255, 84, 0.25); }
+  50%      { box-shadow: 0 0 16px rgba(228, 255, 84, 0.55); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-status-breathe { animation: none; }
+}`,
+      },
+    ],
+  },
 ];

@@ -635,4 +635,580 @@ export const skeletonVariants: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── 13. Shimmer Card ─────────────── */
+  {
+    id: "shimmer-card-skeleton",
+    name: "Shimmer Card",
+    category: "Skeletons",
+    preview: (
+      <div className="nuda-shimcard" aria-hidden="true">
+        <span className="nuda-shimcard__media" />
+        <span className="nuda-shimcard__line" style={{ width: "80%" }} />
+        <span className="nuda-shimcard__line" style={{ width: "55%" }} />
+        <div className="nuda-shimcard__foot">
+          <span className="nuda-shimcard__pill" />
+          <span className="nuda-shimcard__pill" style={{ width: "40px" }} />
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-shimcard{position:relative;display:flex;flex-direction:column;gap:9px;padding:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;width:100%;max-width:200px;overflow:hidden}
+      .nuda-shimcard__media{height:96px;border-radius:8px;background:rgba(255,255,255,.06)}
+      .nuda-shimcard__line{height:10px;border-radius:4px;background:rgba(255,255,255,.06)}
+      .nuda-shimcard__foot{display:flex;gap:8px;margin-top:2px}
+      .nuda-shimcard__pill{width:56px;height:14px;border-radius:7px;background:rgba(255,255,255,.06)}
+      .nuda-shimcard::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(228,255,84,.12) 50%,transparent 70%);transform:translateX(-100%);animation:_shimcard 1.6s ease-in-out infinite}
+      @keyframes _shimcard{to{transform:translateX(100%)}}
+      @media(prefers-reduced-motion:reduce){.nuda-shimcard::after{animation:none;opacity:0}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-shimcard" aria-hidden="true">
+  <span class="nuda-shimcard__media"></span>
+  <span class="nuda-shimcard__line" style="width:80%"></span>
+  <span class="nuda-shimcard__line" style="width:55%"></span>
+  <div class="nuda-shimcard__foot">
+    <span class="nuda-shimcard__pill"></span>
+    <span class="nuda-shimcard__pill" style="width:40px"></span>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Shimmer Card Skeleton
+   Card placeholder with a single lime shimmer sweep passing over it.
+   Customize: --shimcard-glow, --shimcard-block */
+
+.nuda-shimcard {
+  --shimcard-glow: rgba(228, 255, 84, 0.12);
+  --shimcard-block: rgba(255, 255, 255, 0.06);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 200px;
+  overflow: hidden;
+}
+
+.nuda-shimcard__media { height: 96px; border-radius: 8px; background: var(--shimcard-block); }
+.nuda-shimcard__line  { height: 10px; border-radius: 4px; background: var(--shimcard-block); }
+.nuda-shimcard__foot  { display: flex; gap: 8px; margin-top: 2px; }
+.nuda-shimcard__pill  { width: 56px; height: 14px; border-radius: 7px; background: var(--shimcard-block); }
+
+.nuda-shimcard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, var(--shimcard-glow) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: nuda-shimcard 1.6s ease-in-out infinite;
+}
+
+@keyframes nuda-shimcard {
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-shimcard::after { animation: none; opacity: 0; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 14. Avatar + Lines ─────────────── */
+  {
+    id: "avatar-line-skeleton",
+    name: "Avatar + Lines",
+    category: "Skeletons",
+    preview: (
+      <div className="nuda-avline" aria-hidden="true">
+        <span className="nuda-avline__avatar" />
+        <div className="nuda-avline__body">
+          <span style={{ width: "70%" }} />
+          <span style={{ width: "90%" }} />
+          <span style={{ width: "50%" }} />
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-avline{display:flex;gap:12px;align-items:center;padding:12px;width:100%;max-width:260px}
+      .nuda-avline__avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,.06);animation:_avlinePulse 1.5s ease-in-out infinite}
+      .nuda-avline__body{flex:1;display:flex;flex-direction:column;gap:7px}
+      .nuda-avline__body span{height:9px;border-radius:4px;background:rgba(255,255,255,.06);animation:_avlinePulse 1.5s ease-in-out infinite}
+      .nuda-avline__body span:nth-child(2){animation-delay:.15s}
+      .nuda-avline__body span:nth-child(3){animation-delay:.3s}
+      @keyframes _avlinePulse{0%,100%{opacity:.4}50%{opacity:.9}}
+      @media(prefers-reduced-motion:reduce){.nuda-avline__avatar,.nuda-avline__body span{animation:none;opacity:.55}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-avline" aria-hidden="true">
+  <span class="nuda-avline__avatar"></span>
+  <div class="nuda-avline__body">
+    <span style="width:70%"></span>
+    <span style="width:90%"></span>
+    <span style="width:50%"></span>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Avatar + Lines Skeleton
+   Avatar circle beside stacked text lines, gently pulsing in opacity.
+   Customize: --avline-block */
+
+.nuda-avline {
+  --avline-block: rgba(255, 255, 255, 0.06);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  width: 100%;
+  max-width: 260px;
+}
+
+.nuda-avline__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--avline-block);
+  animation: nuda-avline-pulse 1.5s ease-in-out infinite;
+}
+
+.nuda-avline__body { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+
+.nuda-avline__body span {
+  height: 9px;
+  border-radius: 4px;
+  background: var(--avline-block);
+  animation: nuda-avline-pulse 1.5s ease-in-out infinite;
+}
+
+.nuda-avline__body span:nth-child(2) { animation-delay: 0.15s; }
+.nuda-avline__body span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes nuda-avline-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-avline__avatar,
+  .nuda-avline__body span { animation: none; opacity: 0.55; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 15. Table Skeleton ─────────────── */
+  {
+    id: "table-skeleton-sk",
+    name: "Table Skeleton",
+    category: "Skeletons",
+    preview: (
+      <div className="nuda-sktbl" aria-hidden="true">
+        {[0, 1, 2, 3].map((r) => (
+          <div key={r} className="nuda-sktbl__row" style={{ animationDelay: `${r * 0.12}s` }}>
+            <span style={{ width: "30%" }} />
+            <span style={{ width: "22%" }} />
+            <span style={{ width: "18%" }} />
+            <span style={{ width: "15%" }} />
+          </div>
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-sktbl{display:flex;flex-direction:column;gap:9px;padding:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;width:100%;max-width:280px}
+      .nuda-sktbl__row{display:flex;gap:12px;align-items:center;animation:_sktblPulse 1.6s ease-in-out infinite}
+      .nuda-sktbl__row:first-child span{background:rgba(228,255,84,.18)}
+      .nuda-sktbl__row span{height:10px;border-radius:3px;background:rgba(255,255,255,.07)}
+      @keyframes _sktblPulse{0%,100%{opacity:.45}50%{opacity:.9}}
+      @media(prefers-reduced-motion:reduce){.nuda-sktbl__row{animation:none;opacity:.6}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-sktbl" aria-hidden="true">
+  <div class="nuda-sktbl__row">
+    <span style="width:30%"></span>
+    <span style="width:22%"></span>
+    <span style="width:18%"></span>
+    <span style="width:15%"></span>
+  </div>
+  <!-- repeat rows; first row reads as the header -->
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Table Skeleton
+   Rows and columns placeholder; rows pulse in staggered opacity.
+   The first row is tinted to read as a header.
+   Customize: --sktbl-block, --sktbl-head */
+
+.nuda-sktbl {
+  --sktbl-block: rgba(255, 255, 255, 0.07);
+  --sktbl-head: rgba(228, 255, 84, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.nuda-sktbl__row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  animation: nuda-sktbl-pulse 1.6s ease-in-out infinite;
+}
+
+.nuda-sktbl__row:first-child span { background: var(--sktbl-head); }
+.nuda-sktbl__row span { height: 10px; border-radius: 3px; background: var(--sktbl-block); }
+
+@keyframes nuda-sktbl-pulse {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-sktbl__row { animation: none; opacity: 0.6; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 16. Chart Skeleton ─────────────── */
+  {
+    id: "chart-skeleton",
+    name: "Chart Skeleton",
+    category: "Skeletons",
+    preview: (
+      <div className="nuda-skchart" aria-hidden="true">
+        <div className="nuda-skchart__bars">
+          {[40, 70, 50, 90, 60, 80].map((h, i) => (
+            <span key={i} style={{ height: `${h}%`, animationDelay: `${i * 0.1}s` }} />
+          ))}
+        </div>
+        <span className="nuda-skchart__axis" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-skchart{padding:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;width:100%;max-width:220px}
+      .nuda-skchart__bars{display:flex;align-items:flex-end;gap:8px;height:88px}
+      .nuda-skchart__bars span{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,rgba(228,255,84,.28),rgba(255,255,255,.05));transform-origin:bottom;animation:_skchart 1.5s ease-in-out infinite}
+      .nuda-skchart__axis{display:block;height:2px;margin-top:6px;border-radius:1px;background:rgba(255,255,255,.1)}
+      @keyframes _skchart{0%,100%{transform:scaleY(.7);opacity:.5}50%{transform:scaleY(1);opacity:.95}}
+      @media(prefers-reduced-motion:reduce){.nuda-skchart__bars span{animation:none;transform:scaleY(1);opacity:.6}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-skchart" aria-hidden="true">
+  <div class="nuda-skchart__bars">
+    <span style="height:40%"></span>
+    <span style="height:70%"></span>
+    <span style="height:50%"></span>
+    <span style="height:90%"></span>
+    <span style="height:60%"></span>
+    <span style="height:80%"></span>
+  </div>
+  <span class="nuda-skchart__axis"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Chart Skeleton
+   Bar-chart placeholder; bars breathe via scaleY (their heights are inline).
+   Customize: --skchart-bar */
+
+.nuda-skchart {
+  --skchart-bar: rgba(228, 255, 84, 0.28);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 220px;
+}
+
+.nuda-skchart__bars { display: flex; align-items: flex-end; gap: 8px; height: 88px; }
+
+.nuda-skchart__bars span {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--skchart-bar), rgba(255, 255, 255, 0.05));
+  transform-origin: bottom;
+  animation: nuda-skchart 1.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.nuda-skchart__axis {
+  display: block;
+  height: 2px;
+  margin-top: 6px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes nuda-skchart {
+  0%, 100% { transform: scaleY(0.7); opacity: 0.5; }
+  50%      { transform: scaleY(1);   opacity: 0.95; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-skchart__bars span { animation: none; transform: scaleY(1); opacity: 0.6; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 17. Image Skeleton ─────────────── */
+  {
+    id: "image-skeleton-sk",
+    name: "Image Skeleton",
+    category: "Skeletons",
+    preview: (
+      <div className="nuda-skimg" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="34" height="34" className="nuda-skimg__icon" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <circle cx="8.5" cy="9" r="1.6" />
+          <path d="M21 16l-5-5-9 9" />
+        </svg>
+      </div>
+    ),
+    cssInline: `
+      .nuda-skimg{position:relative;width:100%;max-width:200px;height:130px;border-radius:10px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;overflow:hidden}
+      .nuda-skimg__icon{color:rgba(255,255,255,.18)}
+      .nuda-skimg::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(228,255,84,.12) 50%,transparent 70%);transform:translateX(-100%);animation:_skimg 1.7s ease-in-out infinite}
+      @keyframes _skimg{to{transform:translateX(100%)}}
+      @media(prefers-reduced-motion:reduce){.nuda-skimg::after{animation:none;opacity:0}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-skimg" aria-hidden="true">
+  <svg viewBox="0 0 24 24" width="34" height="34" class="nuda-skimg__icon"
+       fill="none" stroke="currentColor" stroke-width="1.5">
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <circle cx="8.5" cy="9" r="1.6" />
+    <path d="M21 16l-5-5-9 9" />
+  </svg>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Image Skeleton
+   Image placeholder with a centered icon and a lime shimmer sweep.
+   Customize: --skimg-block, --skimg-glow */
+
+.nuda-skimg {
+  --skimg-block: rgba(255, 255, 255, 0.05);
+  --skimg-glow: rgba(228, 255, 84, 0.12);
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  height: 130px;
+  border-radius: 10px;
+  background: var(--skimg-block);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.nuda-skimg__icon { color: rgba(255, 255, 255, 0.18); }
+
+.nuda-skimg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, var(--skimg-glow) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: nuda-skimg 1.7s ease-in-out infinite;
+}
+
+@keyframes nuda-skimg {
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-skimg::after { animation: none; opacity: 0; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 18. Wave Skeleton ─────────────── */
+  {
+    id: "wave-skeleton",
+    name: "Wave Skeleton",
+    category: "Skeletons",
+    preview: (
+      <div className="nuda-skwave" aria-hidden="true">
+        <span className="nuda-skwave__block" />
+        <span className="nuda-skwave__block" style={{ width: "75%" }} />
+        <span className="nuda-skwave__block" style={{ width: "55%" }} />
+      </div>
+    ),
+    cssInline: `
+      .nuda-skwave{display:flex;flex-direction:column;gap:10px;padding:12px;width:100%;max-width:240px}
+      .nuda-skwave__block{height:14px;border-radius:5px;background:linear-gradient(90deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.05) 40%,rgba(228,255,84,.18) 50%,rgba(255,255,255,.05) 60%,rgba(255,255,255,.05) 100%);background-size:220% 100%;animation:_skwave 1.6s ease-in-out infinite}
+      .nuda-skwave__block:nth-child(2){animation-delay:.18s}
+      .nuda-skwave__block:nth-child(3){animation-delay:.36s}
+      @keyframes _skwave{0%{background-position:120% 0}100%{background-position:-120% 0}}
+      @media(prefers-reduced-motion:reduce){.nuda-skwave__block{animation:none;background-position:50% 0}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-skwave" aria-hidden="true">
+  <span class="nuda-skwave__block"></span>
+  <span class="nuda-skwave__block" style="width:75%"></span>
+  <span class="nuda-skwave__block" style="width:55%"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Wave Skeleton
+   Blocks with a lime highlight wave traveling across them in sequence
+   (background-position only).
+   Customize: --skwave-glow */
+
+.nuda-skwave {
+  --skwave-glow: rgba(228, 255, 84, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  width: 100%;
+  max-width: 240px;
+}
+
+.nuda-skwave__block {
+  height: 14px;
+  border-radius: 5px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.05) 40%,
+    var(--skwave-glow) 50%,
+    rgba(255, 255, 255, 0.05) 60%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 220% 100%;
+  animation: nuda-skwave 1.6s ease-in-out infinite;
+}
+
+.nuda-skwave__block:nth-child(2) { animation-delay: 0.18s; }
+.nuda-skwave__block:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes nuda-skwave {
+  0%   { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-skwave__block { animation: none; background-position: 50% 0; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 19. Pulse Grid ─────────────── */
+  {
+    id: "pulse-grid-skeleton",
+    name: "Pulse Grid",
+    category: "Skeletons",
+    preview: (
+      <div className="nuda-skpgrid" aria-hidden="true">
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <span key={i} style={{ animationDelay: `${((Math.floor(i / 3)) + (i % 3)) * 0.12}s` }} />
+        ))}
+      </div>
+    ),
+    cssInline: `
+      .nuda-skpgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px;width:fit-content}
+      .nuda-skpgrid span{width:32px;height:32px;border-radius:8px;background:rgba(228,255,84,.16);transform-origin:center;animation:_skpgrid 1.5s ease-in-out infinite}
+      @keyframes _skpgrid{0%,100%{transform:scale(.82);opacity:.35}50%{transform:scale(1);opacity:.85}}
+      @media(prefers-reduced-motion:reduce){.nuda-skpgrid span{animation:none;opacity:.55}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-skpgrid" aria-hidden="true">
+  <!-- 3x3 tiles; stagger delays diagonally: (row + col) * 0.12s -->
+  <span style="animation-delay:0s"></span>
+  <span style="animation-delay:.12s"></span>
+  <span style="animation-delay:.24s"></span>
+  <span style="animation-delay:.12s"></span>
+  <span style="animation-delay:.24s"></span>
+  <span style="animation-delay:.36s"></span>
+  <span style="animation-delay:.24s"></span>
+  <span style="animation-delay:.36s"></span>
+  <span style="animation-delay:.48s"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Pulse Grid Skeleton
+   3x3 grid of tiles pulsing in a diagonal wave (transform: scale + opacity).
+   Customize: --skpgrid-tile */
+
+.nuda-skpgrid {
+  --skpgrid-tile: rgba(228, 255, 84, 0.16);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px;
+  width: fit-content;
+}
+
+.nuda-skpgrid span {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--skpgrid-tile);
+  transform-origin: center;
+  animation: nuda-skpgrid 1.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes nuda-skpgrid {
+  0%, 100% { transform: scale(0.82); opacity: 0.35; }
+  50%      { transform: scale(1);    opacity: 0.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-skpgrid span { animation: none; opacity: 0.55; }
+}`,
+      },
+    ],
+  },
 ];

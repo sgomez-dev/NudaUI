@@ -539,4 +539,272 @@ export const dividers: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── ANIMATED DASH ─────────────── */
+  {
+    id: "animated-dash-divider",
+    name: "Animated Dash",
+    category: "Dividers",
+    preview: (
+      <div className="nuda-dash-flow" role="separator" aria-hidden="true" />
+    ),
+    cssInline: `
+      .nuda-dash-flow{--c:#e4ff54;width:100%;max-width:200px;height:2px;background-image:repeating-linear-gradient(90deg,var(--c) 0,var(--c) 8px,transparent 8px,transparent 16px);background-size:16px 100%;opacity:.7;animation:_dashFlow 1s linear infinite}
+      @keyframes _dashFlow{to{background-position:16px 0}}
+      @media(prefers-reduced-motion:reduce){.nuda-dash-flow{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-dash-flow" role="separator" aria-hidden="true"></div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Animated Dash
+   Dashes flow along the divider.
+   Customize: --dash-color */
+
+.nuda-dash-flow {
+  --dash-color: #e4ff54;
+  width: 100%;
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--dash-color) 0,
+    var(--dash-color) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  background-size: 16px 100%;
+  opacity: 0.7;
+  animation: nuda-dash-flow 1s linear infinite;
+}
+
+@keyframes nuda-dash-flow {
+  to { background-position: 16px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-dash-flow { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── GRADIENT FLOW LINE ─────────────── */
+  {
+    id: "gradient-flow-divider",
+    name: "Gradient Flow Line",
+    category: "Dividers",
+    preview: (
+      <div className="nuda-grad-flow" role="separator" aria-hidden="true" />
+    ),
+    cssInline: `
+      .nuda-grad-flow{width:100%;max-width:200px;height:2px;background:linear-gradient(90deg,transparent,#e4ff54,#62b6ff,#e4ff54,transparent);background-size:200% 100%;border-radius:2px;animation:_gradFlow 3s linear infinite;will-change:background-position}
+      @keyframes _gradFlow{to{background-position:200% 0}}
+      @media(prefers-reduced-motion:reduce){.nuda-grad-flow{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-grad-flow" role="separator" aria-hidden="true"></div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Gradient Flow Line
+   A gradient that flows along the line.
+   Customize: gradient stop colors */
+
+.nuda-grad-flow {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #e4ff54,
+    #62b6ff,
+    #e4ff54,
+    transparent
+  );
+  background-size: 200% 100%;
+  border-radius: 2px;
+  animation: nuda-grad-flow 3s linear infinite;
+}
+
+@keyframes nuda-grad-flow {
+  to { background-position: 200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-grad-flow { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── WAVE LINE DIVIDER ─────────────── */
+  {
+    id: "animated-wave-divider",
+    name: "Wave Divider",
+    category: "Dividers",
+    preview: (
+      <div className="nuda-wave-line" role="separator" aria-hidden="true">
+        <svg className="nuda-wave-line__svg" viewBox="0 0 200 24" preserveAspectRatio="none">
+          <path d="M0 12 Q12.5 0 25 12 T50 12 T75 12 T100 12 T125 12 T150 12 T175 12 T200 12 T225 12 T250 12" fill="none" stroke="#e4ff54" strokeWidth="1.5" />
+        </svg>
+      </div>
+    ),
+    cssInline: `
+      .nuda-wave-line{width:100%;max-width:200px;height:24px;overflow:hidden;opacity:.5}
+      .nuda-wave-line__svg{display:block;width:125%;height:100%;animation:_waveLineSlide 2s linear infinite;will-change:transform}
+      @keyframes _waveLineSlide{from{transform:translateX(0)}to{transform:translateX(-20%)}}
+      @media(prefers-reduced-motion:reduce){.nuda-wave-line__svg{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-wave-line" role="separator" aria-hidden="true">
+  <svg class="nuda-wave-line__svg" viewBox="0 0 200 24" preserveAspectRatio="none">
+    <path d="M0 12 Q12.5 0 25 12 T50 12 T75 12 T100 12 T125 12 T150 12
+             T175 12 T200 12 T225 12 T250 12"
+          fill="none" stroke="#e4ff54" stroke-width="1.5" />
+  </svg>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Wave Divider
+   An SVG wave that scrolls horizontally.
+   Customize: stroke color, opacity */
+
+.nuda-wave-line {
+  width: 100%;
+  height: 24px;
+  overflow: hidden;
+  opacity: 0.5;
+}
+
+.nuda-wave-line__svg {
+  display: block;
+  width: 125%;
+  height: 100%;
+  animation: nuda-wave-line-slide 2s linear infinite;
+}
+
+@keyframes nuda-wave-line-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-20%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-wave-line__svg { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── SPARKLE LINE ─────────────── */
+  {
+    id: "sparkle-line-divider",
+    name: "Sparkle Line",
+    category: "Dividers",
+    preview: (
+      <div className="nuda-sparkle-line" role="separator" aria-hidden="true">
+        <span className="nuda-sparkle-line__base" />
+        <span className="nuda-sparkle-line__s nuda-sparkle-line__s--1" />
+        <span className="nuda-sparkle-line__s nuda-sparkle-line__s--2" />
+        <span className="nuda-sparkle-line__s nuda-sparkle-line__s--3" />
+        <span className="nuda-sparkle-line__s nuda-sparkle-line__s--4" />
+        <span className="nuda-sparkle-line__s nuda-sparkle-line__s--5" />
+      </div>
+    ),
+    cssInline: `
+      .nuda-sparkle-line{--c:#e4ff54;position:relative;width:100%;max-width:200px;height:8px}
+      .nuda-sparkle-line__base{position:absolute;top:50%;left:0;right:0;height:1px;transform:translateY(-50%);background:linear-gradient(90deg,transparent,rgba(228,255,84,.3),transparent)}
+      .nuda-sparkle-line__s{position:absolute;top:50%;width:4px;height:4px;border-radius:50%;background:var(--c);box-shadow:0 0 6px var(--c);transform:translate(-50%,-50%) scale(0);opacity:0;animation:_sparkleLine 2.4s ease-in-out infinite}
+      .nuda-sparkle-line__s--1{left:12%;animation-delay:0s}
+      .nuda-sparkle-line__s--2{left:32%;animation-delay:.5s}
+      .nuda-sparkle-line__s--3{left:52%;animation-delay:1s}
+      .nuda-sparkle-line__s--4{left:72%;animation-delay:1.5s}
+      .nuda-sparkle-line__s--5{left:90%;animation-delay:.9s}
+      @keyframes _sparkleLine{0%,100%{transform:translate(-50%,-50%) scale(0);opacity:0}50%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+      @media(prefers-reduced-motion:reduce){.nuda-sparkle-line__s{animation:none;opacity:.6;transform:translate(-50%,-50%) scale(1)}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<div class="nuda-sparkle-line" role="separator" aria-hidden="true">
+  <span class="nuda-sparkle-line__base"></span>
+  <span class="nuda-sparkle-line__s nuda-sparkle-line__s--1"></span>
+  <span class="nuda-sparkle-line__s nuda-sparkle-line__s--2"></span>
+  <span class="nuda-sparkle-line__s nuda-sparkle-line__s--3"></span>
+  <span class="nuda-sparkle-line__s nuda-sparkle-line__s--4"></span>
+  <span class="nuda-sparkle-line__s nuda-sparkle-line__s--5"></span>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Sparkle Line
+   Sparkles twinkle in sequence along the divider.
+   Customize: --sparkle-line-color */
+
+.nuda-sparkle-line {
+  --sparkle-line-color: #e4ff54;
+  position: relative;
+  width: 100%;
+  height: 8px;
+}
+
+.nuda-sparkle-line__base {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, transparent, rgba(228, 255, 84, 0.3), transparent);
+}
+
+.nuda-sparkle-line__s {
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sparkle-line-color);
+  box-shadow: 0 0 6px var(--sparkle-line-color);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: nuda-sparkle-line 2.4s ease-in-out infinite;
+}
+
+.nuda-sparkle-line__s--1 { left: 12%; animation-delay: 0s; }
+.nuda-sparkle-line__s--2 { left: 32%; animation-delay: 0.5s; }
+.nuda-sparkle-line__s--3 { left: 52%; animation-delay: 1s; }
+.nuda-sparkle-line__s--4 { left: 72%; animation-delay: 1.5s; }
+.nuda-sparkle-line__s--5 { left: 90%; animation-delay: 0.9s; }
+
+@keyframes nuda-sparkle-line {
+  0%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  50%      { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-sparkle-line__s {
+    animation: none;
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}`,
+      },
+    ],
+  },
 ];

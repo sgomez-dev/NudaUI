@@ -1166,4 +1166,695 @@ export const heroSections: NudaComponent[] = [
       },
     ],
   },
+
+  /* ─────────────── 11. Aurora Hero ─────────────── */
+  {
+    id: "aurora-hero",
+    name: "Aurora Hero",
+    category: "Hero Sections",
+    preview: (
+      <div className="nuda-aurorah">
+        <div className="nuda-aurorah__band nuda-aurorah__band--a" />
+        <div className="nuda-aurorah__band nuda-aurorah__band--b" />
+        <div className="nuda-aurorah__content">
+          <h2>Aurora awaits.</h2>
+          <span className="nuda-aurorah__btn">Explore</span>
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-aurorah{position:relative;width:170px;height:100px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#09090b}
+      .nuda-aurorah__band{position:absolute;inset:-40% -20%;filter:blur(22px);opacity:.55;mix-blend-mode:screen;will-change:transform}
+      .nuda-aurorah__band--a{background:radial-gradient(50% 40% at 40% 50%,#e4ff54 0%,transparent 70%);animation:_aurorah-a 9s ease-in-out infinite}
+      .nuda-aurorah__band--b{background:radial-gradient(45% 50% at 65% 45%,#34d399 0%,transparent 70%);animation:_aurorah-b 11s ease-in-out infinite}
+      .nuda-aurorah__content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+      .nuda-aurorah__content h2{font:800 14px ui-sans-serif,system-ui;color:#fafafa;margin:0;letter-spacing:-.02em}
+      .nuda-aurorah__btn{padding:4px 12px;background:rgba(228,255,84,.12);border:1px solid rgba(228,255,84,.3);color:#e4ff54;font:700 9px ui-sans-serif,system-ui;border-radius:999px;cursor:pointer}
+      @keyframes _aurorah-a{0%,100%{transform:translate(-6%,0) scale(1)}50%{transform:translate(10%,-6%) scale(1.15)}}
+      @keyframes _aurorah-b{0%,100%{transform:translate(6%,4%) scale(1.1)}50%{transform:translate(-8%,-4%) scale(.9)}}
+      @media (prefers-reduced-motion:reduce){.nuda-aurorah__band{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Aurora Hero — drifting aurora bands behind the headline -->
+<section class="nuda-aurorah">
+  <div class="nuda-aurorah__band nuda-aurorah__band--a"></div>
+  <div class="nuda-aurorah__band nuda-aurorah__band--b"></div>
+  <div class="nuda-aurorah__content">
+    <h2>Aurora awaits.</h2>
+    <button class="nuda-aurorah__btn" type="button">Explore</button>
+  </div>
+</section>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Aurora Hero
+   Two screen-blended radial bands drift behind the headline.
+   Customize: band colors, --aurorah-accent. */
+
+.nuda-aurorah {
+  --aurorah-accent: #e4ff54;
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #09090b;
+}
+
+.nuda-aurorah__band {
+  position: absolute;
+  inset: -40% -20%;
+  filter: blur(60px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.nuda-aurorah__band--a {
+  background: radial-gradient(50% 40% at 40% 50%, var(--aurorah-accent) 0%, transparent 70%);
+  animation: nuda-aurorah-a 9s ease-in-out infinite;
+}
+
+.nuda-aurorah__band--b {
+  background: radial-gradient(45% 50% at 65% 45%, #34d399 0%, transparent 70%);
+  animation: nuda-aurorah-b 11s ease-in-out infinite;
+}
+
+.nuda-aurorah__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.nuda-aurorah__content h2 {
+  font: 800 clamp(2rem, 5vw, 3.5rem) ui-sans-serif, system-ui, sans-serif;
+  color: #fafafa;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.nuda-aurorah__btn {
+  padding: 10px 24px;
+  background: rgba(228, 255, 84, 0.12);
+  border: 1px solid rgba(228, 255, 84, 0.3);
+  color: var(--aurorah-accent);
+  font: 700 0.95rem ui-sans-serif, system-ui, sans-serif;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+@keyframes nuda-aurorah-a {
+  0%, 100% { transform: translate(-6%, 0) scale(1); }
+  50%      { transform: translate(10%, -6%) scale(1.15); }
+}
+
+@keyframes nuda-aurorah-b {
+  0%, 100% { transform: translate(6%, 4%) scale(1.1); }
+  50%      { transform: translate(-8%, -4%) scale(0.9); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-aurorah__band { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 12. Grain Gradient Hero ─────────────── */
+  {
+    id: "grain-gradient-hero",
+    name: "Grain Gradient Hero",
+    category: "Hero Sections",
+    preview: (
+      <div className="nuda-grainh">
+        <div className="nuda-grainh__grain" />
+        <div className="nuda-grainh__content">
+          <h2>Texture matters.</h2>
+          <span className="nuda-grainh__btn">Get started</span>
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-grainh{position:relative;width:170px;height:100px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a05,#09090b 55%,#0d1a12);background-size:200% 200%;animation:_grainh-shift 10s ease infinite}
+      .nuda-grainh__grain{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.18) .5px,transparent .5px);background-size:3px 3px;opacity:.35;mix-blend-mode:overlay;animation:_grainh-grain .6s steps(3) infinite}
+      .nuda-grainh__content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+      .nuda-grainh__content h2{font:800 14px ui-sans-serif,system-ui;color:#fafafa;margin:0;letter-spacing:-.02em}
+      .nuda-grainh__btn{padding:4px 12px;background:#e4ff54;border:none;color:#09090b;font:700 9px ui-sans-serif,system-ui;border-radius:6px;cursor:pointer}
+      @keyframes _grainh-shift{0%,100%{background-position:0% 0%}50%{background-position:100% 100%}}
+      @keyframes _grainh-grain{0%{transform:translate(0,0)}33%{transform:translate(-1px,1px)}66%{transform:translate(1px,-1px)}100%{transform:translate(0,0)}}
+      @media (prefers-reduced-motion:reduce){.nuda-grainh,.nuda-grainh__grain{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Grain Gradient Hero — drifting gradient + film-grain overlay -->
+<section class="nuda-grainh">
+  <div class="nuda-grainh__grain"></div>
+  <div class="nuda-grainh__content">
+    <h2>Texture matters.</h2>
+    <button class="nuda-grainh__btn" type="button">Get started</button>
+  </div>
+</section>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Grain Gradient Hero
+   Slowly shifting dark gradient with a stepped film-grain overlay.
+   Customize: gradient stops, --grainh-accent. */
+
+.nuda-grainh {
+  --grainh-accent: #e4ff54;
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a05, #09090b 55%, #0d1a12);
+  background-size: 200% 200%;
+  animation: nuda-grainh-shift 10s ease infinite;
+}
+
+.nuda-grainh__grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.18) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  animation: nuda-grainh-grain 0.6s steps(3) infinite;
+}
+
+.nuda-grainh__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.nuda-grainh__content h2 {
+  font: 800 clamp(2rem, 5vw, 3.5rem) ui-sans-serif, system-ui, sans-serif;
+  color: #fafafa;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.nuda-grainh__btn {
+  padding: 10px 24px;
+  background: var(--grainh-accent);
+  border: none;
+  color: #09090b;
+  font: 700 0.95rem ui-sans-serif, system-ui, sans-serif;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes nuda-grainh-shift {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 100% 100%; }
+}
+
+@keyframes nuda-grainh-grain {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-1px, 1px); }
+  66%  { transform: translate(1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-grainh, .nuda-grainh__grain { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 13. Spotlight Hero ─────────────── */
+  {
+    id: "spotlight-hero",
+    name: "Spotlight Hero",
+    category: "Hero Sections",
+    preview: (
+      <div
+        className="nuda-spoth"
+        onMouseMove={(e) => {
+          const r = e.currentTarget.getBoundingClientRect();
+          e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`);
+          e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
+        }}
+      >
+        <div className="nuda-spoth__content">
+          <h2>Follow the light.</h2>
+          <span className="nuda-spoth__sub">Move your cursor.</span>
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-spoth{--x:50%;--y:50%;position:relative;width:170px;height:100px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#09090b;border:1px solid rgba(255,255,255,.06)}
+      .nuda-spoth::before{content:"";position:absolute;inset:0;background:radial-gradient(140px circle at var(--x) var(--y),rgba(228,255,84,.18),transparent 60%);transition:background .08s linear}
+      .nuda-spoth__content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+      .nuda-spoth__content h2{font:800 14px ui-sans-serif,system-ui;color:#fafafa;margin:0;letter-spacing:-.02em}
+      .nuda-spoth__sub{font:500 9px ui-sans-serif,system-ui;color:#a1a1aa}
+      @media (prefers-reduced-motion:reduce){.nuda-spoth::before{transition:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Spotlight Hero — cursor-tracking spotlight via --x / --y -->
+<section class="nuda-spoth" id="spoth">
+  <div class="nuda-spoth__content">
+    <h2>Follow the light.</h2>
+    <span class="nuda-spoth__sub">Move your cursor.</span>
+  </div>
+</section>
+
+<script>
+  const el = document.getElementById("spoth");
+  el.addEventListener("pointermove", (e) => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--x", (e.clientX - r.left) + "px");
+    el.style.setProperty("--y", (e.clientY - r.top) + "px");
+  });
+</script>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Spotlight Hero
+   Radial spotlight tracks the cursor through --x / --y custom properties.
+   Customize: spotlight radius & --spoth-accent. */
+
+.nuda-spoth {
+  --x: 50%;
+  --y: 50%;
+  --spoth-accent: 228, 255, 84;
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #09090b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nuda-spoth::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    300px circle at var(--x) var(--y),
+    rgba(var(--spoth-accent), 0.18),
+    transparent 60%
+  );
+  transition: background 0.08s linear;
+}
+
+.nuda-spoth__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.nuda-spoth__content h2 {
+  font: 800 clamp(2rem, 5vw, 3.5rem) ui-sans-serif, system-ui, sans-serif;
+  color: #fafafa;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.nuda-spoth__sub {
+  font: 500 1rem ui-sans-serif, system-ui, sans-serif;
+  color: #a1a1aa;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-spoth::before { transition: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 14. Marquee Hero ─────────────── */
+  {
+    id: "marquee-hero",
+    name: "Marquee Hero",
+    category: "Hero Sections",
+    preview: (
+      <div className="nuda-marqh">
+        <div className="nuda-marqh__content">
+          <h2>Always shipping.</h2>
+        </div>
+        <div className="nuda-marqh__strip">
+          <div className="nuda-marqh__track">
+            <span>SHIP&nbsp;·&nbsp;ITERATE&nbsp;·&nbsp;REPEAT&nbsp;·&nbsp;</span>
+            <span aria-hidden="true">SHIP&nbsp;·&nbsp;ITERATE&nbsp;·&nbsp;REPEAT&nbsp;·&nbsp;</span>
+          </div>
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-marqh{position:relative;width:170px;height:100px;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#09090b}
+      .nuda-marqh__content h2{font:800 14px ui-sans-serif,system-ui;color:#fafafa;margin:0;letter-spacing:-.02em}
+      .nuda-marqh__strip{position:absolute;bottom:0;left:0;right:0;overflow:hidden;background:#e4ff54;padding:3px 0}
+      .nuda-marqh__track{display:flex;width:max-content;animation:_marqh-roll 6s linear infinite;will-change:transform}
+      .nuda-marqh__track span{font:800 9px ui-sans-serif,system-ui;color:#09090b;letter-spacing:.08em;white-space:nowrap}
+      @keyframes _marqh-roll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+      @media (prefers-reduced-motion:reduce){.nuda-marqh__track{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Marquee Hero — headline above an infinite scrolling strip.
+     Duplicate the span (aria-hidden) for a seamless loop. -->
+<section class="nuda-marqh">
+  <div class="nuda-marqh__content">
+    <h2>Always shipping.</h2>
+  </div>
+  <div class="nuda-marqh__strip">
+    <div class="nuda-marqh__track">
+      <span>SHIP · ITERATE · REPEAT · </span>
+      <span aria-hidden="true">SHIP · ITERATE · REPEAT · </span>
+    </div>
+  </div>
+</section>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Marquee Hero
+   Headline with an infinite scrolling brand strip pinned to the bottom.
+   The track is duplicated and slid -50% for a seamless loop.
+   Customize: --marqh-accent, scroll duration. */
+
+.nuda-marqh {
+  --marqh-accent: #e4ff54;
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: #09090b;
+}
+
+.nuda-marqh__content h2 {
+  font: 800 clamp(2rem, 5vw, 3.5rem) ui-sans-serif, system-ui, sans-serif;
+  color: #fafafa;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.nuda-marqh__strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: var(--marqh-accent);
+  padding: 10px 0;
+}
+
+.nuda-marqh__track {
+  display: flex;
+  width: max-content;
+  animation: nuda-marqh-roll 14s linear infinite;
+  will-change: transform;
+}
+
+.nuda-marqh__track span {
+  font: 800 0.95rem ui-sans-serif, system-ui, sans-serif;
+  color: #09090b;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+@keyframes nuda-marqh-roll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-marqh__track { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 15. Split Reveal Hero ─────────────── */
+  {
+    id: "split-reveal-hero",
+    name: "Split Reveal Hero",
+    category: "Hero Sections",
+    preview: (
+      <h1 className="nuda-srevealh">
+        <span className="nuda-srevealh__line"><span style={{ ["--d" as string]: "0s" }}>Rise</span></span>
+        <span className="nuda-srevealh__line"><span style={{ ["--d" as string]: ".12s" }}>and</span></span>
+        <span className="nuda-srevealh__line"><span style={{ ["--d" as string]: ".24s" }} className="is-accent">reveal.</span></span>
+      </h1>
+    ),
+    cssInline: `
+      .nuda-srevealh{display:flex;flex-direction:column;align-items:center;gap:0;font:800 18px ui-sans-serif,system-ui;color:#fafafa;margin:0;line-height:1.05;letter-spacing:-.02em;padding:14px;text-align:center;width:170px}
+      .nuda-srevealh__line{display:block;overflow:hidden}
+      .nuda-srevealh__line>span{display:inline-block;transform:translateY(105%);animation:_srevealh-rise .7s cubic-bezier(.16,1,.3,1) var(--d) forwards}
+      .nuda-srevealh .is-accent{background:linear-gradient(180deg,#e4ff54,#a8c93a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+      @keyframes _srevealh-rise{to{transform:translateY(0)}}
+      @media (prefers-reduced-motion:reduce){.nuda-srevealh__line>span{animation:none;transform:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Split Reveal Hero — each line's word rises out of a clipped mask.
+     The outer line clips; the inner span animates from translateY(105%). -->
+<h1 class="nuda-srevealh">
+  <span class="nuda-srevealh__line"><span style="--d: 0s">Rise</span></span>
+  <span class="nuda-srevealh__line"><span style="--d: .12s">and</span></span>
+  <span class="nuda-srevealh__line"><span style="--d: .24s" class="is-accent">reveal.</span></span>
+</h1>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Split Reveal Hero
+   Headline words rise out of clipped lines on load, staggered via --d.
+   Customize: --srevealh-accent, font sizing, stagger. */
+
+.nuda-srevealh {
+  --srevealh-accent: #e4ff54;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font: 800 clamp(2.5rem, 7vw, 5rem) ui-sans-serif, system-ui, sans-serif;
+  color: #fafafa;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.nuda-srevealh__line {
+  display: block;
+  overflow: hidden;
+}
+
+.nuda-srevealh__line > span {
+  display: inline-block;
+  transform: translateY(105%);
+  animation: nuda-srevealh-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
+}
+
+.nuda-srevealh .is-accent {
+  background: linear-gradient(180deg, var(--srevealh-accent), #a8c93a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes nuda-srevealh-rise {
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-srevealh__line > span { animation: none; transform: none; }
+}`,
+      },
+    ],
+  },
+
+  /* ─────────────── 16. Glass Hero ─────────────── */
+  {
+    id: "glass-hero",
+    name: "Glass Hero",
+    category: "Hero Sections",
+    preview: (
+      <div className="nuda-glassh">
+        <div className="nuda-glassh__blob nuda-glassh__blob--a" />
+        <div className="nuda-glassh__blob nuda-glassh__blob--b" />
+        <div className="nuda-glassh__panel">
+          <h2>Crystal clear.</h2>
+          <p>Frosted glass, sharp focus.</p>
+          <span className="nuda-glassh__btn">Try it</span>
+        </div>
+      </div>
+    ),
+    cssInline: `
+      .nuda-glassh{position:relative;width:170px;height:100px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#09090b}
+      .nuda-glassh__blob{position:absolute;width:90px;height:90px;border-radius:50%;filter:blur(18px);opacity:.6;will-change:transform}
+      .nuda-glassh__blob--a{background:#e4ff54;top:-20px;left:-10px;animation:_glassh-a 8s ease-in-out infinite}
+      .nuda-glassh__blob--b{background:#8b5cf6;bottom:-20px;right:-10px;animation:_glassh-b 10s ease-in-out infinite}
+      .nuda-glassh__panel{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;padding:10px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:10px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
+      .nuda-glassh__panel h2{font:800 13px ui-sans-serif,system-ui;color:#fafafa;margin:0;letter-spacing:-.02em}
+      .nuda-glassh__panel p{font:500 8px ui-sans-serif,system-ui;color:#cfcfd6;margin:0}
+      .nuda-glassh__btn{margin-top:3px;padding:3px 10px;background:#e4ff54;color:#09090b;border:none;border-radius:5px;font:700 8px ui-sans-serif,system-ui;cursor:pointer}
+      @keyframes _glassh-a{0%,100%{transform:translate(0,0)}50%{transform:translate(14px,10px)}}
+      @keyframes _glassh-b{0%,100%{transform:translate(0,0)}50%{transform:translate(-12px,-8px)}}
+      @media (prefers-reduced-motion:reduce){.nuda-glassh__blob{animation:none}}
+    `,
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Glass Hero — frosted glass panel over drifting color blobs -->
+<section class="nuda-glassh">
+  <div class="nuda-glassh__blob nuda-glassh__blob--a"></div>
+  <div class="nuda-glassh__blob nuda-glassh__blob--b"></div>
+  <div class="nuda-glassh__panel">
+    <h2>Crystal clear.</h2>
+    <p>Frosted glass, sharp focus.</p>
+    <button class="nuda-glassh__btn" type="button">Try it</button>
+  </div>
+</section>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* Glass Hero
+   Glassmorphism panel floating over two drifting color blobs.
+   Customize: blob colors, --glassh-accent, blur radius. */
+
+.nuda-glassh {
+  --glassh-accent: #e4ff54;
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #09090b;
+}
+
+.nuda-glassh__blob {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.6;
+  will-change: transform;
+}
+
+.nuda-glassh__blob--a {
+  background: var(--glassh-accent);
+  top: -60px;
+  left: -40px;
+  animation: nuda-glassh-a 8s ease-in-out infinite;
+}
+
+.nuda-glassh__blob--b {
+  background: #8b5cf6;
+  bottom: -60px;
+  right: -40px;
+  animation: nuda-glassh-b 10s ease-in-out infinite;
+}
+
+.nuda-glassh__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 32px 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.5);
+}
+
+.nuda-glassh__panel h2 {
+  font: 800 clamp(2rem, 5vw, 3.25rem) ui-sans-serif, system-ui, sans-serif;
+  color: #fafafa;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.nuda-glassh__panel p {
+  font: 500 1rem ui-sans-serif, system-ui, sans-serif;
+  color: #cfcfd6;
+  margin: 0;
+}
+
+.nuda-glassh__btn {
+  margin-top: 8px;
+  padding: 10px 24px;
+  background: var(--glassh-accent);
+  color: #09090b;
+  border: none;
+  border-radius: 8px;
+  font: 700 0.95rem ui-sans-serif, system-ui, sans-serif;
+  cursor: pointer;
+}
+
+@keyframes nuda-glassh-a {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(40px, 30px); }
+}
+
+@keyframes nuda-glassh-b {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-30px, -24px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuda-glassh__blob { animation: none; }
+}`,
+      },
+    ],
+  },
 ];

@@ -1063,4 +1063,1095 @@ export const cardsHover: NudaComponent[] = [
       },
     ],
   },
+
+  /* -------------------------------------------------------
+     9. Spotlight Follow
+     ------------------------------------------------------- */
+  {
+    id: "spotlight-follow-card",
+    name: "Spotlight Follow",
+    category: "Cards & Hover",
+    cssInline: `
+      .nuda-spotlight-follow{--nuda-sf2-x:50%;--nuda-sf2-y:50%;position:relative;width:220px;padding:28px 20px;background:#09090b;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;color:#fafafa;text-align:center}
+      .nuda-spotlight-follow::before{content:'';position:absolute;inset:0;background:radial-gradient(circle 200px at var(--nuda-sf2-x) var(--nuda-sf2-y),rgba(228,255,84,0.18),transparent 70%);opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+      .nuda-spotlight-follow:hover::before,.nuda-spotlight-follow:focus-visible::before{opacity:1}
+      .nuda-spotlight-follow:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      .nuda-spotlight-follow__title{position:relative;font-size:1.05rem;font-weight:700;margin:0}
+      .nuda-spotlight-follow__desc{position:relative;font-size:0.85rem;opacity:0.6;margin:6px 0 0}
+      @media (prefers-reduced-motion:reduce){.nuda-spotlight-follow::before{transition:none}}
+    `,
+    preview: (
+      <div
+        style={{
+          position: "relative",
+          width: "220px",
+          padding: "28px 20px",
+          background: "#09090b",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: "16px",
+          overflow: "hidden",
+          color: "#fafafa",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(circle 160px at 50% 40%, rgba(228,255,84,0.16), transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
+        <div style={{ position: "relative", fontWeight: 700, fontSize: "1.05rem" }}>
+          Spotlight Follow
+        </div>
+        <div
+          style={{
+            position: "relative",
+            fontSize: "0.85rem",
+            opacity: 0.6,
+            marginTop: "6px",
+          }}
+        >
+          Cursor radial spotlight
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Spotlight Follow — cursor radial spotlight (vanilla JS) -->
+<div class="nuda-spotlight-follow" tabindex="0">
+  <h3 class="nuda-spotlight-follow__title">Spotlight Follow</h3>
+  <p class="nuda-spotlight-follow__desc">Cursor radial spotlight</p>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Spotlight Follow ────────────────────────────────────────
+   Radial spotlight tracks the cursor via --nuda-sf2-x / -y.
+   Customize:
+     --nuda-sf2-bg     : card background
+     --nuda-sf2-light  : spotlight color
+   ──────────────────────────────────────────────────────────── */
+.nuda-spotlight-follow {
+  --nuda-sf2-x: 50%;
+  --nuda-sf2-y: 50%;
+  --nuda-sf2-bg: #09090b;
+  --nuda-sf2-light: rgba(228, 255, 84, 0.18);
+
+  position: relative;
+  width: 280px;
+  padding: 28px 20px;
+  background: var(--nuda-sf2-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  color: #fafafa;
+  text-align: center;
+}
+
+.nuda-spotlight-follow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 200px at var(--nuda-sf2-x) var(--nuda-sf2-y),
+    var(--nuda-sf2-light),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nuda-spotlight-follow:hover::before,
+.nuda-spotlight-follow:focus-visible::before {
+  opacity: 1;
+}
+
+.nuda-spotlight-follow:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+.nuda-spotlight-follow__title {
+  position: relative;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nuda-spotlight-follow__desc {
+  position: relative;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin: 6px 0 0;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-spotlight-follow::before { transition: none; }
+}`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* ── Spotlight Follow — vanilla JS ───────────────────────────
+   Positions the radial spotlight at cursor coordinates.
+   ──────────────────────────────────────────────────────────── */
+;(function () {
+  document.querySelectorAll(".nuda-spotlight-follow").forEach(function (card) {
+    card.addEventListener("mousemove", function (e) {
+      var rect = card.getBoundingClientRect();
+      card.style.setProperty("--nuda-sf2-x", (e.clientX - rect.left) + "px");
+      card.style.setProperty("--nuda-sf2-y", (e.clientY - rect.top) + "px");
+    });
+  });
+})();`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     10. Tilt 3D
+     ------------------------------------------------------- */
+  {
+    id: "tilt-3d-card",
+    name: "Tilt 3D",
+    category: "Cards & Hover",
+    cssInline: `
+      .nuda-tilt3d{--nuda-t3-rx:0deg;--nuda-t3-ry:0deg;width:220px;perspective:800px}
+      .nuda-tilt3d__inner{padding:32px 24px;background:linear-gradient(135deg,#18181b,#09090b);border:1px solid rgba(228,255,84,0.15);border-radius:16px;color:#fafafa;text-align:center;box-shadow:0 12px 32px rgba(0,0,0,0.4);transform:rotateX(var(--nuda-t3-rx)) rotateY(var(--nuda-t3-ry));transition:transform 0.15s ease;will-change:transform}
+      .nuda-tilt3d__title{font-size:1.1rem;font-weight:700;margin:0}
+      .nuda-tilt3d__desc{font-size:0.85rem;opacity:0.65;margin:6px 0 0}
+      @media (prefers-reduced-motion:reduce){.nuda-tilt3d__inner{transition:none;transform:none !important}}
+    `,
+    preview: (
+      <div style={{ width: "220px", perspective: "800px" }}>
+        <div
+          style={{
+            padding: "32px 24px",
+            background: "linear-gradient(135deg,#18181b,#09090b)",
+            border: "1px solid rgba(228,255,84,0.15)",
+            borderRadius: "16px",
+            color: "#fafafa",
+            textAlign: "center",
+            boxShadow: "0 12px 32px rgba(0,0,0,0.4)",
+            transform: "rotateX(8deg) rotateY(-10deg)",
+          }}
+        >
+          <div style={{ fontWeight: 700, fontSize: "1.1rem" }}>Tilt 3D</div>
+          <div style={{ fontSize: "0.85rem", opacity: 0.65, marginTop: "6px" }}>
+            Tilts toward cursor
+          </div>
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Tilt 3D — 3D tilt toward cursor (vanilla JS) -->
+<div class="nuda-tilt3d">
+  <div class="nuda-tilt3d__inner">
+    <h3 class="nuda-tilt3d__title">Tilt 3D</h3>
+    <p class="nuda-tilt3d__desc">Tilts toward your cursor</p>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Tilt 3D ─────────────────────────────────────────────────
+   Tilt driven by JS via --nuda-t3-rx / -ry custom properties.
+   Customize:
+     --nuda-t3-bg     : card background
+   ──────────────────────────────────────────────────────────── */
+.nuda-tilt3d {
+  --nuda-t3-rx: 0deg;
+  --nuda-t3-ry: 0deg;
+
+  width: 280px;
+  perspective: 800px;
+}
+
+.nuda-tilt3d__inner {
+  padding: 32px 24px;
+  background: linear-gradient(135deg, #18181b, #09090b);
+  border: 1px solid rgba(228, 255, 84, 0.15);
+  border-radius: 16px;
+  color: #fafafa;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  transform: rotateX(var(--nuda-t3-rx)) rotateY(var(--nuda-t3-ry));
+  transition: transform 0.15s ease;
+  will-change: transform;
+}
+
+.nuda-tilt3d__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nuda-tilt3d__desc {
+  font-size: 0.85rem;
+  opacity: 0.65;
+  margin: 6px 0 0;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-tilt3d__inner {
+    transition: none;
+    transform: none !important;
+  }
+}`,
+      },
+      {
+        label: "JS",
+        language: "javascript",
+        code: `/* ── Tilt 3D — vanilla JS ────────────────────────────────────
+   Maps cursor position to rotateX / rotateY.
+   Respects prefers-reduced-motion.
+   ──────────────────────────────────────────────────────────── */
+;(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var maxTilt = 14; /* degrees */
+
+  document.querySelectorAll(".nuda-tilt3d").forEach(function (card) {
+    var inner = card.querySelector(".nuda-tilt3d__inner");
+    if (!inner) return;
+
+    card.addEventListener("mousemove", function (e) {
+      var rect = card.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width;
+      var y = (e.clientY - rect.top) / rect.height;
+      inner.style.setProperty("--nuda-t3-rx", ((0.5 - y) * maxTilt) + "deg");
+      inner.style.setProperty("--nuda-t3-ry", ((x - 0.5) * maxTilt) + "deg");
+    });
+
+    card.addEventListener("mouseleave", function () {
+      inner.style.setProperty("--nuda-t3-rx", "0deg");
+      inner.style.setProperty("--nuda-t3-ry", "0deg");
+    });
+  });
+})();`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     11. Rotating Gradient Border
+     ------------------------------------------------------- */
+  {
+    id: "border-gradient-rotate-card",
+    name: "Rotating Gradient Border",
+    category: "Cards & Hover",
+    cssInline: `
+      @property --nuda-bgr-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+      .nuda-bgr-card{--nuda-bgr-angle:0deg;width:220px;padding:2px;border-radius:16px;background:conic-gradient(from var(--nuda-bgr-angle),#e4ff54,#a3b800,#09090b,#e4ff54);animation:_bgrSpin 4s linear infinite}
+      .nuda-bgr-card__inner{padding:28px 20px;background:#09090b;border-radius:14px;color:#fafafa;text-align:center}
+      .nuda-bgr-card__title{font-size:1.05rem;font-weight:700;margin:0}
+      .nuda-bgr-card__desc{font-size:0.85rem;opacity:0.6;margin:6px 0 0}
+      @keyframes _bgrSpin{to{--nuda-bgr-angle:360deg}}
+      @media (prefers-reduced-motion:reduce){.nuda-bgr-card{animation:none}}
+    `,
+    preview: (
+      <div
+        style={{
+          width: "220px",
+          padding: "2px",
+          borderRadius: "16px",
+          background:
+            "conic-gradient(from 120deg,#e4ff54,#a3b800,#09090b,#e4ff54)",
+        }}
+      >
+        <div
+          style={{
+            padding: "28px 20px",
+            background: "#09090b",
+            borderRadius: "14px",
+            color: "#fafafa",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontWeight: 700, fontSize: "1.05rem" }}>Rotating Border</div>
+          <div style={{ fontSize: "0.85rem", opacity: 0.6, marginTop: "6px" }}>
+            Conic gradient spins
+          </div>
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Rotating Gradient Border — conic border rotates -->
+<div class="nuda-bgr-card">
+  <div class="nuda-bgr-card__inner">
+    <h3 class="nuda-bgr-card__title">Rotating Border</h3>
+    <p class="nuda-bgr-card__desc">Conic gradient spins</p>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Rotating Gradient Border ────────────────────────────────
+   Uses @property to animate a conic-gradient angle.
+   Falls back to a static gradient where @property is unsupported.
+   Customize:
+     --nuda-bgr-bg     : inner card background
+     --nuda-bgr-speed  : rotation speed
+   ──────────────────────────────────────────────────────────── */
+@property --nuda-bgr-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.nuda-bgr-card {
+  --nuda-bgr-angle: 0deg;
+  --nuda-bgr-bg: #09090b;
+  --nuda-bgr-speed: 4s;
+
+  width: 280px;
+  padding: 2px;
+  border-radius: 16px;
+  background: conic-gradient(
+    from var(--nuda-bgr-angle),
+    #e4ff54,
+    #a3b800,
+    #09090b,
+    #e4ff54
+  );
+  animation: nuda-bgr-spin var(--nuda-bgr-speed) linear infinite;
+}
+
+.nuda-bgr-card__inner {
+  padding: 28px 20px;
+  background: var(--nuda-bgr-bg);
+  border-radius: 14px;
+  color: #fafafa;
+  text-align: center;
+}
+
+.nuda-bgr-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nuda-bgr-card__desc {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin: 6px 0 0;
+}
+
+@keyframes nuda-bgr-spin {
+  to { --nuda-bgr-angle: 360deg; }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-bgr-card { animation: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     12. Lift Shadow
+     ------------------------------------------------------- */
+  {
+    id: "lift-shadow-card",
+    name: "Lift Shadow",
+    category: "Cards & Hover",
+    cssInline: `
+      .nuda-lift-shadow{width:220px;padding:28px 20px;background:linear-gradient(135deg,#18181b,#09090b);border:1px solid rgba(255,255,255,0.06);border-radius:16px;color:#fafafa;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);cursor:pointer;transform:translateY(0);transition:transform 0.35s cubic-bezier(0.22,1,0.36,1),box-shadow 0.35s ease;will-change:transform,box-shadow}
+      .nuda-lift-shadow:hover,.nuda-lift-shadow:focus-visible{transform:translateY(-8px);box-shadow:0 22px 44px rgba(228,255,84,0.18)}
+      .nuda-lift-shadow:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      .nuda-lift-shadow__title{font-size:1.05rem;font-weight:700;margin:0}
+      .nuda-lift-shadow__desc{font-size:0.85rem;opacity:0.65;margin:6px 0 0}
+      @media (prefers-reduced-motion:reduce){.nuda-lift-shadow{transition:none}.nuda-lift-shadow:hover,.nuda-lift-shadow:focus-visible{transform:none}}
+    `,
+    preview: (
+      <div
+        style={{
+          width: "220px",
+          padding: "28px 20px",
+          background: "linear-gradient(135deg,#18181b,#09090b)",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: "16px",
+          color: "#fafafa",
+          textAlign: "center",
+          boxShadow: "0 22px 44px rgba(228,255,84,0.18)",
+          transform: "translateY(-8px)",
+        }}
+      >
+        <div style={{ fontWeight: 700, fontSize: "1.05rem" }}>Lift Shadow</div>
+        <div style={{ fontSize: "0.85rem", opacity: 0.65, marginTop: "6px" }}>
+          Lifts with deepening shadow
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Lift Shadow — lifts with deepening shadow on hover -->
+<div class="nuda-lift-shadow" tabindex="0">
+  <h3 class="nuda-lift-shadow__title">Lift Shadow</h3>
+  <p class="nuda-lift-shadow__desc">Lifts with deepening shadow on hover</p>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Lift Shadow ─────────────────────────────────────────────
+   Customize:
+     --nuda-ls-lift     : hover lift distance
+     --nuda-ls-shadow   : resting shadow
+     --nuda-ls-shadow-h : hover shadow
+     --nuda-ls-speed    : transition speed
+   ──────────────────────────────────────────────────────────── */
+.nuda-lift-shadow {
+  --nuda-ls-lift: -8px;
+  --nuda-ls-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --nuda-ls-shadow-h: 0 22px 44px rgba(228, 255, 84, 0.18);
+  --nuda-ls-speed: 0.35s;
+
+  width: 280px;
+  padding: 28px 20px;
+  background: linear-gradient(135deg, #18181b, #09090b);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  color: #fafafa;
+  text-align: center;
+  box-shadow: var(--nuda-ls-shadow);
+  cursor: pointer;
+  transform: translateY(0);
+  transition:
+    transform var(--nuda-ls-speed) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--nuda-ls-speed) ease;
+  will-change: transform, box-shadow;
+}
+
+.nuda-lift-shadow:hover,
+.nuda-lift-shadow:focus-visible {
+  transform: translateY(var(--nuda-ls-lift));
+  box-shadow: var(--nuda-ls-shadow-h);
+}
+
+.nuda-lift-shadow:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+.nuda-lift-shadow__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nuda-lift-shadow__desc {
+  font-size: 0.85rem;
+  opacity: 0.65;
+  margin: 6px 0 0;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-lift-shadow { transition: none; }
+  .nuda-lift-shadow:hover,
+  .nuda-lift-shadow:focus-visible { transform: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     13. Image Zoom Mask
+     ------------------------------------------------------- */
+  {
+    id: "image-zoom-mask-card",
+    name: "Image Zoom Mask",
+    category: "Cards & Hover",
+    cssInline: `
+      .nuda-zoom-mask{width:220px;border-radius:16px;overflow:hidden;background:#09090b;border:1px solid rgba(255,255,255,0.08);cursor:pointer}
+      .nuda-zoom-mask:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      .nuda-zoom-mask__media{height:130px;background-image:radial-gradient(circle at 30% 30%,#e4ff54,transparent 45%),linear-gradient(135deg,#a3b800,#09090b);transform:scale(1);transform-origin:center;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);will-change:transform}
+      .nuda-zoom-mask:hover .nuda-zoom-mask__media,.nuda-zoom-mask:focus-visible .nuda-zoom-mask__media{transform:scale(1.12)}
+      .nuda-zoom-mask__body{padding:16px 18px;color:#fafafa}
+      .nuda-zoom-mask__title{font-size:1rem;font-weight:700;margin:0}
+      .nuda-zoom-mask__desc{font-size:0.82rem;opacity:0.6;margin:4px 0 0}
+      @media (prefers-reduced-motion:reduce){.nuda-zoom-mask__media{transition:none}.nuda-zoom-mask:hover .nuda-zoom-mask__media,.nuda-zoom-mask:focus-visible .nuda-zoom-mask__media{transform:none}}
+    `,
+    preview: (
+      <div
+        style={{
+          width: "220px",
+          borderRadius: "16px",
+          overflow: "hidden",
+          background: "#09090b",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <div
+          style={{
+            height: "130px",
+            backgroundImage:
+              "radial-gradient(circle at 30% 30%,#e4ff54,transparent 45%),linear-gradient(135deg,#a3b800,#09090b)",
+            transform: "scale(1.12)",
+          }}
+        />
+        <div style={{ padding: "16px 18px", color: "#fafafa" }}>
+          <div style={{ fontWeight: 700, fontSize: "1rem" }}>Image Zoom Mask</div>
+          <div style={{ fontSize: "0.82rem", opacity: 0.6, marginTop: "4px" }}>
+            Image zooms within mask
+          </div>
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Image Zoom Mask — image zooms within mask on hover -->
+<div class="nuda-zoom-mask" tabindex="0">
+  <div class="nuda-zoom-mask__media"></div>
+  <div class="nuda-zoom-mask__body">
+    <h3 class="nuda-zoom-mask__title">Image Zoom Mask</h3>
+    <p class="nuda-zoom-mask__desc">Image zooms within the mask on hover</p>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Image Zoom Mask ─────────────────────────────────────────
+   The overflow:hidden wrapper masks the scaling media.
+   Swap the gradient on __media for a real background-image.
+   Customize:
+     --nuda-zm-scale   : hover zoom factor
+     --nuda-zm-speed   : zoom duration
+   ──────────────────────────────────────────────────────────── */
+.nuda-zoom-mask {
+  --nuda-zm-scale: 1.12;
+  --nuda-zm-speed: 0.5s;
+
+  width: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #09090b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.nuda-zoom-mask:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+.nuda-zoom-mask__media {
+  height: 160px;
+  /* Replace with: background: url('...') center / cover; */
+  background-image:
+    radial-gradient(circle at 30% 30%, #e4ff54, transparent 45%),
+    linear-gradient(135deg, #a3b800, #09090b);
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform var(--nuda-zm-speed) cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.nuda-zoom-mask:hover .nuda-zoom-mask__media,
+.nuda-zoom-mask:focus-visible .nuda-zoom-mask__media {
+  transform: scale(var(--nuda-zm-scale));
+}
+
+.nuda-zoom-mask__body {
+  padding: 16px 18px;
+  color: #fafafa;
+}
+
+.nuda-zoom-mask__title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nuda-zoom-mask__desc {
+  font-size: 0.82rem;
+  opacity: 0.6;
+  margin: 4px 0 0;
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-zoom-mask__media { transition: none; }
+  .nuda-zoom-mask:hover .nuda-zoom-mask__media,
+  .nuda-zoom-mask:focus-visible .nuda-zoom-mask__media { transform: none; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     14. Flip Card (3D)
+     ------------------------------------------------------- */
+  {
+    id: "flip-card-3d",
+    name: "Flip Card",
+    category: "Cards & Hover",
+    cssInline: `
+      .nuda-flip3d{width:220px;height:150px;perspective:900px;cursor:pointer}
+      .nuda-flip3d:focus-visible{outline:2px solid #e4ff54;outline-offset:3px;border-radius:16px}
+      .nuda-flip3d__inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateY(0deg);transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);will-change:transform}
+      .nuda-flip3d:hover .nuda-flip3d__inner,.nuda-flip3d:focus-visible .nuda-flip3d__inner{transform:rotateY(180deg)}
+      .nuda-flip3d__face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:16px;padding:18px;text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+      .nuda-flip3d__front{background:linear-gradient(135deg,#18181b,#09090b);border:1px solid rgba(255,255,255,0.08);color:#fafafa}
+      .nuda-flip3d__back{background:linear-gradient(135deg,#e4ff54,#a3b800);color:#09090b;transform:rotateY(180deg)}
+      .nuda-flip3d__face h3{margin:0 0 4px;font-size:1.05rem}
+      .nuda-flip3d__face p{margin:0;font-size:0.82rem;opacity:0.8}
+      @media (prefers-reduced-motion:reduce){.nuda-flip3d__inner{transition:none}.nuda-flip3d__back{transform:none;display:none}.nuda-flip3d:hover .nuda-flip3d__front,.nuda-flip3d:focus-visible .nuda-flip3d__front{display:none}.nuda-flip3d:hover .nuda-flip3d__back,.nuda-flip3d:focus-visible .nuda-flip3d__back{display:flex}}
+    `,
+    preview: (
+      <div style={{ width: "220px", height: "150px", perspective: "900px" }}>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            transformStyle: "preserve-3d",
+            transform: "rotateY(0deg)",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "16px",
+              background: "linear-gradient(135deg,#18181b,#09090b)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              color: "#fafafa",
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <div style={{ fontWeight: 700, fontSize: "1.05rem" }}>Flip Card</div>
+            <div style={{ fontSize: "0.82rem", opacity: 0.7, marginTop: "4px" }}>
+              Hover to flip
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Flip Card — 3D flip to reveal back -->
+<div class="nuda-flip3d" tabindex="0" role="button" aria-label="Flip card">
+  <div class="nuda-flip3d__inner">
+    <div class="nuda-flip3d__face nuda-flip3d__front">
+      <h3>Flip Card</h3>
+      <p>Hover or focus to flip</p>
+    </div>
+    <div class="nuda-flip3d__face nuda-flip3d__back">
+      <h3>Back Side</h3>
+      <p>Hidden content here</p>
+    </div>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Flip Card ───────────────────────────────────────────────
+   3D Y-axis flip on hover/focus.
+   Customize:
+     --nuda-f3-w / --nuda-f3-h : card size
+     --nuda-f3-speed           : flip duration
+   ──────────────────────────────────────────────────────────── */
+.nuda-flip3d {
+  --nuda-f3-w: 280px;
+  --nuda-f3-h: 190px;
+  --nuda-f3-speed: 0.6s;
+
+  width: var(--nuda-f3-w);
+  height: var(--nuda-f3-h);
+  perspective: 900px;
+  cursor: pointer;
+}
+
+.nuda-flip3d:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+  border-radius: 16px;
+}
+
+.nuda-flip3d__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform var(--nuda-f3-speed) cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.nuda-flip3d:hover .nuda-flip3d__inner,
+.nuda-flip3d:focus-visible .nuda-flip3d__inner {
+  transform: rotateY(180deg);
+}
+
+.nuda-flip3d__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.nuda-flip3d__front {
+  background: linear-gradient(135deg, #18181b, #09090b);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fafafa;
+}
+
+.nuda-flip3d__back {
+  background: linear-gradient(135deg, #e4ff54, #a3b800);
+  color: #09090b;
+  transform: rotateY(180deg);
+}
+
+.nuda-flip3d__face h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.nuda-flip3d__face p  { margin: 0; font-size: 0.82rem; opacity: 0.8; }
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-flip3d__inner { transition: none; }
+  .nuda-flip3d__back { transform: none; display: none; }
+  .nuda-flip3d:hover .nuda-flip3d__front,
+  .nuda-flip3d:focus-visible .nuda-flip3d__front { display: none; }
+  .nuda-flip3d:hover .nuda-flip3d__back,
+  .nuda-flip3d:focus-visible .nuda-flip3d__back { display: flex; }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     15. Reveal Content
+     ------------------------------------------------------- */
+  {
+    id: "reveal-content-card",
+    name: "Reveal Content",
+    category: "Cards & Hover",
+    cssInline: `
+      .nuda-reveal-content{position:relative;width:220px;height:150px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#a3b800,#09090b);cursor:pointer}
+      .nuda-reveal-content:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      .nuda-reveal-content__front{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fafafa;font-weight:700;font-size:1.1rem}
+      .nuda-reveal-content__overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:20px;text-align:center;background:rgba(9,9,11,0.92);color:#fafafa;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)}
+      .nuda-reveal-content:hover .nuda-reveal-content__overlay,.nuda-reveal-content:focus-visible .nuda-reveal-content__overlay{transform:translateY(0)}
+      .nuda-reveal-content__overlay strong{color:#e4ff54;font-size:1rem}
+      .nuda-reveal-content__overlay span{font-size:0.82rem;opacity:0.75}
+      @media (prefers-reduced-motion:reduce){.nuda-reveal-content__overlay{transition:none;transform:none;opacity:0}.nuda-reveal-content:hover .nuda-reveal-content__overlay,.nuda-reveal-content:focus-visible .nuda-reveal-content__overlay{opacity:1}}
+    `,
+    preview: (
+      <div
+        style={{
+          position: "relative",
+          width: "220px",
+          height: "150px",
+          borderRadius: "16px",
+          overflow: "hidden",
+          background: "linear-gradient(135deg,#a3b800,#09090b)",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#fafafa",
+            fontWeight: 700,
+            fontSize: "1.1rem",
+          }}
+        >
+          Reveal Content
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
+            padding: "20px",
+            textAlign: "center",
+            background: "rgba(9,9,11,0.92)",
+            color: "#fafafa",
+            transform: "translateY(40%)",
+          }}
+        >
+          <strong style={{ color: "#e4ff54", fontSize: "1rem" }}>Details</strong>
+          <span style={{ fontSize: "0.82rem", opacity: 0.75 }}>
+            Overlay slides up on hover
+          </span>
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Reveal Content — overlay content slides up on hover -->
+<div class="nuda-reveal-content" tabindex="0">
+  <div class="nuda-reveal-content__front">Reveal Content</div>
+  <div class="nuda-reveal-content__overlay">
+    <strong>Details</strong>
+    <span>Overlay slides up on hover</span>
+  </div>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Reveal Content ──────────────────────────────────────────
+   Overlay panel slides up from the bottom on hover/focus.
+   Customize:
+     --nuda-rv-overlay : overlay background
+     --nuda-rv-speed   : slide duration
+   ──────────────────────────────────────────────────────────── */
+.nuda-reveal-content {
+  --nuda-rv-overlay: rgba(9, 9, 11, 0.92);
+  --nuda-rv-speed: 0.4s;
+
+  position: relative;
+  width: 280px;
+  height: 190px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #a3b800, #09090b);
+  cursor: pointer;
+}
+
+.nuda-reveal-content:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+.nuda-reveal-content__front {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fafafa;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.nuda-reveal-content__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px;
+  text-align: center;
+  background: var(--nuda-rv-overlay);
+  color: #fafafa;
+  transform: translateY(100%);
+  transition: transform var(--nuda-rv-speed) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nuda-reveal-content:hover .nuda-reveal-content__overlay,
+.nuda-reveal-content:focus-visible .nuda-reveal-content__overlay {
+  transform: translateY(0);
+}
+
+.nuda-reveal-content__overlay strong { color: #e4ff54; font-size: 1rem; }
+.nuda-reveal-content__overlay span { font-size: 0.82rem; opacity: 0.75; }
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-reveal-content__overlay {
+    transition: none;
+    transform: none;
+    opacity: 0;
+  }
+  .nuda-reveal-content:hover .nuda-reveal-content__overlay,
+  .nuda-reveal-content:focus-visible .nuda-reveal-content__overlay {
+    opacity: 1;
+  }
+}`,
+      },
+    ],
+  },
+
+  /* -------------------------------------------------------
+     16. Shine Sweep
+     ------------------------------------------------------- */
+  {
+    id: "shine-sweep-card",
+    name: "Shine Sweep",
+    category: "Cards & Hover",
+    cssInline: `
+      .nuda-shine-sweep-card{position:relative;width:220px;padding:28px 20px;background:linear-gradient(135deg,#18181b,#09090b);border:1px solid rgba(228,255,84,0.15);border-radius:16px;color:#fafafa;text-align:center;overflow:hidden;cursor:pointer}
+      .nuda-shine-sweep-card:focus-visible{outline:2px solid #e4ff54;outline-offset:3px}
+      .nuda-shine-sweep-card::before{content:'';position:absolute;top:0;left:0;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(228,255,84,0.25),transparent);transform:translateX(-180%) skewX(-18deg);pointer-events:none}
+      .nuda-shine-sweep-card:hover::before,.nuda-shine-sweep-card:focus-visible::before{animation:_ssSweep 0.85s ease forwards}
+      .nuda-shine-sweep-card__title{position:relative;font-size:1.05rem;font-weight:700;margin:0}
+      .nuda-shine-sweep-card__desc{position:relative;font-size:0.85rem;opacity:0.6;margin:6px 0 0}
+      @keyframes _ssSweep{to{transform:translateX(280%) skewX(-18deg)}}
+      @media (prefers-reduced-motion:reduce){.nuda-shine-sweep-card::before{display:none}}
+    `,
+    preview: (
+      <div
+        style={{
+          position: "relative",
+          width: "220px",
+          padding: "28px 20px",
+          background: "linear-gradient(135deg,#18181b,#09090b)",
+          border: "1px solid rgba(228,255,84,0.15)",
+          borderRadius: "16px",
+          color: "#fafafa",
+          textAlign: "center",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "60%",
+            height: "100%",
+            background:
+              "linear-gradient(100deg,transparent,rgba(228,255,84,0.22),transparent)",
+            transform: "translateX(40%) skewX(-18deg)",
+            pointerEvents: "none",
+          }}
+        />
+        <div style={{ position: "relative", fontWeight: 700, fontSize: "1.05rem" }}>
+          Shine Sweep
+        </div>
+        <div
+          style={{
+            position: "relative",
+            fontSize: "0.85rem",
+            opacity: 0.6,
+            marginTop: "6px",
+          }}
+        >
+          Diagonal shine on hover
+        </div>
+      </div>
+    ),
+    code: [
+      {
+        label: "HTML",
+        language: "html",
+        code: `<!-- Shine Sweep — diagonal shine sweep on hover -->
+<div class="nuda-shine-sweep-card" tabindex="0">
+  <h3 class="nuda-shine-sweep-card__title">Shine Sweep</h3>
+  <p class="nuda-shine-sweep-card__desc">Diagonal shine on hover</p>
+</div>`,
+      },
+      {
+        label: "CSS",
+        language: "css",
+        code: `/* ── Shine Sweep ─────────────────────────────────────────────
+   A skewed highlight sweeps across the card on hover/focus.
+   Customize:
+     --nuda-sw-shine  : shine color
+     --nuda-sw-speed  : sweep duration
+   ──────────────────────────────────────────────────────────── */
+.nuda-shine-sweep-card {
+  --nuda-sw-shine: rgba(228, 255, 84, 0.25);
+  --nuda-sw-speed: 0.85s;
+
+  position: relative;
+  width: 280px;
+  padding: 28px 20px;
+  background: linear-gradient(135deg, #18181b, #09090b);
+  border: 1px solid rgba(228, 255, 84, 0.15);
+  border-radius: 16px;
+  color: #fafafa;
+  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.nuda-shine-sweep-card:focus-visible {
+  outline: 2px solid #e4ff54;
+  outline-offset: 3px;
+}
+
+.nuda-shine-sweep-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, var(--nuda-sw-shine), transparent);
+  transform: translateX(-180%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.nuda-shine-sweep-card:hover::before,
+.nuda-shine-sweep-card:focus-visible::before {
+  animation: nuda-shine-sweep-card var(--nuda-sw-speed) ease forwards;
+}
+
+.nuda-shine-sweep-card__title {
+  position: relative;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nuda-shine-sweep-card__desc {
+  position: relative;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin: 6px 0 0;
+}
+
+@keyframes nuda-shine-sweep-card {
+  to { transform: translateX(280%) skewX(-18deg); }
+}
+
+/* ── Accessibility ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .nuda-shine-sweep-card::before { display: none; }
+}`,
+      },
+    ],
+  },
 ];
