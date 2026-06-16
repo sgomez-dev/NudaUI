@@ -14,6 +14,12 @@ estética de marca, accesible, y autocontenida (copy-paste sin build).
 Aterrizar *por encima* de 1.000 permite comunicar "1,000+ animaciones" en toda
 la superficie pública.
 
+**Objetivo ampliado:** ~205 es el piso, no el techo. Donde el impacto/calidad se
+mantenga, se añaden **más** (categorías nuevas más nutridas y deepening más
+amplio de existentes), apuntando a ~1.050–1.100+ sin meter relleno. La regla
+es: cada animación entra solo si aporta valor distinto; nunca padding para
+inflar el conteo.
+
 ## Contexto del proyecto (estado actual)
 
 - **Modelo de datos:** cada animación es un `NudaComponent`
@@ -142,7 +148,8 @@ Hardcoded a actualizar a "1,000+":
 
 ## Criterios de éxito
 
-- `totalCount` ≥ 1.000 (objetivo ~1.005).
+- `totalCount` ≥ 1.000 (piso ~1.005; estirar a ~1.050–1.100+ donde el impacto
+  se mantenga, sin relleno).
 - `npm run audit` y `npm run test` en verde (0 issues de integridad).
 - 12 categorías nuevas visibles en galería, sidebar, búsqueda y endpoints de IA.
 - `/api/registry.json` enumera los nuevos y su código es fetcheable vía la URL
