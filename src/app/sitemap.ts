@@ -38,6 +38,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
+      url: absoluteUrl("/search"),
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+      alternates: {
+        languages: { en: absoluteUrl("/search") },
+      },
+    },
+    {
       url: absoluteUrl("/terms"),
       lastModified: now,
       changeFrequency: "yearly",
