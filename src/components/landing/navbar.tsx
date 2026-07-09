@@ -49,12 +49,6 @@ export function Navbar() {
           >
             Components
           </Link>
-          <Link
-            href="/search"
-            className="px-3 py-1.5 text-sm text-text-secondary hover:text-text-primary rounded-lg hover:bg-surface-hover transition-all"
-          >
-            Search
-          </Link>
           <a
             href={site.social.github}
             target="_blank"
@@ -102,13 +96,6 @@ export function Navbar() {
                 className="px-4 py-3 text-sm text-text-secondary hover:text-text-primary rounded-xl hover:bg-surface-hover transition-colors"
               >
                 Components
-              </Link>
-              <Link
-                href="/search"
-                onClick={() => setMobileOpen(false)}
-                className="px-4 py-3 text-sm text-text-secondary hover:text-text-primary rounded-xl hover:bg-surface-hover transition-colors"
-              >
-                Search
               </Link>
               <Link
                 href="/components"

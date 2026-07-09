@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { site } from "@/lib/site";
 import { MotionProvider } from "@/components/motion-provider";
+import { FloatingSearchChatbot } from "@/components/search/floating-search-chatbot";
 import "./globals.css";
 
 const inter = Inter({
@@ -191,7 +192,11 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          {children}
+          {/* Global floating search — a mini chatbot available on every page. */}
+          <FloatingSearchChatbot />
+        </MotionProvider>
       </body>
     </html>
   );
