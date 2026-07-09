@@ -86,6 +86,12 @@ export async function searchComponents(
     throw new RagError("Could not reach the search service. Check your connection and try again.");
   }
 
+  // 429: the search API throttles per client to survive traffic bursts.
+  // Surface a friendly, actionable message rather than a bare status code.
+  if (res.status === 429) {
+    throw new RagError("Too many searches in a short time. Please wait a moment and try again.");
+  }
+
   if (!res.ok) {
     throw new RagError(`The search service returned an error (${res.status}). Please try again.`);
   }
