@@ -76,6 +76,21 @@ export function FloatingSearchChatbot() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // On phones the panel is near-fullscreen, so lock the background from
+  // scrolling behind it. On larger screens it's a small floating widget —
+  // the page should still scroll — so this only kicks in below the `sm`
+  // breakpoint.
+  useEffect(() => {
+    if (!open) return;
+    const mq = window.matchMedia("(max-width: 639px)");
+    if (!mq.matches) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   // Keep the thread scrolled to the newest turn.
   useEffect(() => {
     scrollRef.current?.scrollTo({
