@@ -170,7 +170,7 @@ export function FloatingSearchChatbot() {
         transition={{ delay: 0.6, duration: 0.5, ease }}
         aria-label={open ? "Close component search" : "Search components"}
         aria-expanded={open}
-        className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex items-center justify-center w-14 h-14 rounded-2xl bg-accent text-surface shadow-2xl shadow-accent-glow hover:bg-accent-dim transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+        className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-[calc(1.25rem+env(safe-area-inset-right))] sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:right-[calc(1.5rem+env(safe-area-inset-right))] z-40 flex items-center justify-center w-14 h-14 rounded-2xl bg-accent text-surface shadow-2xl shadow-accent-glow hover:bg-accent-dim transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
       >
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
@@ -208,7 +208,7 @@ export function FloatingSearchChatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.35, ease }}
-            className="fixed z-40 flex flex-col overflow-hidden bg-surface-light/95 backdrop-blur-xl border border-border shadow-2xl shadow-black/40 inset-x-3 bottom-24 top-20 rounded-2xl sm:inset-x-auto sm:top-auto sm:bottom-24 sm:right-6 sm:w-[400px] sm:h-[min(600px,75vh)]"
+            className="fixed z-40 flex flex-col overflow-hidden bg-surface-light/95 backdrop-blur-xl border border-border shadow-2xl shadow-black/40 inset-x-3 bottom-[calc(6rem+env(safe-area-inset-bottom))] top-[calc(5rem+env(safe-area-inset-top))] rounded-2xl sm:inset-x-auto sm:top-auto sm:right-[calc(1.5rem+env(safe-area-inset-right))] sm:bottom-[calc(6rem+env(safe-area-inset-bottom))] sm:w-[400px] sm:h-[min(600px,75vh)]"
           >
             {/* Header */}
             <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-border flex-shrink-0">
