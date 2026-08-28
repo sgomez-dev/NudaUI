@@ -1,4 +1,5 @@
 import { site, absoluteUrl } from "@/lib/site";
+import { JSON_HEADERS } from "@/lib/api-error";
 import {
   categories,
   totalCount,
@@ -75,12 +76,10 @@ export function GET(): Response {
 
   return new Response(JSON.stringify(payload, null, 2), {
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
+      ...JSON_HEADERS,
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
-      // CORS: this is meant to be consumed by any tool, anywhere.
-      "Access-Control-Allow-Origin": "*",
-      // Hint to LLM-aware proxies about content type
-      "X-Catalog-Schema": "https://nudaui.dev/api/catalog.json",
+      // RFC 8631: point every consumer at the machine-readable contract.
+      Link: `<${absoluteUrl("/openapi.json")}>; rel="service-desc"`,
     },
   });
 }

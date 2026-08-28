@@ -2,27 +2,9 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { manifestoPoints as points } from "@/lib/landing-content";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-
-const points = [
-  {
-    title: "Framework lock-in is a tax on your time.",
-    body: "Every animation library ties you to React, Vue, or whatever's trending. Switch frameworks? Rewrite everything. NudaUI animations are just HTML and CSS — they outlive your framework choices.",
-  },
-  {
-    title: "200kb for a loading spinner is insane.",
-    body: "Most animation libraries ship entire runtime engines. Our components are typically under 1kb each. No JavaScript runtime. No bundle size anxiety. Just CSS keyframes that browsers already know how to optimize.",
-  },
-  {
-    title: "Backend developers deserve nice things too.",
-    body: "If you write Go, PHP, Python, or Rust — you've been left out of the animation conversation. Server-rendered templates don't need React. Blade, Jinja, ERB can all use NudaUI with zero configuration.",
-  },
-  {
-    title: "Accessible from day one, not as an afterthought.",
-    body: "Every component ships with ARIA attributes, prefers-reduced-motion support, and semantic HTML. Accessibility isn't a feature — it's the baseline.",
-  },
-];
 
 export function WhyNuda() {
   const ref = useRef<HTMLDivElement>(null);

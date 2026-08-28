@@ -69,6 +69,22 @@ export const site = {
   // Inbox for press, partnership, and general contact. Security reports go
   // through .well-known/security.txt instead — keep this address spam-soft.
   email: "contact@nudaui.dev",
+  // Postal address published in the Organization JSON-LD. NudaUI is a
+  // one-person open-source project with no registered office, so we publish
+  // country only — enough for an agent to verify jurisdiction, without
+  // inventing a street address that doesn't exist. Add `addressLocality` /
+  // `postalCode` here if that ever changes; `organizationSchema()` picks up
+  // whatever is present and omits the rest.
+  address: {
+    /** ISO 3166-1 alpha-2. */
+    addressCountry: "ES",
+  } as {
+    addressCountry: string;
+    addressRegion?: string;
+    addressLocality?: string;
+    postalCode?: string;
+    streetAddress?: string;
+  },
   // OG colors — kept here so the dynamic OG image and the manifest share tokens.
   theme: {
     background: "#09090b",

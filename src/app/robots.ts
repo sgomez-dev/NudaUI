@@ -11,16 +11,22 @@ import { absoluteUrl, site } from "@/lib/site";
  *      (OpenAI, Anthropic, Perplexity, Apple, Google AI, Meta, ByteDance, …)
  *
  * Tighten this ruleset only if our stance on AI training/grounding ever
- * changes. The `/api/`, `/_next/`, `/private/` disallows are defensive
- * — we don't have those routes today, but listing them now avoids a
- * missed edge later.
+ * changes. The `/_next/` and `/private/` disallows are defensive; the
+ * `/api/markdown/` one is real — that path is the internal destination the
+ * content-negotiation middleware rewrites to, so it must never be indexed
+ * as a URL in its own right.
  *
  * The host + sitemap fields tell crawlers the canonical origin and where
  * the up-to-date URL list lives. We deliberately don't set Crawl-delay:
  * Googlebot ignores it and we want fast re-indexing for the catalog.
  */
 export default function robots(): MetadataRoute.Robots {
-  const disallowDefault = ["/api/", "/_next/", "/private/"];
+  // The JSON API is *deliberately* crawlable: /api/catalog.json and friends
+  // are the canonical machine-readable view of the catalog, and blocking them
+  // would hide the very resources llms.txt and openapi.json point at. Only
+  // framework internals and the Markdown negotiation target — an internal
+  // rewrite destination, never a canonical URL — stay closed.
+  const disallowDefault = ["/_next/", "/private/", "/api/markdown/"];
 
   return {
     rules: [

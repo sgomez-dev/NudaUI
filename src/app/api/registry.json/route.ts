@@ -1,4 +1,5 @@
 import { site, absoluteUrl } from "@/lib/site";
+import { JSON_HEADERS } from "@/lib/api-error";
 import { totalCount, categories } from "@/components/showcase/registry/categories";
 import { allComponents } from "@/lib/component-payload";
 
@@ -30,9 +31,10 @@ export function GET(): Response {
 
   return new Response(JSON.stringify(payload, null, 2), {
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
+      ...JSON_HEADERS,
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
-      "Access-Control-Allow-Origin": "*",
+      // RFC 8631: point every consumer at the machine-readable contract.
+      Link: `<${absoluteUrl("/openapi.json")}>; rel="service-desc"`,
     },
   });
 }

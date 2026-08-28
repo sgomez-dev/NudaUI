@@ -83,6 +83,14 @@ export function organizationSchema(): JsonLd {
       height: 630,
     },
     sameAs: [site.social.github],
+    // PostalAddress completes the pair AI agents check when verifying a
+    // business (address + contactPoint). NudaUI has no registered office, so
+    // we publish the country only rather than fabricate a street address —
+    // `site.address` carries whichever fields are actually true.
+    address: {
+      "@type": "PostalAddress",
+      ...site.address,
+    },
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -270,6 +278,77 @@ export function articleSchema(args: {
       width: 1200,
       height: 630,
     },
+  };
+}
+
+/**
+ * ContactPage — the schema an AI agent looks for when answering "how do I
+ * reach them?". Mirrors the routes rendered on /contact so the structured
+ * data and the visible page never disagree.
+ */
+export function contactPageSchema(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${site.url}/contact#contactpage`,
+    url: absoluteUrl("/contact"),
+    name: `Contact ${site.name}`,
+    description: `How to reach ${site.name}: general email, GitHub issues for bugs and component requests, and a published security disclosure route.`,
+    inLanguage: site.language,
+    isPartOf: { "@id": `${site.url}/#website` },
+    about: { "@id": `${site.url}/#organization` },
+    mainEntity: {
+      "@id": `${site.url}/#organization`,
+    },
+    significantLink: [
+      `${site.social.github}/issues`,
+      absoluteUrl("/.well-known/security.txt"),
+    ],
+  };
+}
+
+/**
+ * APIReference — the schema.org type for developer documentation of a
+ * programmatic interface. Signals to search engines and agents that
+ * /developers is API docs, not marketing.
+ */
+export function apiReferenceSchema(args: {
+  url: string;
+  name: string;
+  description: string;
+  datePublished: string;
+  dateModified: string;
+  sections?: string[];
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "APIReference",
+    "@id": `${args.url}#apireference`,
+    url: args.url,
+    name: args.name,
+    headline: args.name,
+    description: args.description,
+    datePublished: args.datePublished,
+    dateModified: args.dateModified,
+    inLanguage: site.language,
+    isPartOf: { "@id": `${site.url}/#website` },
+    about: { "@id": `${site.url}/#software` },
+    publisher: { "@id": `${site.url}/#organization` },
+    author: { "@id": `${site.url}/#founder` },
+    mainEntityOfPage: args.url,
+    programmingModel: "REST",
+    assemblyVersion: "1.0.0",
+    targetPlatform: "HTTP",
+    proficiencyLevel: "Beginner",
+    encoding: {
+      "@type": "MediaObject",
+      name: "OpenAPI 3.1 specification",
+      encodingFormat: "application/json",
+      contentUrl: absoluteUrl("/openapi.json"),
+    },
+    ...(args.sections && args.sections.length > 0
+      ? { articleSection: args.sections }
+      : {}),
   };
 }
 

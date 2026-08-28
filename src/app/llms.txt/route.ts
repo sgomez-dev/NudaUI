@@ -2,6 +2,7 @@ import { site, absoluteUrl } from "@/lib/site";
 import { categories, totalCount } from "@/components/showcase/registry/categories";
 import { categoryDescriptions } from "@/lib/category-meta";
 import { faqs } from "@/lib/faqs";
+import { whenToUseMarkdownLines } from "@/lib/agent-guidance";
 
 /**
  * /llms.txt — the emerging convention (proposed by Jeremy Howard) for
@@ -62,9 +63,29 @@ export function GET(): Response {
     `- [Full catalog with code](${absoluteUrl("/api/catalog-full.json")}): the entire library, code embedded, in one payload.`
   );
   lines.push(
+    `- [Developer portal](${absoluteUrl("/developers")}): quickstart, endpoint reference, error codes, caching rules, framework recipes. No API key required.`
+  );
+  lines.push(
+    `- [OpenAPI 3.1 spec](${absoluteUrl("/openapi.json")}): the machine-readable API contract — typed schemas and a unique operationId per operation, ready to turn into function-calling tool definitions.`
+  );
+  lines.push(
+    `- [Agent instructions](${absoluteUrl("/agent-instructions.md")}): when to reach for ${site.name}, when not to, and the exact call sequence per task.`
+  );
+  lines.push(
+    `- [About](${absoluteUrl("/about")}): who builds this, how it is licensed, why it exists.`
+  );
+  lines.push(
+    `- [Contact](${absoluteUrl("/contact")}): every route to a human, and what each one is for.`
+  );
+  lines.push(
     `- [Changelog](${absoluteUrl("/changelog")}): temporal anchor — what shipped, when.`
   );
   lines.push("");
+
+  // ── 2a. When to use it ──────────────────────────────────────
+  // Placed high on purpose: a model deciding *whether* to use NudaUI reads
+  // the top of this file, not the category list at the bottom.
+  lines.push(...whenToUseMarkdownLines());
 
   // ── 2b. Instructions for AI agents ──────────────────────────
   lines.push("## How to use this site programmatically");
@@ -115,6 +136,17 @@ export function GET(): Response {
   lines.push("```");
   lines.push(`GET ${absoluteUrl("/api/registry.json")}    # flat index: every id + its json/page URL`);
   lines.push(`GET ${absoluteUrl("/api/catalog-full.json")} # whole library WITH code embedded, in one request`);
+  lines.push("```");
+  lines.push("");
+  lines.push("### Reading any page as Markdown");
+  lines.push("");
+  lines.push(
+    "Every page on this site content-negotiates. Send `Accept: text/markdown` to a page URL and you get clean Markdown instead of the HTML app shell — or append `.md` to the path. Responses carry `Content-Type: text/markdown; charset=utf-8` and `Vary: Accept`."
+  );
+  lines.push("");
+  lines.push("```");
+  lines.push(`curl -s -H "Accept: text/markdown" ${site.url}/components`);
+  lines.push(`curl -s ${site.url}/developers.md`);
   lines.push("```");
   lines.push("");
 
@@ -171,6 +203,11 @@ export function GET(): Response {
   lines.push(`- [robots.txt](${absoluteUrl("/robots.txt")})`);
   lines.push(`- [sitemap.xml](${absoluteUrl("/sitemap.xml")})`);
   lines.push(`- [OpenSearch description](${absoluteUrl("/opensearch.xml")})`);
+  lines.push(`- [OpenAPI 3.1 specification](${absoluteUrl("/openapi.json")})`);
+  lines.push(`- [Agent instructions](${absoluteUrl("/agent-instructions.md")})`);
+  lines.push(`- [Developer portal](${absoluteUrl("/developers")})`);
+  lines.push(`- [About](${absoluteUrl("/about")})`);
+  lines.push(`- [Contact](${absoluteUrl("/contact")})`);
   lines.push("");
 
   // ── 6. Licensing & attribution ──────────────────────────────

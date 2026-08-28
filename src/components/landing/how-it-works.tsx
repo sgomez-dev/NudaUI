@@ -2,32 +2,9 @@
 
 import { useRef } from "react";
 import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion";
+import { howItWorksSteps as steps } from "@/lib/landing-content";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-
-const steps = [
-  {
-    n: "01",
-    label: "Browse",
-    title: "Find the animation you actually need.",
-    body: "A curated gallery — not 400 variations of the same spinner. Preview, tweak speed, compare side by side.",
-    code: "→ nudaui.dev/components",
-  },
-  {
-    n: "02",
-    label: "Copy",
-    title: "Grab the snippet. That's the whole install.",
-    body: "One file, zero imports, one click. What you copy is what you ship. No hidden peer deps, no build configuration.",
-    code: "⌘  Copy to clipboard",
-  },
-  {
-    n: "03",
-    label: "Paste",
-    title: "Paste into any stack that renders HTML.",
-    body: "Next, Nuxt, Laravel, Django, a <script> tag on a static page — it doesn't matter. It works on the first try.",
-    code: "<div class=\"nuda-pulse\" />",
-  },
-];
 
 export function HowItWorks() {
   const ref = useRef<HTMLDivElement>(null);

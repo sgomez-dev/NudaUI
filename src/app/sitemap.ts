@@ -38,6 +38,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
+      // The developer portal is the discovery surface for the JSON API, so it
+      // sits just under the gallery rather than with the legal pages.
+      url: absoluteUrl("/developers"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: { en: absoluteUrl("/developers") },
+      },
+    },
+    {
+      url: absoluteUrl("/about"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: { en: absoluteUrl("/about") },
+      },
+    },
+    {
+      url: absoluteUrl("/contact"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: { en: absoluteUrl("/contact") },
+      },
+    },
+    {
       url: absoluteUrl("/terms"),
       lastModified: now,
       changeFrequency: "yearly",
@@ -65,6 +94,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
   ];
+
+  // Machine-readable resources. Sitemaps are not restricted to HTML, and
+  // listing these is how a name-based search ("NudaUI OpenAPI") can surface
+  // them at all — they are linked from llms.txt and /developers, but nothing
+  // else points a crawler at them.
+  const machineReadable: MetadataRoute.Sitemap = [
+    absoluteUrl("/openapi.json"),
+    absoluteUrl("/agent-instructions.md"),
+    absoluteUrl("/llms.txt"),
+    absoluteUrl("/api/catalog.json"),
+    absoluteUrl("/api/registry.json"),
+  ].map((url) => ({
+    url,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.5,
+  }));
 
   // One entry per category. The `#section-<id>` anchor matches the
   // `id` rendered in components-gallery.tsx, so deep links land on the
@@ -100,5 +146,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  return [...top, ...perCategory, ...perComponent];
+  return [...top, ...machineReadable, ...perCategory, ...perComponent];
 }

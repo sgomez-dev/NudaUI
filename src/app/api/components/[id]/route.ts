@@ -1,9 +1,10 @@
-import { site } from "@/lib/site";
+import { site, absoluteUrl } from "@/lib/site";
 import {
   allComponents,
   findComponent,
   componentPayload,
 } from "@/lib/component-payload";
+import { JSON_HEADERS, componentNotFound } from "@/lib/api-error";
 
 /**
  * /api/components/{id}.json — the full, paste-ready code for a single component.
@@ -15,9 +16,13 @@ import {
  *
  * URL shape mirrors catalog.json: `/api/components/toast-slide.json`. The id
  * param therefore carries a trailing `.json`, which the lookup strips.
+ *
+ * `dynamicParams` is deliberately `true`: every known id is prerendered by
+ * `generateStaticParams`, but an *unknown* id must still reach this handler so
+ * it gets the JSON 404 envelope below. With `dynamicParams = false` Next would
+ * answer with the site's HTML 404 page, which an agent cannot parse.
  */
-export const dynamic = "force-static";
-export const dynamicParams = false;
+export const dynamicParams = true;
 export const revalidate = 3600;
 
 export function generateStaticParams(): { id: string }[] {
@@ -32,15 +37,9 @@ export async function GET(
   const flat = findComponent(id);
 
   if (!flat) {
-    return new Response(
-      JSON.stringify({ error: "not_found", id: id.replace(/\.json$/i, "") }, null, 2),
-      {
-        status: 404,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
+    return componentNotFound(
+      id.replace(/\.json$/i, ""),
+      `/api/components/${id}`
     );
   }
 
@@ -53,9 +52,9 @@ export async function GET(
 
   return new Response(JSON.stringify(payload, null, 2), {
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
+      ...JSON_HEADERS,
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
-      "Access-Control-Allow-Origin": "*",
+      Link: `<${absoluteUrl("/openapi.json")}>; rel="service-desc"`,
     },
   });
 }

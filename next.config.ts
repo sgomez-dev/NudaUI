@@ -48,6 +48,34 @@ const nextConfig: NextConfig = {
   // Canonicalise to no-trailing-slash so search engines see one URL per page.
   trailingSlash: false,
 
+  /**
+   * Predictable aliases for the developer resources.
+   *
+   * Agents and humans guess `/docs` and `/api` long before they guess
+   * `/developers`; audits probe `/api/openapi.yaml` and `/api/openapi.json`.
+   * A 308 keeps one canonical URL per document while making every reasonable
+   * guess land somewhere useful. These run *before* middleware, so the
+   * Markdown negotiator never sees the alias.
+   */
+  async redirects() {
+    return [
+      { source: "/docs", destination: "/developers", permanent: true },
+      { source: "/developer", destination: "/developers", permanent: true },
+      { source: "/api-docs", destination: "/developers", permanent: true },
+      { source: "/api", destination: "/developers", permanent: true },
+      {
+        source: "/api/openapi.json",
+        destination: "/openapi.json",
+        permanent: true,
+      },
+      {
+        source: "/.well-known/openapi.json",
+        destination: "/openapi.json",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

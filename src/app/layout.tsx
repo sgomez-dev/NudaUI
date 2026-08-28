@@ -45,6 +45,11 @@ export const metadata: Metadata = {
       "application/opensearchdescription+xml": [
         { url: "/opensearch.xml", title: `Search ${site.name}` },
       ],
+      // Markdown sibling of the homepage. Every page also answers
+      // `Accept: text/markdown` on its canonical URL.
+      "text/markdown": [
+        { url: "/index.md", title: `${site.name} as Markdown` },
+      ],
     },
   },
   robots: {
@@ -183,6 +188,63 @@ export default function RootLayout({
           title={`${site.name} catalog JSON`}
           href="/api/catalog.json"
         />
+        {/* RFC 8631 — the machine-readable description of this site's API.
+            Also sent as a `Link: …; rel="service-desc"` response header. */}
+        <link
+          rel="service-desc"
+          type="application/json"
+          title={`${site.name} OpenAPI 3.1 specification`}
+          href="/openapi.json"
+        />
+        {/* Agent operating manual: when to use NudaUI and how to call it. */}
+        <link
+          rel="help"
+          type="text/markdown"
+          title={`${site.name} agent instructions`}
+          href="/agent-instructions.md"
+        />
+        {/* Markdown sibling of the current document, for link-aware agents
+            that discover representations instead of negotiating them. The
+            per-page value is also sent as a `Link: …; rel="alternate"`
+            header by the content-negotiation middleware. */}
+        <link
+          rel="alternate"
+          type="text/markdown"
+          title={`${site.name} as Markdown`}
+          href="/index.md"
+        />
+
+        {/*
+          Progressive enhancement fallback.
+
+          Scroll-reveal sections are server rendered with framer-motion's
+          entry state inlined (`opacity:0; transform: translateY(...)`), and
+          the animation that clears it only runs once JavaScript hydrates.
+          With JS unavailable — a text-mode browser, a crawler that renders
+          without scripts, a user who blocks it — the page would arrive
+          effectively blank below the hero.
+
+          This block resets exactly those entry states and nothing else: the
+          selector only matches elements whose *inline* style sets an opacity
+          below 1, which is precisely what framer-motion writes. Keyframe
+          animations (marquees, spinners) are untouched, and with JS enabled
+          the rule never applies at all, so the designed motion is unchanged.
+        */}
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: [
+                '[style*="opacity:0"],',
+                '[style*="opacity: 0"],',
+                '[style*="opacity:0."],',
+                '[style*="opacity: 0."] {',
+                "  opacity: 1 !important;",
+                "  transform: none !important;",
+                "}",
+              ].join("\n"),
+            }}
+          />
+        </noscript>
       </head>
       <body className="min-h-screen bg-surface text-text-primary antialiased">
         {/* Accessible skip link — first focusable element on every page. */}

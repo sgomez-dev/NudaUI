@@ -49,6 +49,14 @@ export function Navbar() {
           >
             Components
           </Link>
+          {/* Developer portal — the API docs have to be reachable from the
+              homepage, not just from llms.txt, or nothing discovers them. */}
+          <Link
+            href="/developers"
+            className="px-3 py-1.5 text-sm text-text-secondary hover:text-text-primary rounded-lg hover:bg-surface-hover transition-all"
+          >
+            Developers
+          </Link>
           <a
             href={site.social.github}
             target="_blank"
@@ -96,6 +104,13 @@ export function Navbar() {
                 className="px-4 py-3 text-sm text-text-secondary hover:text-text-primary rounded-xl hover:bg-surface-hover transition-colors"
               >
                 Components
+              </Link>
+              <Link
+                href="/developers"
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 text-sm text-text-secondary hover:text-text-primary rounded-xl hover:bg-surface-hover transition-colors"
+              >
+                Developers
               </Link>
               <Link
                 href="/components"

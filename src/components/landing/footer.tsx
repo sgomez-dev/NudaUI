@@ -24,6 +24,12 @@ export function Footer() {
           >
             Components
           </Link>
+          <Link
+            href="/developers"
+            className="hover:text-text-primary transition-colors"
+          >
+            API docs
+          </Link>
           <a
             href={site.social.github}
             target="_blank"
@@ -32,6 +38,18 @@ export function Footer() {
           >
             GitHub
           </a>
+          <Link
+            href="/about"
+            className="hover:text-text-primary transition-colors"
+          >
+            About
+          </Link>
+          <Link
+            href="/contact"
+            className="hover:text-text-primary transition-colors"
+          >
+            Contact
+          </Link>
           <ContactDialog />
           <Link
             href="/terms"

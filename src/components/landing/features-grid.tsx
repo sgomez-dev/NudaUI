@@ -11,54 +11,25 @@ import {
   Infinity as InfinityIcon,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { featureCards } from "@/lib/landing-content";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-type Feature = {
-  icon: LucideIcon;
-  label: string;
-  title: string;
-  body: string;
+/** Icons live here; the copy lives in `@/lib/landing-content` so the
+ *  homepage's Markdown representation renders the same words. */
+const featureIcons: Record<string, LucideIcon> = {
+  weightless: Feather,
+  portable: InfinityIcon,
+  accessible: Accessibility,
+  readable: Code2,
+  unopinionated: Scale,
+  crafted: Sparkles,
 };
 
-const features: Feature[] = [
-  {
-    icon: Feather,
-    label: "Weightless",
-    title: "Typically under 1kb.",
-    body: "Single-file snippets with no runtime. Drop them in and forget the bundle size conversation.",
-  },
-  {
-    icon: InfinityIcon,
-    label: "Portable",
-    title: "Works everywhere HTML works.",
-    body: "React, Vue, Svelte, Astro, Blade, Jinja, plain HTML. If it renders markup, it runs NudaUI.",
-  },
-  {
-    icon: Accessibility,
-    label: "Accessible",
-    title: "Respects the user.",
-    body: "Semantic HTML, ARIA attributes and prefers-reduced-motion shipped by default, not added later.",
-  },
-  {
-    icon: Code2,
-    label: "Readable",
-    title: "Code you can actually debug.",
-    body: "No transpiled blobs, no minified monsters. The source is the same code you paste.",
-  },
-  {
-    icon: Scale,
-    label: "Unopinionated",
-    title: "Your design system, your rules.",
-    body: "Tokens, not themes. Restyle anything with CSS variables — we don't ship a brand for you.",
-  },
-  {
-    icon: Sparkles,
-    label: "Crafted",
-    title: "Easing curves, not defaults.",
-    body: "Every animation is hand-tuned. No bouncing for the sake of bouncing. No motion for motion's sake.",
-  },
-];
+const features = featureCards.map((card) => ({
+  ...card,
+  icon: featureIcons[card.key],
+}));
 
 export function FeaturesGrid() {
   const ref = useRef<HTMLDivElement>(null);

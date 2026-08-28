@@ -6,7 +6,11 @@ import { Check, Copy, Mail, X } from "lucide-react";
 import { site } from "@/lib/site";
 
 /**
- * Footer "Contact" trigger + dialog.
+ * Footer "Email" trigger + dialog.
+ *
+ * Sits next to the footer's /contact link: the link goes to the full
+ * contact page, this dialog is the one-click "just give me the address"
+ * shortcut.
  *
  * We deliberately don't use `mailto:` directly: many users browse on
  * machines without a mail client wired up, and the link silently fails.
@@ -66,7 +70,7 @@ export function ContactDialog() {
         onClick={() => setOpen(true)}
         className="hover:text-text-primary transition-colors cursor-pointer"
       >
-        Contact
+        Email
       </button>
 
       <AnimatePresence>
