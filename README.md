@@ -32,12 +32,12 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 - **Copy-paste ownership** — shadcn/ui-style model. The code is yours the moment you paste it.
 - **Framework-agnostic** — React, Vue, Svelte, Astro, Next, Nuxt, Laravel, Django, Rails, or a plain `.html` file.
 - **Accessibility-aware** — `prefers-reduced-motion` respected, proper ARIA roles where it matters.
-- **650 components across 61 categories** — loaders, charts, AI/chat, drag & drop, command palette, hero sections, pricing, video player, onboarding, terminal, footers, auth, calendars, sidebars, steppers, search & autocomplete, sliders & ranges, audio & waveforms, color pickers, galleries & carousels, maps, watch faces, quotes & testimonials, comments & reactions, profile headers, settings, file upload, tags & chips input, mobile patterns, notification center, skeleton variants & more.
+- **1,516 components across 81 categories** — loaders, charts, AI/chat, drag & drop, command palette, hero sections, pricing, video player, onboarding, terminal, footers, auth, calendars, sidebars, steppers, search & autocomplete, sliders & ranges, audio & waveforms, color pickers, galleries & carousels, maps, watch faces, quotes & testimonials, comments & reactions, profile headers, settings, file upload, tags & chips input, mobile patterns, notification center, skeleton variants & more.
 - **Tailwind-friendly, Tailwind-optional** — works with your setup, not against it.
 
 ## 📦 Components
 
-650 components, 61 categories.
+1,516 components, 81 categories.
 
 | Category | Sample components | Count |
 | --- | --- | --- |
@@ -146,6 +146,17 @@ Pick a component on [nudaui.dev](https://nudaui.dev/components), grab the HTML a
 ```
 
 Tweak the CSS variables, rename the class, delete what you don't need. It's your code now.
+
+## 🤖 For AI agents and integrations
+
+The full catalog is available through a public, read-only JSON API: no API key,
+signup, or scraping required. Discover components with
+[`/api/catalog.json`](https://nudaui.dev/api/catalog.json), then fetch a
+copy-paste-ready component at
+[`/api/components/{id}.json`](https://nudaui.dev/api/components/toast-slide.json).
+The API contract is published at
+[`/openapi.json`](https://nudaui.dev/openapi.json), and agent guidance is at
+[`/agent-instructions.md`](https://nudaui.dev/agent-instructions.md).
 
 ## 🤔 Why NudaUI?
 
