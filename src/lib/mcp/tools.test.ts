@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   getComponent,
   listCategories,
@@ -7,9 +7,11 @@ import {
 } from "@/lib/mcp/tools";
 import {
   categories,
+  componentHasJS,
   totalCount,
 } from "@/components/showcase/registry/categories";
 import { allComponents } from "@/lib/component-payload";
+import type { RagResponse } from "@/lib/rag";
 
 describe("listCategories", () => {
   it("returns every category with a description and a count", () => {
@@ -94,36 +96,77 @@ describe("localSearch (fallback ranking)", () => {
   });
 });
 
+/** Stub `global.fetch` with a successful `/search` response carrying `ids`. */
+function mockRagOk(ids: string[]): void {
+  const body: RagResponse = {
+    query: "q",
+    count: ids.length,
+    results: ids.map((id) => ({
+      id,
+      name: id,
+      category: "test",
+      anchor: `https://nudaui.dev/components#${id}`,
+      score: 1,
+    })),
+  };
+  vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
+    ok: true,
+    status: 200,
+    json: async () => body,
+  } as Response);
+}
+
 describe("searchComponentsTool", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("degrades to local ranking when the RAG service is unreachable", async () => {
-    const original = process.env.NEXT_PUBLIC_RAG_API_URL;
-    process.env.NEXT_PUBLIC_RAG_API_URL = "http://127.0.0.1:9";
-    try {
-      const result = await searchComponentsTool({ query: "toast", limit: 5 });
-      expect(result.degraded).toBe(true);
-      expect(result.results.length).toBeGreaterThan(0);
-    } finally {
-      process.env.NEXT_PUBLIC_RAG_API_URL = original;
-    }
+    vi.spyOn(globalThis, "fetch").mockRejectedValueOnce(
+      new TypeError("network error"),
+    );
+    const result = await searchComponentsTool({ query: "toast", limit: 5 });
+    expect(result.degraded).toBe(true);
+    expect(result.results.length).toBeGreaterThan(0);
   });
 
   it("filters to CSS-only components when hasJS is false", async () => {
-    // Pinned to an unreachable host: this assertion is about the FILTER,
-    // which runs identically on the RAG and fallback paths, not about
-    // ranking quality — so it must not depend on a live network call to
-    // rag.nudaui.dev. The live RAG path is covered by the HTTP
-    // verification step in the task report instead.
-    const original = process.env.NEXT_PUBLIC_RAG_API_URL;
-    process.env.NEXT_PUBLIC_RAG_API_URL = "http://127.0.0.1:9";
-    try {
-      const result = await searchComponentsTool({
-        query: "button",
-        hasJS: false,
-        limit: 10,
-      });
-      for (const hit of result.results) expect(hit.hasJS).toBe(false);
-    } finally {
-      process.env.NEXT_PUBLIC_RAG_API_URL = original;
+    const pool = allComponents();
+    const cssOnly = pool.find((f) => !componentHasJS(f.component));
+    const withJs = pool.find((f) => componentHasJS(f.component));
+    if (!cssOnly || !withJs) {
+      throw new Error(
+        "fixture assumption failed: registry needs both a CSS-only and a JS component",
+      );
     }
+    mockRagOk([cssOnly.component.id, withJs.component.id]);
+
+    const result = await searchComponentsTool({
+      query: "button",
+      hasJS: false,
+      limit: 10,
+    });
+    expect(result.degraded).toBe(false);
+    expect(result.results.length).toBeGreaterThan(0);
+    for (const hit of result.results) expect(hit.hasJS).toBe(false);
+  });
+
+  it("reports a real empty result, not degraded, when the index legitimately finds nothing", async () => {
+    mockRagOk([]);
+    const result = await searchComponentsTool({
+      query: "zzzqqqxxnotathing",
+      limit: 5,
+    });
+    expect(result.degraded).toBe(false);
+    expect(result.count).toBe(0);
+    expect(result.results).toHaveLength(0);
+  });
+
+  it("reports degraded when the index's hits no longer resolve against the registry (drift)", async () => {
+    mockRagOk(["this-id-does-not-exist-in-the-registry"]);
+    const result = await searchComponentsTool({ query: "toast", limit: 5 });
+    expect(result.degraded).toBe(true);
+    // Still recovers via local fallback ranking rather than returning nothing.
+    expect(result.results.length).toBeGreaterThan(0);
   });
 });

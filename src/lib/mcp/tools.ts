@@ -19,6 +19,7 @@ import {
   findComponent,
   type ComponentPayload,
 } from "@/lib/component-payload";
+import { searchComponents as ragSearch, RagError } from "@/lib/rag";
 
 export interface CategorySummary {
   id: string;
@@ -120,12 +121,6 @@ export interface SearchHit {
 /** How long we wait on the semantic index before falling back. */
 const RAG_TIMEOUT_MS = 6000;
 
-function ragBaseUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_RAG_API_URL ?? "https://rag.nudaui.dev"
-  ).replace(/\/$/, "");
-}
-
 function toHit(f: ReturnType<typeof allComponents>[number]): SearchHit {
   return {
     id: f.component.id,
@@ -167,9 +162,15 @@ export function localSearch(query: string, limit: number): SearchHit[] {
 /**
  * Semantic search with graceful degradation.
  *
- * Over-fetches from the index so that post-filtering by category/hasJS can
- * still fill a page, then hydrates every hit from the local registry — the
- * index only supplies ranking, never content.
+ * Requests up to double the page size from the index (`k = min(20, limit *
+ * 2)`) so post-filtering by category/hasJS still has headroom to fill a
+ * page — but only below `limit: 10`. The service (verified live against
+ * `rag.nudaui.dev`: `k > 20` returns 422 "Input should be less than or
+ * equal to 20") hard-caps `k` at 20, the same value as the tool's own max
+ * `limit`, so at `limit >= 10` the doubled request collapses to exactly
+ * `limit` candidates and filtering gets no extra headroom — that ceiling
+ * is the index's, not a choice made here. Every hit is hydrated from the
+ * local registry — the index only supplies ranking, never content.
  */
 export async function searchComponentsTool(args: {
   query: string;
@@ -191,25 +192,39 @@ export async function searchComponentsTool(args: {
 
   let ranked: SearchHit[] | null = null;
   try {
-    const url = new URL(`${ragBaseUrl()}/search`);
-    url.searchParams.set("q", args.query);
-    url.searchParams.set("k", String(Math.min(20, limit * 2)));
+    const k = Math.min(20, limit * 2);
+    const response = await ragSearch(
+      args.query,
+      k,
+      AbortSignal.timeout(RAG_TIMEOUT_MS),
+    );
+    const byId = new Map(allComponents().map((f) => [f.component.id, f]));
+    const hydrated = response.results
+      .map((r) => byId.get(r.id))
+      .filter((f): f is NonNullable<typeof f> => Boolean(f))
+      .map(toHit);
 
-    const res = await fetch(url, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(RAG_TIMEOUT_MS),
-    });
-    if (res.ok) {
-      const data = (await res.json()) as { results?: { id: string }[] };
-      const byId = new Map(allComponents().map((f) => [f.component.id, f]));
-      ranked = (data.results ?? [])
-        .map((r) => byId.get(r.id))
-        .filter((f): f is NonNullable<typeof f> => Boolean(f))
-        .map(toHit);
+    if (response.results.length > 0 && hydrated.length === 0) {
+      // The index returned hits, but none resolve against the current
+      // registry — that's drift between the index and the catalog, not a
+      // legitimate empty result. Report it as degraded and fall back.
+      ranked = null;
+    } else {
+      // Either the index found real, resolvable hits, or it legitimately
+      // found nothing at all (an empty array is a real empty result).
+      ranked = hydrated;
     }
-  } catch {
-    // Index unreachable or slow — fall through to local ranking below.
-    ranked = null;
+  } catch (err) {
+    // Index unreachable, erroring, or our own timeout — fall through to
+    // local ranking below rather than failing the call.
+    if (
+      err instanceof RagError ||
+      (err instanceof DOMException && err.name === "AbortError")
+    ) {
+      ranked = null;
+    } else {
+      throw err;
+    }
   }
 
   const degraded = ranked === null;
