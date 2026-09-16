@@ -61,9 +61,9 @@ f91423e docs: add server.json and MCP server section to README
 | 3 — `get_component` | complete, 1 fix round |
 | 4 — `search_components` | complete, 1 fix round |
 | 5 — instrumentation | complete, 1 fix round |
-| 6 — `server.json`, `mcp-name:`, README section | **committed, review NOT completed** |
-| 7 — agent-facing surfaces | not started |
-| Final whole-branch review (opus) | not started |
+| 6 — `server.json`, `mcp-name:`, README section | complete, review clean |
+| 7 — agent-facing surfaces | **not started** |
+| Final whole-branch review (opus) | **not started** |
 
 Suite: **219 tests passing**, `npx tsc --noEmit` clean.
 
@@ -72,14 +72,21 @@ Suite: **219 tests passing**, `npx tsc --noEmit` clean.
 endpoint. Everything before that had only been verified against `next dev`, so
 this is the first confirmation the route survives a production build.
 
-**Where work stopped.** Task 6's code is committed but its review was
-dispatched and lost when the session ended. Re-run it before trusting
-`server.json` — the review package is regenerable with
-`scripts/review-package <plan> 3ff95cd f91423e`. Two disclosed deviations in
-that commit specifically need checking: the `$schema` URL was changed from the
-plan's `2025-07-09` to `2025-12-11`, and the `"status": "active"` field was
-removed as no longer part of the schema. Both were the implementer's own
-findings and neither has been independently verified.
+**Where work stopped.** Task 6 is complete and its review came back clean.
+Both of its deviations were independently verified: the `2025-12-11` schema is
+current (the plan's `2025-07-09` was stale), and `status` is genuinely not a
+publisher-submitted property — it is registry-managed and appears only in API
+responses.
+
+That review also corrected a premise carried from the originating brief: the
+`mcp-name:` README line does **not** validate ownership for this server.
+README-token scanning is the mechanism for PyPI/NuGet/Cargo *package*
+ownership only. A GitHub-namespace, remote-only, package-less server is
+verified purely through the OAuth device flow, with a token that needs no
+repository scopes. The line is correctly formatted and harmless, so it stays —
+but do not rely on it, and do not repeat the claim.
+
+Work stopped before Task 7 and the final whole-branch review.
 
 The branch is **not merged to main**. Merging triggers a Vercel deploy and puts
 `/mcp` live, which is a deliberate decision left to the maintainer.
