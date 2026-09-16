@@ -13,7 +13,8 @@ import { createMcpHandler } from "mcp-handler";
 import type { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import { totalCount } from "@/components/showcase/registry/categories";
-import { hashQuery, logToolCall } from "@/lib/mcp/log";
+import { hashQuery } from "@/lib/mcp/log";
+import { runInstrumented } from "@/lib/mcp/instrument";
 import {
   getComponent,
   listCategories,
@@ -50,10 +51,23 @@ export const maxDuration = 60;
  * `clientInfo` on the envelope is optional (spec PR #3002 demoted it from
  * MUST to SHOULD), so a compliant client may legitimately omit it — expect
  * `client` to be `undefined` for some, possibly most, real callers.
+ *
+ * Defensive on purpose: `getClientVersion()` is a trivial getter on the
+ * installed SDK today, but it is `@deprecated` and could change shape
+ * under us. This call happens at each tool's log call site, outside
+ * `runInstrumented`'s own try/catch — if it ever threw there, the catch
+ * branch's own `logToolCall(...)` call would throw a second time before
+ * reaching `throw err`, which would drop the log line entirely *and* mask
+ * the original error. Swallowing failures here, once, keeps that
+ * impossible regardless of what this accessor does in a future SDK.
  */
 function clientIdentity(server: McpServer): string | undefined {
-  const info = server.server.getClientVersion();
-  return info ? `${info.name}/${info.version}` : undefined;
+  try {
+    const info = server.server.getClientVersion();
+    return info ? `${info.name}/${info.version}` : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 const handler = createMcpHandler(
@@ -67,27 +81,14 @@ const handler = createMcpHandler(
         inputSchema: z.object({}),
       },
       async () => {
-        const started = Date.now();
-        try {
-          const data = listCategories();
-          logToolCall({
-            tool: "list_categories",
-            ok: true,
-            ms: Date.now() - started,
-            client: clientIdentity(server),
-          });
-          return {
-            content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
-          };
-        } catch (err) {
-          logToolCall({
-            tool: "list_categories",
-            ok: false,
-            ms: Date.now() - started,
-            client: clientIdentity(server),
-          });
-          throw err;
-        }
+        const data = await runInstrumented(
+          "list_categories",
+          { client: clientIdentity(server) },
+          () => listCategories(),
+        );
+        return {
+          content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+        };
       },
     );
 
@@ -105,49 +106,32 @@ const handler = createMcpHandler(
         }),
       },
       async ({ id }) => {
-        const started = Date.now();
-        try {
-          const result = getComponent(id);
-          logToolCall({
-            tool: "get_component",
-            ok: result.found,
-            ms: Date.now() - started,
-            client: clientIdentity(server),
-            componentId: id,
-          });
-          if (!result.found) {
-            return {
-              isError: true,
-              content: [
-                {
-                  type: "text",
-                  text: `No NudaUI component with id "${result.id}".${
-                    result.suggestions.length
-                      ? ` Did you mean: ${result.suggestions.map((s) => s.id).join(", ")}?`
-                      : ""
-                  } ${result.hint}`,
-                },
-              ],
-            };
-          }
+        const result = await runInstrumented(
+          "get_component",
+          { client: clientIdentity(server), componentId: id },
+          () => getComponent(id),
+          (r) => ({ ok: r.found }),
+        );
+        if (!result.found) {
           return {
+            isError: true,
             content: [
               {
                 type: "text",
-                text: JSON.stringify(result.component, null, 2),
+                text: `No NudaUI component with id "${result.id}".${
+                  result.suggestions.length
+                    ? ` Did you mean: ${result.suggestions.map((s) => s.id).join(", ")}?`
+                    : ""
+                } ${result.hint}`,
               },
             ],
           };
-        } catch (err) {
-          logToolCall({
-            tool: "get_component",
-            ok: false,
-            ms: Date.now() - started,
-            client: clientIdentity(server),
-            componentId: id,
-          });
-          throw err;
         }
+        return {
+          content: [
+            { type: "text", text: JSON.stringify(result.component, null, 2) },
+          ],
+        };
       },
     );
 
@@ -174,37 +158,24 @@ const handler = createMcpHandler(
         }),
       },
       async (args) => {
-        const started = Date.now();
-        try {
-          const result = await searchComponentsTool(args);
-          logToolCall({
-            tool: "search_components",
-            ok: true,
-            ms: Date.now() - started,
-            client: clientIdentity(server),
-            queryHash: hashQuery(args.query),
-            results: result.count,
-            zeroResults: result.count === 0,
-            degraded: result.degraded,
-          });
-          const note = result.degraded
-            ? "NOTE: the semantic index was unreachable; these results use basic keyword matching and may rank poorly.\n\n"
-            : "";
-          return {
-            content: [
-              { type: "text", text: note + JSON.stringify(result, null, 2) },
-            ],
-          };
-        } catch (err) {
-          logToolCall({
-            tool: "search_components",
-            ok: false,
-            ms: Date.now() - started,
-            client: clientIdentity(server),
-            queryHash: hashQuery(args.query),
-          });
-          throw err;
-        }
+        const result = await runInstrumented(
+          "search_components",
+          { client: clientIdentity(server), queryHash: hashQuery(args.query) },
+          () => searchComponentsTool(args),
+          (r) => ({
+            results: r.count,
+            zeroResults: r.count === 0,
+            degraded: r.degraded,
+          }),
+        );
+        const note = result.degraded
+          ? "NOTE: the semantic index was unreachable; these results use basic keyword matching and may rank poorly.\n\n"
+          : "";
+        return {
+          content: [
+            { type: "text", text: note + JSON.stringify(result, null, 2) },
+          ],
+        };
       },
     );
   },
