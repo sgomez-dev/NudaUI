@@ -11,7 +11,12 @@
  */
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
-import { getComponent, listCategories } from "@/lib/mcp/tools";
+import { totalCount } from "@/components/showcase/registry/categories";
+import {
+  getComponent,
+  listCategories,
+  searchComponentsTool,
+} from "@/lib/mcp/tools";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -67,6 +72,41 @@ const handler = createMcpHandler(
         return {
           content: [
             { type: "text", text: JSON.stringify(result.component, null, 2) },
+          ],
+        };
+      },
+    );
+
+    server.registerTool(
+      "search_components",
+      {
+        title: "Search NudaUI components",
+        description:
+          `Search ${totalCount.toLocaleString("en-US")} copy-paste CSS and JS UI components by natural-language description, e.g. 'accessible date picker' or 'toast that slides in'. Returns ids to pass to get_component. Optionally filter by category id or by whether the component needs JavaScript.`,
+        inputSchema: z.object({
+          query: z
+            .string()
+            .min(3)
+            .describe("Natural-language description of the UI you need."),
+          category: z
+            .string()
+            .optional()
+            .describe("Restrict to one category id, from list_categories."),
+          hasJS: z
+            .boolean()
+            .optional()
+            .describe("true for components that ship JS; false for CSS-only."),
+          limit: z.number().int().min(1).max(20).optional().default(8),
+        }),
+      },
+      async (args) => {
+        const result = await searchComponentsTool(args);
+        const note = result.degraded
+          ? "NOTE: the semantic index was unreachable; these results use basic keyword matching and may rank poorly.\n\n"
+          : "";
+        return {
+          content: [
+            { type: "text", text: note + JSON.stringify(result, null, 2) },
           ],
         };
       },

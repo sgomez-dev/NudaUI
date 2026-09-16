@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { getComponent, listCategories } from "@/lib/mcp/tools";
+import {
+  getComponent,
+  listCategories,
+  localSearch,
+  searchComponentsTool,
+} from "@/lib/mcp/tools";
 import {
   categories,
   totalCount,
@@ -63,5 +68,62 @@ describe("getComponent", () => {
     expect(result.suggestions).toHaveLength(0);
     expect(result.hint).toContain("/api/registry.json");
     expect(result.hint).not.toContain("/components");
+  });
+});
+
+describe("localSearch (fallback ranking)", () => {
+  it("finds components by a word in their name", () => {
+    const hits = localSearch("toast", 5);
+    expect(hits.length).toBeGreaterThan(0);
+    expect(
+      hits.some(
+        (h) =>
+          h.name.toLowerCase().includes("toast") ||
+          h.id.includes("toast") ||
+          h.category.toLowerCase().includes("toast"),
+      ),
+    ).toBe(true);
+  });
+
+  it("respects the limit", () => {
+    expect(localSearch("card", 3).length).toBeLessThanOrEqual(3);
+  });
+
+  it("returns nothing for a query that matches nothing", () => {
+    expect(localSearch("zzzqqqxxnotathing", 5)).toHaveLength(0);
+  });
+});
+
+describe("searchComponentsTool", () => {
+  it("degrades to local ranking when the RAG service is unreachable", async () => {
+    const original = process.env.NEXT_PUBLIC_RAG_API_URL;
+    process.env.NEXT_PUBLIC_RAG_API_URL = "http://127.0.0.1:9";
+    try {
+      const result = await searchComponentsTool({ query: "toast", limit: 5 });
+      expect(result.degraded).toBe(true);
+      expect(result.results.length).toBeGreaterThan(0);
+    } finally {
+      process.env.NEXT_PUBLIC_RAG_API_URL = original;
+    }
+  });
+
+  it("filters to CSS-only components when hasJS is false", async () => {
+    // Pinned to an unreachable host: this assertion is about the FILTER,
+    // which runs identically on the RAG and fallback paths, not about
+    // ranking quality — so it must not depend on a live network call to
+    // rag.nudaui.dev. The live RAG path is covered by the HTTP
+    // verification step in the task report instead.
+    const original = process.env.NEXT_PUBLIC_RAG_API_URL;
+    process.env.NEXT_PUBLIC_RAG_API_URL = "http://127.0.0.1:9";
+    try {
+      const result = await searchComponentsTool({
+        query: "button",
+        hasJS: false,
+        limit: 10,
+      });
+      for (const hit of result.results) expect(hit.hasJS).toBe(false);
+    } finally {
+      process.env.NEXT_PUBLIC_RAG_API_URL = original;
+    }
   });
 });

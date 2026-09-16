@@ -8,6 +8,7 @@
  */
 import {
   categories,
+  componentHasJS,
   totalCount,
 } from "@/components/showcase/registry/categories";
 import { categoryDescriptions } from "@/lib/category-meta";
@@ -103,4 +104,116 @@ export function getComponent(rawId: string): GetComponentResult {
 
   const hint = `Enumerate valid ids at ${absoluteUrl("/api/registry.json")}, then retry with one of them.`;
   return { found: false, id: rawId, suggestions, hint };
+}
+
+export interface SearchHit {
+  id: string;
+  name: string;
+  category: string;
+  categoryId: string;
+  languages: string[];
+  hasJS: boolean;
+  page: string;
+  anchor: string;
+}
+
+/** How long we wait on the semantic index before falling back. */
+const RAG_TIMEOUT_MS = 6000;
+
+function ragBaseUrl(): string {
+  return (
+    process.env.NEXT_PUBLIC_RAG_API_URL ?? "https://rag.nudaui.dev"
+  ).replace(/\/$/, "");
+}
+
+function toHit(f: ReturnType<typeof allComponents>[number]): SearchHit {
+  return {
+    id: f.component.id,
+    name: f.component.name,
+    category: f.categoryLabel,
+    categoryId: f.categoryId,
+    languages: f.component.code.map((t) => t.language),
+    hasJS: componentHasJS(f.component),
+    page: absoluteUrl(`/components/${f.component.id}`),
+    anchor: absoluteUrl(`/components#${f.component.id}`),
+  };
+}
+
+/**
+ * Dependency-free ranking over names, ids and category labels. This is the
+ * fallback, not the primary path: it exists so a search tool degrades to
+ * worse results instead of to an error when the index is unreachable.
+ */
+export function localSearch(query: string, limit: number): SearchHit[] {
+  const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (tokens.length === 0) return [];
+
+  return allComponents()
+    .map((f) => {
+      const haystack =
+        `${f.component.name} ${f.component.id} ${f.categoryLabel}`.toLowerCase();
+      const score = tokens.reduce(
+        (acc, t) => acc + (haystack.includes(t) ? 1 : 0),
+        0,
+      );
+      return { f, score };
+    })
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((x) => toHit(x.f));
+}
+
+/**
+ * Semantic search with graceful degradation.
+ *
+ * Over-fetches from the index so that post-filtering by category/hasJS can
+ * still fill a page, then hydrates every hit from the local registry — the
+ * index only supplies ranking, never content.
+ */
+export async function searchComponentsTool(args: {
+  query: string;
+  category?: string;
+  hasJS?: boolean;
+  limit?: number;
+}): Promise<{
+  query: string;
+  degraded: boolean;
+  count: number;
+  results: SearchHit[];
+}> {
+  const limit = Math.min(20, Math.max(1, args.limit ?? 8));
+  const filter = (hits: SearchHit[]): SearchHit[] =>
+    hits
+      .filter((h) => (args.category ? h.categoryId === args.category : true))
+      .filter((h) => (args.hasJS === undefined ? true : h.hasJS === args.hasJS))
+      .slice(0, limit);
+
+  let ranked: SearchHit[] | null = null;
+  try {
+    const url = new URL(`${ragBaseUrl()}/search`);
+    url.searchParams.set("q", args.query);
+    url.searchParams.set("k", String(Math.min(20, limit * 2)));
+
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(RAG_TIMEOUT_MS),
+    });
+    if (res.ok) {
+      const data = (await res.json()) as { results?: { id: string }[] };
+      const byId = new Map(allComponents().map((f) => [f.component.id, f]));
+      ranked = (data.results ?? [])
+        .map((r) => byId.get(r.id))
+        .filter((f): f is NonNullable<typeof f> => Boolean(f))
+        .map(toHit);
+    }
+  } catch {
+    // Index unreachable or slow — fall through to local ranking below.
+    ranked = null;
+  }
+
+  const degraded = ranked === null;
+  const results = filter(ranked ?? localSearch(args.query, limit * 3));
+
+  return { query: args.query, degraded, count: results.length, results };
 }
