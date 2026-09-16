@@ -32,7 +32,10 @@ const OPAQUE_PREFIXES = [
 /**
  * Single-representation files served from the app router or `public/`.
  * `/llms.txt` is already Markdown, `/openapi.json` is already JSON — asking
- * either of them for a "Markdown variant" is a category error.
+ * either of them for a "Markdown variant" is a category error. `/mcp` is a
+ * JSON-RPC endpoint: real MCP clients send
+ * `Accept: application/json, text/event-stream`, which negotiation would
+ * otherwise 406 before the request ever reaches the route handler.
  */
 const OPAQUE_PATHS = new Set([
   "/agent-instructions.md",
@@ -44,6 +47,7 @@ const OPAQUE_PATHS = new Set([
   "/llms-full.txt",
   "/llms.txt",
   "/manifest.webmanifest",
+  "/mcp",
   "/opengraph-image",
   "/openapi.json",
   "/opensearch.xml",

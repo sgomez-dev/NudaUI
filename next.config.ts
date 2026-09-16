@@ -73,6 +73,7 @@ const nextConfig: NextConfig = {
         destination: "/openapi.json",
         permanent: true,
       },
+      { source: "/api/mcp", destination: "/mcp", permanent: true },
     ];
   },
 
