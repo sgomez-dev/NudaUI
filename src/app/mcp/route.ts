@@ -11,7 +11,8 @@
  */
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
-import { listCategories } from "@/lib/mcp/tools";
+import { getComponent, listCategories } from "@/lib/mcp/tools";
+import { site } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -30,6 +31,44 @@ const handler = createMcpHandler(
         const data = listCategories();
         return {
           content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+        };
+      },
+    );
+
+    server.registerTool(
+      "get_component",
+      {
+        title: "Get a NudaUI component",
+        description:
+          "Fetch the complete, paste-ready code for one NudaUI component by id: HTML, CSS, and JavaScript where the pattern needs it. Ids come from search_components or list_categories.",
+        inputSchema: z.object({
+          id: z
+            .string()
+            .min(1)
+            .describe("Component id, e.g. 'toast-slide'. A trailing .json is accepted."),
+        }),
+      },
+      async ({ id }) => {
+        const result = getComponent(id);
+        if (!result.found) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: `No NudaUI component with id "${result.id}".${
+                  result.suggestions.length
+                    ? ` Did you mean: ${result.suggestions.map((s) => s.id).join(", ")}?`
+                    : ""
+                } Browse ${site.url}/components to enumerate ids.`,
+              },
+            ],
+          };
+        }
+        return {
+          content: [
+            { type: "text", text: JSON.stringify(result.component, null, 2) },
+          ],
         };
       },
     );

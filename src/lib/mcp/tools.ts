@@ -12,6 +12,12 @@ import {
 } from "@/components/showcase/registry/categories";
 import { categoryDescriptions } from "@/lib/category-meta";
 import { absoluteUrl } from "@/lib/site";
+import {
+  allComponents,
+  componentPayload,
+  findComponent,
+  type ComponentPayload,
+} from "@/lib/component-payload";
 
 export interface CategorySummary {
   id: string;
@@ -40,4 +46,48 @@ export function listCategories(): {
       url: absoluteUrl(`/components#section-${cat.id}`),
     })),
   };
+}
+
+export interface ComponentSuggestion {
+  id: string;
+  name: string;
+  category: string;
+}
+
+export type GetComponentResult =
+  | { found: true; component: ComponentPayload }
+  | { found: false; id: string; suggestions: ComponentSuggestion[] };
+
+/**
+ * Score an id against a query by shared hyphen-delimited tokens, then by
+ * substring containment. Cheap, dependency-free, and good enough to turn a
+ * typo into a usable suggestion — which is the whole job here.
+ */
+function similarity(candidate: string, query: string): number {
+  const a = new Set(candidate.split("-").filter(Boolean));
+  const b = query.split("-").filter(Boolean);
+  let score = b.reduce((acc, token) => acc + (a.has(token) ? 2 : 0), 0);
+  if (candidate.includes(query) || query.includes(candidate)) score += 1;
+  return score;
+}
+
+/** One component's full paste-ready payload, or the nearest ids to it. */
+export function getComponent(rawId: string): GetComponentResult {
+  const flat = findComponent(rawId);
+  if (flat) return { found: true, component: componentPayload(flat) };
+
+  const id = rawId.replace(/\.json$/i, "").toLowerCase();
+  const suggestions = allComponents()
+    .map((f) => ({
+      id: f.component.id,
+      name: f.component.name,
+      category: f.categoryLabel,
+      score: similarity(f.component.id.toLowerCase(), id),
+    }))
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5)
+    .map(({ id, name, category }) => ({ id, name, category }));
+
+  return { found: false, id: rawId, suggestions };
 }
