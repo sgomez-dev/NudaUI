@@ -11,6 +11,7 @@ describe("listCategories", () => {
     expect(result.categoryCount).toBe(categories.length);
     expect(result.total).toBe(totalCount);
     expect(result.categories).toHaveLength(categories.length);
+    expect(categories.length).toBeGreaterThan(0);
     for (const c of result.categories) {
       expect(c.id).toBeTruthy();
       expect(c.label).toBeTruthy();

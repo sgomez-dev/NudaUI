@@ -58,6 +58,8 @@ describe("isNegotiablePagePath", () => {
     "/agent-instructions.md",
     "/opensearch.xml",
     "/humans.txt",
+    // JSON-RPC endpoint — no HTML or Markdown representation.
+    "/mcp",
     // Generated images.
     "/opengraph-image",
     "/components/toast-slide/opengraph-image",
