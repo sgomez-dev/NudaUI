@@ -10,8 +10,10 @@
  * any request can land on any Vercel instance with no shared storage.
  */
 import { createMcpHandler } from "mcp-handler";
+import type { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import { totalCount } from "@/components/showcase/registry/categories";
+import { hashQuery, logToolCall } from "@/lib/mcp/log";
 import {
   getComponent,
   listCategories,
@@ -20,6 +22,39 @@ import {
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
+
+/**
+ * Best-effort caller identity for the usage log.
+ *
+ * Investigated against the installed `mcp-handler@2.1.1` /
+ * `@modelcontextprotocol/server@2.0.0`: protocol revision 2026-07-28 moved
+ * client identity off the (now-removed) `initialize` session and onto a
+ * per-request `_meta` envelope (`io.modelcontextprotocol/clientInfo`), sent
+ * as a claim on every request, tools/call included — see
+ * `RESERVED_ENVELOPE_META_KEYS` / `seedClientIdentityFromEnvelope` in
+ * `@modelcontextprotocol/server/dist/src-*.mjs`. Confirmed reachable here:
+ * for each request this endpoint's stateless HTTP entry builds a fresh
+ * `McpServer` (`factory()` in `serveModern`), seeds it from that request's
+ * envelope, and only then invokes the tool handler — so `server.server
+ * .getClientVersion()` reflects the correct request's `clientInfo` at the
+ * time a handler runs, with no cross-request leakage despite being
+ * instance-scoped, because the instance itself is per-request. That
+ * accessor is `@deprecated` in favor of reading `ctx.mcpReq.envelope`
+ * directly on a handler's second argument, but the recommended replacement
+ * is not practically usable at this SDK build: `RequestMetaEnvelope` (the
+ * type of that field) is bundled out to a bare `{}` in the shipped
+ * `.d.mts`, so reading it back requires an `as any` the deprecated
+ * accessor doesn't. `getClientVersion()` remains functional per its own
+ * doc comment, so it is used here instead.
+ *
+ * `clientInfo` on the envelope is optional (spec PR #3002 demoted it from
+ * MUST to SHOULD), so a compliant client may legitimately omit it — expect
+ * `client` to be `undefined` for some, possibly most, real callers.
+ */
+function clientIdentity(server: McpServer): string | undefined {
+  const info = server.server.getClientVersion();
+  return info ? `${info.name}/${info.version}` : undefined;
+}
 
 const handler = createMcpHandler(
   (server) => {
@@ -32,10 +67,27 @@ const handler = createMcpHandler(
         inputSchema: z.object({}),
       },
       async () => {
-        const data = listCategories();
-        return {
-          content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
-        };
+        const started = Date.now();
+        try {
+          const data = listCategories();
+          logToolCall({
+            tool: "list_categories",
+            ok: true,
+            ms: Date.now() - started,
+            client: clientIdentity(server),
+          });
+          return {
+            content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+          };
+        } catch (err) {
+          logToolCall({
+            tool: "list_categories",
+            ok: false,
+            ms: Date.now() - started,
+            client: clientIdentity(server),
+          });
+          throw err;
+        }
       },
     );
 
@@ -53,27 +105,49 @@ const handler = createMcpHandler(
         }),
       },
       async ({ id }) => {
-        const result = getComponent(id);
-        if (!result.found) {
+        const started = Date.now();
+        try {
+          const result = getComponent(id);
+          logToolCall({
+            tool: "get_component",
+            ok: result.found,
+            ms: Date.now() - started,
+            client: clientIdentity(server),
+            componentId: id,
+          });
+          if (!result.found) {
+            return {
+              isError: true,
+              content: [
+                {
+                  type: "text",
+                  text: `No NudaUI component with id "${result.id}".${
+                    result.suggestions.length
+                      ? ` Did you mean: ${result.suggestions.map((s) => s.id).join(", ")}?`
+                      : ""
+                  } ${result.hint}`,
+                },
+              ],
+            };
+          }
           return {
-            isError: true,
             content: [
               {
                 type: "text",
-                text: `No NudaUI component with id "${result.id}".${
-                  result.suggestions.length
-                    ? ` Did you mean: ${result.suggestions.map((s) => s.id).join(", ")}?`
-                    : ""
-                } ${result.hint}`,
+                text: JSON.stringify(result.component, null, 2),
               },
             ],
           };
+        } catch (err) {
+          logToolCall({
+            tool: "get_component",
+            ok: false,
+            ms: Date.now() - started,
+            client: clientIdentity(server),
+            componentId: id,
+          });
+          throw err;
         }
-        return {
-          content: [
-            { type: "text", text: JSON.stringify(result.component, null, 2) },
-          ],
-        };
       },
     );
 
@@ -100,15 +174,37 @@ const handler = createMcpHandler(
         }),
       },
       async (args) => {
-        const result = await searchComponentsTool(args);
-        const note = result.degraded
-          ? "NOTE: the semantic index was unreachable; these results use basic keyword matching and may rank poorly.\n\n"
-          : "";
-        return {
-          content: [
-            { type: "text", text: note + JSON.stringify(result, null, 2) },
-          ],
-        };
+        const started = Date.now();
+        try {
+          const result = await searchComponentsTool(args);
+          logToolCall({
+            tool: "search_components",
+            ok: true,
+            ms: Date.now() - started,
+            client: clientIdentity(server),
+            queryHash: hashQuery(args.query),
+            results: result.count,
+            zeroResults: result.count === 0,
+            degraded: result.degraded,
+          });
+          const note = result.degraded
+            ? "NOTE: the semantic index was unreachable; these results use basic keyword matching and may rank poorly.\n\n"
+            : "";
+          return {
+            content: [
+              { type: "text", text: note + JSON.stringify(result, null, 2) },
+            ],
+          };
+        } catch (err) {
+          logToolCall({
+            tool: "search_components",
+            ok: false,
+            ms: Date.now() - started,
+            client: clientIdentity(server),
+            queryHash: hashQuery(args.query),
+          });
+          throw err;
+        }
       },
     );
   },
