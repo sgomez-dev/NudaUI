@@ -32,12 +32,12 @@ You own the code. No package to update, no API to learn, no abstraction to fight
 - **Copy-paste ownership** — shadcn/ui-style model. The code is yours the moment you paste it.
 - **Framework-agnostic** — React, Vue, Svelte, Astro, Next, Nuxt, Laravel, Django, Rails, or a plain `.html` file.
 - **Accessibility-aware** — `prefers-reduced-motion` respected, proper ARIA roles where it matters.
-- **1,516 components across 81 categories** — loaders, charts, AI/chat, drag & drop, command palette, hero sections, pricing, video player, onboarding, terminal, footers, auth, calendars, sidebars, steppers, search & autocomplete, sliders & ranges, audio & waveforms, color pickers, galleries & carousels, maps, watch faces, quotes & testimonials, comments & reactions, profile headers, settings, file upload, tags & chips input, mobile patterns, notification center, skeleton variants & more.
+- **1,503 components across 81 categories** — loaders, charts, AI/chat, drag & drop, command palette, hero sections, pricing, video player, onboarding, terminal, footers, auth, calendars, sidebars, steppers, search & autocomplete, sliders & ranges, audio & waveforms, color pickers, galleries & carousels, maps, watch faces, quotes & testimonials, comments & reactions, profile headers, settings, file upload, tags & chips input, mobile patterns, notification center, skeleton variants & more.
 - **Tailwind-friendly, Tailwind-optional** — works with your setup, not against it.
 
 ## 📦 Components
 
-1,516 components, 81 categories.
+1,503 components, 81 categories.
 
 | Category | Sample components | Count |
 | --- | --- | --- |
