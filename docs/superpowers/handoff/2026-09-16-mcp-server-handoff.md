@@ -48,6 +48,10 @@ cd56f7d feat: add /mcp endpoint with list_categories tool
 2b19438 fix: point get_component's unknown-id recovery at the JSON registry
 bd0333e feat: add search_components MCP tool with graceful degradation
 16d3011 fix: honest over-fetch docstring, reuse RAG client, detect index drift
+edff06a docs: commit the MCP session handoff and decision trail
+9a73991 feat: instrument MCP tool calls
+3ff95cd fix: make MCP client-identity lookup failure-safe, test exception-path logging
+f91423e docs: add server.json and MCP server section to README
 ```
 
 | Task | Status |
@@ -56,12 +60,29 @@ bd0333e feat: add search_components MCP tool with graceful degradation
 | 2 — `/mcp` route + `list_categories` (core) | complete, opus review, 1 fix round |
 | 3 — `get_component` | complete, 1 fix round |
 | 4 — `search_components` | complete, 1 fix round |
-| 5 — instrumentation | **in progress** |
-| 6 — `server.json`, `mcp-name:`, README section | not started |
+| 5 — instrumentation | complete, 1 fix round |
+| 6 — `server.json`, `mcp-name:`, README section | **committed, review NOT completed** |
 | 7 — agent-facing surfaces | not started |
 | Final whole-branch review (opus) | not started |
 
-Suite at last green point: **211 tests passing**, `npx tsc --noEmit` clean.
+Suite: **219 tests passing**, `npx tsc --noEmit` clean.
+
+`npm run build` was run against this state and succeeded: `/mcp` compiles as
+`ƒ (Dynamic)` — server-rendered on demand, which is correct for an MCP
+endpoint. Everything before that had only been verified against `next dev`, so
+this is the first confirmation the route survives a production build.
+
+**Where work stopped.** Task 6's code is committed but its review was
+dispatched and lost when the session ended. Re-run it before trusting
+`server.json` — the review package is regenerable with
+`scripts/review-package <plan> 3ff95cd f91423e`. Two disclosed deviations in
+that commit specifically need checking: the `$schema` URL was changed from the
+plan's `2025-07-09` to `2025-12-11`, and the `"status": "active"` field was
+removed as no longer part of the schema. Both were the implementer's own
+findings and neither has been independently verified.
+
+The branch is **not merged to main**. Merging triggers a Vercel deploy and puts
+`/mcp` live, which is a deliberate decision left to the maintainer.
 
 ---
 
@@ -178,18 +199,14 @@ says so rather than fabricating it.
 
 ## 7. What remains
 
-**Task 5 — instrumentation** (in progress). `src/lib/mcp/log.ts`: one
-structured JSON line per call to stdout, read through Vercel logs. No database,
-no analytics dependency. Queries hashed, never logged raw; `zeroResults` kept
-in the clear.
+**Task 6 review — do this first.** The code is committed at `f91423e` but was
+never reviewed; see §2 for the two unverified deviations.
 
-**Task 6 — publication metadata.** `server.json` with namespace
-`io.github.sgomez-dev/*` and a `streamable-http` remote pointing at
-`https://nudaui.dev/mcp`; the `mcp-name:` line in the root README, which is
-what registry ownership validation reads; a README server section. The
-`description` field is the highest-return text in the project — it is the only
-indexed string in several directories — so it should be chosen deliberately,
-not accepted by default.
+**A `description` decision for the maintainer.** `server.json`'s `description`
+is the highest-return text in the project — in several MCP directories it is
+the only indexed string. The committed value is the plan's default. Task 6's
+report (`session-record/task-6-report.md`) contains one alternative with
+reasoning. This should be chosen deliberately rather than inherited.
 
 **Task 7 — agent-facing surfaces.** Add the endpoint to `ai.txt`, `llms.txt`,
 `llms-full.txt`, `agent-instructions.md` and `/developers`. These files already
