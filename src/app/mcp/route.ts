@@ -12,7 +12,6 @@
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
 import { getComponent, listCategories } from "@/lib/mcp/tools";
-import { site } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -60,7 +59,7 @@ const handler = createMcpHandler(
                   result.suggestions.length
                     ? ` Did you mean: ${result.suggestions.map((s) => s.id).join(", ")}?`
                     : ""
-                } Browse ${site.url}/components to enumerate ids.`,
+                } ${result.hint}`,
               },
             ],
           };

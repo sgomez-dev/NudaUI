@@ -55,4 +55,13 @@ describe("getComponent", () => {
     expect(result.suggestions.length).toBeGreaterThan(0);
     expect(result.suggestions.length).toBeLessThanOrEqual(5);
   });
+
+  it("points recovery at the JSON registry, not the unscrapable gallery, even with no near matches", () => {
+    const result = getComponent("nope-not-real");
+    expect(result.found).toBe(false);
+    if (result.found) throw new Error("unreachable");
+    expect(result.suggestions).toHaveLength(0);
+    expect(result.hint).toContain("/api/registry.json");
+    expect(result.hint).not.toContain("/components");
+  });
 });

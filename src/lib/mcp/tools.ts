@@ -56,7 +56,19 @@ export interface ComponentSuggestion {
 
 export type GetComponentResult =
   | { found: true; component: ComponentPayload }
-  | { found: false; id: string; suggestions: ComponentSuggestion[] };
+  | {
+      found: false;
+      id: string;
+      suggestions: ComponentSuggestion[];
+      /**
+       * Where to recover: the JSON id-enumeration endpoint, never the
+       * client-rendered `/components` gallery an agent cannot scrape.
+       * Phrased to match `componentNotFound()` in `@/lib/api-error` — the
+       * REST 404 for the same failure — so both surfaces recover an agent
+       * the same way.
+       */
+      hint: string;
+    };
 
 /**
  * Score an id against a query by shared hyphen-delimited tokens, then by
@@ -89,5 +101,6 @@ export function getComponent(rawId: string): GetComponentResult {
     .slice(0, 5)
     .map(({ id, name, category }) => ({ id, name, category }));
 
-  return { found: false, id: rawId, suggestions };
+  const hint = `Enumerate valid ids at ${absoluteUrl("/api/registry.json")}, then retry with one of them.`;
+  return { found: false, id: rawId, suggestions, hint };
 }
