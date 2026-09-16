@@ -158,6 +158,31 @@ The API contract is published at
 [`/openapi.json`](https://nudaui.dev/openapi.json), and agent guidance is at
 [`/agent-instructions.md`](https://nudaui.dev/agent-instructions.md).
 
+## 🔌 MCP server
+
+NudaUI runs a remote [Model Context Protocol](https://modelcontextprotocol.io)
+server. There is nothing to install — point your MCP client at the URL:
+
+```
+https://nudaui.dev/mcp
+```
+
+mcp-name: io.github.sgomez-dev/nudaui
+
+Three read-only tools:
+
+| Tool | What it does |
+| --- | --- |
+| `search_components` | Natural-language search over all 1,503 components; returns ids |
+| `get_component` | Paste-ready HTML, CSS and JS for one component id |
+| `list_categories` | All 81 categories with descriptions and counts |
+
+For Claude Code:
+
+```bash
+claude mcp add --transport http nudaui https://nudaui.dev/mcp
+```
+
 ## 🤔 Why NudaUI?
 
 | Feature | NudaUI | Traditional animation library |

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.sgomez-dev/nudaui",
+  "description": "Search 1,503 copy-paste CSS and JS UI components with zero dependencies and no build step. Loaders, buttons, charts, date pickers, command palettes, auth screens and 75 more categories, returned as paste-ready HTML, CSS and JS.",
+  "repository": {
+    "url": "https://github.com/sgomez-dev/nudaui",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://nudaui.dev/mcp"
+    }
+  ]
+}
