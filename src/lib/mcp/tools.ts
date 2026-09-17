@@ -182,13 +182,22 @@ export async function searchComponentsTool(args: {
   degraded: boolean;
   count: number;
   results: SearchHit[];
+  /**
+   * Hits found before `category`/`hasJS` filtering and the `limit` slice —
+   * i.e. what the index (or the local fallback) actually returned. Logged
+   * alongside `count` so "the index found nothing" (`hydratedCount: 0`) can
+   * be told apart from "a narrowing filter emptied an otherwise-real result"
+   * (`hydratedCount > 0`, `count` smaller than requested) — collapsing both
+   * into one `zeroResults` bucket would poison that metric.
+   */
+  hydratedCount: number;
 }> {
   const limit = Math.min(20, Math.max(1, args.limit ?? 8));
+  const matches = (h: SearchHit): boolean =>
+    (args.category ? h.categoryId === args.category : true) &&
+    (args.hasJS === undefined ? true : h.hasJS === args.hasJS);
   const filter = (hits: SearchHit[]): SearchHit[] =>
-    hits
-      .filter((h) => (args.category ? h.categoryId === args.category : true))
-      .filter((h) => (args.hasJS === undefined ? true : h.hasJS === args.hasJS))
-      .slice(0, limit);
+    hits.filter(matches).slice(0, limit);
 
   let ranked: SearchHit[] | null = null;
   try {
@@ -228,7 +237,28 @@ export async function searchComponentsTool(args: {
   }
 
   const degraded = ranked === null;
-  const results = filter(ranked ?? localSearch(args.query, limit * 3));
+  const pool = ranked ?? localSearch(args.query, limit * 3);
+  const hydratedCount = pool.length;
 
-  return { query: args.query, degraded, count: results.length, results };
+  let results = filter(pool);
+
+  // A category (or hasJS) filter can legitimately empty an otherwise-real
+  // result: the index/local ranking found real hits, but none happened to
+  // sit in the requested category. That is a different failure than "the
+  // index found nothing" and deserves a different remedy — top up from a
+  // dedicated local-ranking pass restricted to the same filters, so the
+  // tool still returns something useful instead of a bare zero.
+  if (results.length === 0 && hydratedCount > 0 && args.category) {
+    results = localSearch(args.query, limit * 5)
+      .filter(matches)
+      .slice(0, limit);
+  }
+
+  return {
+    query: args.query,
+    degraded,
+    count: results.length,
+    results,
+    hydratedCount,
+  };
 }

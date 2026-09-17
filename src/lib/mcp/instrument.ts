@@ -15,13 +15,16 @@
  */
 import { logToolCall, type ToolCallEvent } from "@/lib/mcp/log";
 
-type CommonFields = Pick<ToolCallEvent, "client" | "queryHash" | "componentId">;
+type CommonFields = Pick<
+  ToolCallEvent,
+  "client" | "uaHash" | "queryHash" | "componentId"
+>;
 
 /**
  * Runs `fn`, logging exactly one line before returning or rethrowing.
  *
- * `common` fields (client, queryHash, componentId) are attached to both
- * the success and the failure line. `describeSuccess` derives the
+ * `common` fields (client, uaHash, queryHash, componentId) are attached to
+ * both the success and the failure line. `describeSuccess` derives the
  * success-only fields from the resolved value and may override `ok`
  * (e.g. `get_component` logs `ok: result.found`, not `ok: true`, even
  * though no exception was thrown); when it doesn't set `ok`, the call is

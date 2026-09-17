@@ -160,6 +160,9 @@ describe("searchComponentsTool", () => {
     expect(result.degraded).toBe(false);
     expect(result.count).toBe(0);
     expect(result.results).toHaveLength(0);
+    // Genuinely nothing, at every stage — hydratedCount is what tells this
+    // case apart from a category filter emptying an otherwise-real result.
+    expect(result.hydratedCount).toBe(0);
   });
 
   it("reports degraded when the index's hits no longer resolve against the registry (drift)", async () => {
@@ -168,5 +171,69 @@ describe("searchComponentsTool", () => {
     expect(result.degraded).toBe(true);
     // Still recovers via local fallback ranking rather than returning nothing.
     expect(result.results.length).toBeGreaterThan(0);
+  });
+
+  it("reports the pre-filter hydrated count alongside the post-filter count", async () => {
+    const pool = allComponents();
+    const cssOnly = pool.find((f) => !componentHasJS(f.component));
+    const withJs = pool.find((f) => componentHasJS(f.component));
+    if (!cssOnly || !withJs) {
+      throw new Error(
+        "fixture assumption failed: registry needs both a CSS-only and a JS component",
+      );
+    }
+    mockRagOk([cssOnly.component.id, withJs.component.id]);
+
+    const result = await searchComponentsTool({
+      query: "button",
+      hasJS: false,
+      limit: 10,
+    });
+    // The index hydrated 2 hits; hasJS narrows the returned page to 1.
+    expect(result.hydratedCount).toBe(2);
+    expect(result.count).toBe(1);
+  });
+
+  it("tops up from local search restricted to the category when that filter empties an otherwise-real result", async () => {
+    const pool = allComponents();
+    const outsideLoaders = pool.find((f) => f.categoryId !== "loaders");
+    if (!outsideLoaders) {
+      throw new Error(
+        "fixture assumption failed: registry needs a component outside 'loaders'",
+      );
+    }
+    // The index found a real, resolvable hit — just not in the requested
+    // category. Without the top-up this collapses to `count: 0`,
+    // indistinguishable in the log from the index finding nothing at all.
+    mockRagOk([outsideLoaders.component.id]);
+
+    const result = await searchComponentsTool({
+      query: "loaders",
+      category: "loaders",
+      limit: 5,
+    });
+
+    expect(result.degraded).toBe(false);
+    expect(result.hydratedCount).toBeGreaterThan(0);
+    expect(result.count).toBeGreaterThan(0);
+    for (const hit of result.results) expect(hit.categoryId).toBe("loaders");
+  });
+
+  it("does not top up when the category filter is absent (only category narrowing gets the rescue)", async () => {
+    const pool = allComponents();
+    const withJs = pool.find((f) => componentHasJS(f.component));
+    if (!withJs) throw new Error("fixture assumption failed: need a JS component");
+    // A real hit that hasJS: false will filter out — no category involved,
+    // so this is an ordinary narrow result, not the case the top-up exists for.
+    mockRagOk([withJs.component.id]);
+
+    const result = await searchComponentsTool({
+      query: "button",
+      hasJS: false,
+      limit: 5,
+    });
+
+    expect(result.hydratedCount).toBe(1);
+    expect(result.count).toBe(0);
   });
 });

@@ -1,5 +1,10 @@
 import { describe, expect, it, vi, afterEach } from "vitest";
-import { hashQuery, logToolCall } from "@/lib/mcp/log";
+import {
+  hashQuery,
+  hashUserAgent,
+  logToolCall,
+  normalizeComponentId,
+} from "@/lib/mcp/log";
 
 afterEach(() => vi.restoreAllMocks());
 
@@ -14,6 +19,54 @@ describe("hashQuery", () => {
 
   it("never returns the raw query", () => {
     expect(hashQuery("date picker")).not.toContain("date");
+  });
+});
+
+describe("hashUserAgent", () => {
+  it("is stable for the same input", () => {
+    expect(hashUserAgent("claude-code/2.1")).toBe(
+      hashUserAgent("claude-code/2.1"),
+    );
+  });
+
+  it("differs for different inputs", () => {
+    expect(hashUserAgent("claude-code/2.1")).not.toBe(
+      hashUserAgent("Mozilla/5.0"),
+    );
+  });
+
+  it("never returns the raw user agent", () => {
+    expect(hashUserAgent("claude-code/2.1")).not.toContain("claude");
+  });
+
+  it("returns undefined for a missing or blank header instead of hashing it", () => {
+    expect(hashUserAgent(undefined)).toBeUndefined();
+    expect(hashUserAgent(null)).toBeUndefined();
+    expect(hashUserAgent("")).toBeUndefined();
+    expect(hashUserAgent("   ")).toBeUndefined();
+  });
+});
+
+describe("normalizeComponentId", () => {
+  it("strips a trailing .json", () => {
+    expect(normalizeComponentId("toast-slide.json")).toBe("toast-slide");
+  });
+
+  it("lowercases", () => {
+    expect(normalizeComponentId("Toast-Slide")).toBe("toast-slide");
+  });
+
+  it("aggregates all three call-site variants to the same bucket", () => {
+    const variants = ["toast-slide", "toast-slide.json", "Toast-Slide"];
+    const normalized = new Set(variants.map(normalizeComponentId));
+    expect(normalized.size).toBe(1);
+    expect([...normalized][0]).toBe("toast-slide");
+  });
+
+  it("only strips a trailing .json, not an incidental mid-string occurrence", () => {
+    expect(normalizeComponentId("toast.json-slide")).toBe(
+      "toast.json-slide",
+    );
   });
 });
 
