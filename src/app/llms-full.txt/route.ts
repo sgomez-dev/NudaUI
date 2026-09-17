@@ -31,6 +31,10 @@ export function GET(): Response {
     `To fetch the actual code for any id below, GET ${absoluteUrl("/api/components/{id}.json")} (e.g. ${absoluteUrl("/api/components/toast-slide.json")}). For the whole library with code in one payload, GET ${absoluteUrl("/api/catalog-full.json")}.`
   );
   lines.push("");
+  lines.push(
+    `If your client speaks Model Context Protocol, connect to ${absoluteUrl("/mcp")} instead of calling the JSON endpoints directly — three read-only tools (search_components, get_component, list_categories) over streamable HTTP, no installation, no key.`
+  );
+  lines.push("");
   lines.push("---");
   lines.push("");
 

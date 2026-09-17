@@ -72,6 +72,9 @@ export function GET(): Response {
     `- [Agent instructions](${absoluteUrl("/agent-instructions.md")}): when to reach for ${site.name}, when not to, and the exact call sequence per task.`
   );
   lines.push(
+    `- [MCP server](${absoluteUrl("/mcp")}): remote Model Context Protocol endpoint — three read-only tools (search_components, get_component, list_categories). Streamable HTTP, no installation, no key.`
+  );
+  lines.push(
     `- [About](${absoluteUrl("/about")}): who builds this, how it is licensed, why it exists.`
   );
   lines.push(

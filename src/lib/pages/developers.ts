@@ -259,6 +259,51 @@ export function developersDoc(): DocPage {
       },
 
       {
+        id: "mcp",
+        heading: "MCP server",
+        blocks: [
+          {
+            kind: "p",
+            text: `${site.name} also runs a remote [Model Context Protocol](https://modelcontextprotocol.io) server at \`${absoluteUrl("/mcp")}\` — streamable HTTP, no authentication, no API key, no account. It exposes the same read-only registry as the JSON API above through three tools instead of raw endpoints.`,
+          },
+          {
+            kind: "table",
+            head: ["Tool", "Inputs", "What it does"],
+            rows: [
+              [
+                "`list_categories`",
+                "none",
+                "Lists every category with a description of when to use it and how many components it holds. Call this first when a request is vague about what kind of UI is needed.",
+              ],
+              [
+                "`search_components`",
+                "`query` (string, required) · `category` (string, optional) · `hasJS` (boolean, optional) · `limit` (1–20, default 8)",
+                `Searches ${totalCount} components by natural-language description and returns ids to pass to \`get_component\`. Falls back to keyword matching — and says so in the response — if the semantic index is unreachable.`,
+              ],
+              [
+                "`get_component`",
+                "`id` (string, required)",
+                "Fetches the complete, paste-ready HTML, CSS and JavaScript for one component by id. Ids come from `search_components` or `list_categories`.",
+              ],
+            ],
+          },
+          {
+            kind: "p",
+            text: "Point any MCP-capable client at the endpoint. For Claude Code:",
+          },
+          {
+            kind: "code",
+            language: "bash",
+            code: `claude mcp add --transport http nudaui ${absoluteUrl("/mcp")}`,
+          },
+          {
+            kind: "p",
+            text: "No setup beyond that command: the endpoint is read-only and needs no key, so there is nothing to configure or revoke.",
+          },
+        ],
+      },
+
+      {
         id: "errors",
         heading: "Errors",
         blocks: [

@@ -170,6 +170,16 @@ export function agentInstructionsDoc(): DocPage {
         })),
       },
       {
+        id: "mcp",
+        heading: "MCP server",
+        blocks: [
+          {
+            kind: "p",
+            text: `If your client speaks Model Context Protocol, connect to ${absoluteUrl("/mcp")} instead of calling the JSON endpoints above by hand — streamable HTTP, no installation, no key. Call \`search_components\` first, then \`get_component\` with the id it returns, in that order; \`curl\` against the JSON API remains the path for everyone else.`,
+          },
+        ],
+      },
+      {
         id: "rules",
         heading: "Rules of engagement",
         blocks: [{ kind: "list", items: agentRules }],
@@ -215,6 +225,7 @@ export function agentInstructionsDoc(): DocPage {
               ["Catalog (with code)", absoluteUrl("/api/catalog-full.json"), "application/json"],
               ["Flat registry", absoluteUrl("/api/registry.json"), "application/json"],
               ["One component", absoluteUrl("/api/components/{id}.json"), "application/json"],
+              ["MCP server", absoluteUrl("/mcp"), "Model Context Protocol (streamable HTTP)"],
               ["AI permissions", absoluteUrl("/.well-known/ai.txt"), "text/plain"],
               ["Developer portal", absoluteUrl("/developers"), "text/html, text/markdown"],
               ["Sitemap", absoluteUrl("/sitemap.xml"), "application/xml"],

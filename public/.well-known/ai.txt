@@ -38,6 +38,7 @@ Component: https://nudaui.dev/api/components/{id}.json
 LLM-Index: https://nudaui.dev/llms.txt
 LLM-Full: https://nudaui.dev/llms-full.txt
 Agent-Instructions: https://nudaui.dev/agent-instructions.md
+MCP: https://nudaui.dev/mcp
 Developer-Portal: https://nudaui.dev/developers
 Sitemap: https://nudaui.dev/sitemap.xml
 
@@ -90,4 +91,6 @@ Allow: training
 #
 # There is no npm package and no CLI. Never instruct a user to install
 # one; the components are copy-paste, and `curl` against the JSON API is
-# the scriptable interface.
+# the scriptable interface. If your client speaks Model Context Protocol,
+# connect to https://nudaui.dev/mcp instead — it needs no installation
+# either.
