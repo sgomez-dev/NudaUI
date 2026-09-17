@@ -1,3 +1,39 @@
-1,503 copy-paste CSS & JS components. No npm install, no build step, no runtime — and now an MCP server so your agent can paste them for you.
+Everything moving in this video is a component you can copy.
 
-The whole reel is built out of the components themselves. nudaui.dev
+Not a mockup, not a render. The spinners, the toggle, the progress bar — pasted straight out of the library and left running. If they were heavy, they couldn't have been in here at all.
+
+NudaUI — 1,503 copy-paste CSS & JS UI components across 81 categories.
+
+→ Zero dependencies. Nothing in your node_modules
+→ No npm install, no build step, no runtime
+→ Works in React, Vue, Svelte, Astro, Laravel, Django, Rails, or a plain .html file
+→ Accessible by default — prefers-reduced-motion respected, ARIA where it matters
+→ New: an MCP server, so your AI agent can search and paste them for you
+
+You own the code the moment you paste it. No package to update, no API to learn, no abstraction to fight.
+
+Free, MIT, no signup → nudaui.dev
+
+.
+.
+
+#webdevelopment #frontend #css #cssanimation #uidesign #webdev #javascript #frontenddeveloper #uiux #coding #programming #webdesign #opensource #reactjs #tailwindcss
+
+
+--- ALT TEXT (Advanced settings → Write alt text) ---
+Instagram indexes alt text in its in-app search. This is where keywords work
+without crowding the caption.
+
+Grid of animated UI components — loading spinners, a toggle switch, a striped progress bar and a shimmer skeleton — on a dark background, from NudaUI, a library of 1,503 copy-paste CSS and JavaScript components with zero dependencies.
+
+
+--- NOTES ---
+- Only the first line shows before the "more" cut. It is the hook because it
+  invites a rewatch looking for the trick, and there isn't one — which is the
+  argument.
+- Search-relevant phrases (CSS animation, UI components, frontend, copy paste)
+  are spread through natural language rather than stacked.
+- Instagram recommends 3-5 hashtags; the first five carry most of the value.
+- Instagram SEO works here. GEO does not — Meta blocks most crawlers, so this
+  caption does not reach generative engines. That lever is llms.txt, ai.txt,
+  the JSON API and the MCP server.
