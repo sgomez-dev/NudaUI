@@ -15,15 +15,27 @@ export interface FlatComponent {
   categoryLabel: string;
 }
 
-/** Every component, flattened, carrying its category id + label. */
+/**
+ * Every component, flattened, carrying its category id + label.
+ *
+ * Memoized at module scope: the registry is immutable after build (it is
+ * generated code, not runtime state), and this flattening walks the entire
+ * ~5.1 MB registry. The MCP endpoint alone calls this 2-3x per request
+ * (`getComponent`'s suggestion search, `searchComponentsTool`'s hydration and
+ * local fallback), so rebuilding it every call is pure waste on a hot path.
+ */
+let cached: FlatComponent[] | undefined;
 export function allComponents(): FlatComponent[] {
-  return categories.flatMap((cat) =>
-    cat.components.map((component) => ({
-      component,
-      categoryId: cat.id,
-      categoryLabel: cat.label,
-    }))
-  );
+  if (!cached) {
+    cached = categories.flatMap((cat) =>
+      cat.components.map((component) => ({
+        component,
+        categoryId: cat.id,
+        categoryLabel: cat.label,
+      }))
+    );
+  }
+  return cached;
 }
 
 /** Look up a component by id. Accepts an optional trailing `.json`. */
