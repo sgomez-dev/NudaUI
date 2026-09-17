@@ -62,8 +62,8 @@ f91423e docs: add server.json and MCP server section to README
 | 4 — `search_components` | complete, 1 fix round |
 | 5 — instrumentation | complete, 1 fix round |
 | 6 — `server.json`, `mcp-name:`, README section | complete, review clean |
-| 7 — agent-facing surfaces | **not started** |
-| Final whole-branch review (opus) | **not started** |
+| 7 — agent-facing surfaces | complete, review clean |
+| Final whole-branch review (opus) | complete — 14 findings, all fixed and re-verified |
 
 Suite: **219 tests passing**, `npx tsc --noEmit` clean.
 
@@ -72,7 +72,36 @@ Suite: **219 tests passing**, `npx tsc --noEmit` clean.
 endpoint. Everything before that had only been verified against `next dev`, so
 this is the first confirmation the route survives a production build.
 
-**Where work stopped.** Task 6 is complete and its review came back clean.
+**All seven tasks and the final whole-branch review are complete.** The final
+review raised 14 findings and every one was fixed in a single wave and
+re-verified on a more capable model, including live HTTP checks. Suite:
+**240 passing**, `tsc` clean, `next build` succeeds.
+
+The finding worth knowing about: **the project's own stopping criterion was
+unmeasurable.** `client` identity came only from `_meta` clientInfo, which the
+spec is SHOULD-not-MUST about, with no fallback — so "distinct clients per day"
+could have collapsed into a single `undefined` bucket and the four-week go/no-go
+would have lost one of its four metrics. A hashed `uaHash` bucket now
+complements it. No per-task review was positioned to catch this; it took
+reading the experiment's design against the log shape.
+
+**One residual, deliberately parked.** Two places still say the semantic index
+was "unreachable" rather than "did not respond in time":
+`src/lib/pages/developers.ts:281` and the `src/lib/mcp/tools.ts:141` docstring.
+The shipped tool response itself was corrected and is asserted by a test, so
+the user-visible contract is right and only the prose lags. Two words, whenever
+convenient.
+
+**Still open for the maintainer, and not closable from a session:** cold-start
+behaviour on a real Vercel deployment. Everything is verified against
+`next dev` and a successful production build, but the index itself cold-starts
+for several seconds against a 6-second budget, so expect a burst of
+`degraded: true` on cold paths. Check this on a preview deployment before
+announcing. Also set a Vercel spend limit or firewall rule before
+distribution — this is the site's first unauthenticated, uncached POST
+endpoint that fans out to an external service per call.
+
+**Previously: where work stopped.** Task 6 is complete and its review came back clean.
 Both of its deviations were independently verified: the `2025-12-11` schema is
 current (the plan's `2025-07-09` was stale), and `status` is genuinely not a
 publisher-submitted property — it is registry-managed and appears only in API
