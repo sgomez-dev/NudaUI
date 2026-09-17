@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>NudaUI — Brag Reel</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/audio-rms.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #09090b;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #09090b;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: #fafafa;
+        --surface: #09090b;
+        --panel: #111113;
+        --panel-hover: #1a1a1f;
+        --border: #222228;
+        --border-light: #2a2a32;
+        --accent: #e4ff54;
+        --accent-dim: #b8cc43;
+        --glow: rgba(228, 255, 84, 0.15);
+        --text: #fafafa;
+        --text-secondary: #a1a1aa;
+        --text-muted: #63636e;
+      }
+
+      .scene {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        background: var(--surface);
+        overflow: hidden;
+      }
+
+      .mono {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* =====================================================================
+         Scene 1 — The opinion (0.0 - 3.0s)
+         ===================================================================== */
+      #s1 {
+        align-items: flex-start;
+        justify-content: center;
+        padding: 0 84px;
+      }
+      #s1-eyebrow {
+        display: block;
+        font-size: 30px;
+        color: var(--text-muted);
+        letter-spacing: 0.04em;
+      }
+      #s1-lines {
+        margin-top: 64px;
+      }
+      .s1-line {
+        display: block;
+        font-weight: 900;
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+      }
+      #s1-line-1 {
+        font-size: 172px;
+        color: var(--accent);
+      }
+      #s1-line-2 {
+        font-size: 78px;
+        font-weight: 700;
+        color: var(--text);
+        margin-top: 20px;
+        letter-spacing: -0.02em;
+      }
+      #s1-line-3 {
+        font-size: 104px;
+        color: var(--text);
+        margin-top: 12px;
+      }
+      #s1-spinner-dock {
+        display: flex;
+        align-items: center;
+        margin-top: 60px;
+        transform: scale(1.9);
+        transform-origin: left center;
+      }
+
+      /* =====================================================================
+         Scene 2 — The number (3.0 - 6.0s)
+         ===================================================================== */
+      #s2 {
+        align-items: center;
+        justify-content: center;
+      }
+      #s2-counter {
+        font-size: 232px;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+      }
+      #s2-label {
+        margin-top: 18px;
+        font-size: 46px;
+        font-weight: 400;
+        color: var(--text-secondary);
+      }
+      #s2-sub {
+        margin-top: 14px;
+        font-size: 38px;
+        font-weight: 400;
+        color: var(--text-secondary);
+      }
+
+      /* =====================================================================
+         Scene 3 — The wall (6.0 - 10.0s)
+         ===================================================================== */
+      #s3 {
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 120px 70px 140px;
+      }
+      #s3-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 42%,
+          rgba(228, 255, 84, 0.38) 0%,
+          rgba(228, 255, 84, 0.12) 42%,
+          rgba(228, 255, 84, 0) 70%
+        );
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      #s3-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 26px;
+        width: 100%;
+      }
+      .s3-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        padding: 30px 20px;
+        min-height: 250px;
+      }
+      .s3-card-label {
+        font-size: 22px;
+        color: var(--text-secondary);
+        letter-spacing: 0.02em;
+      }
+      .s3-stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 70px;
+      }
+      #s3-caption {
+        /* Sits directly beneath the component wall (which ends ~1350px down
+           the 1920px canvas) rather than pinned near the bottom edge, so it
+           reads as a caption on the grid and stays clear of Instagram's
+           bottom-chrome overlay (username/caption/audio-strip/action-bar
+           band, roughly the final 250-320px). */
+        position: absolute;
+        left: 70px;
+        bottom: 440px;
+        font-size: 28px;
+        color: var(--text-secondary);
+      }
+
+      /* =====================================================================
+         Scene 4 — The install that isn't (10.0 - 13.5s)
+         ===================================================================== */
+      #s4 {
+        align-items: center;
+        justify-content: center;
+      }
+      #s4-terminal {
+        /* Positioned independently of the replace/codeblock flow below: it
+           fully fades out at t=11.35s but, as a normal flex child, would
+           still reserve its flow height and push the centered block that
+           follows it down off true center. Absolute + a fixed top keeps
+           the terminal itself centered on canvas while it is visible,
+           without affecting the centering of what replaces it. */
+        position: absolute;
+        left: 50%;
+        top: 886px;
+        margin-left: -460px;
+        width: 920px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 30px 36px;
+        overflow: hidden;
+      }
+      #s4-termbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 26px;
+      }
+      .s4-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--border-light);
+      }
+      #s4-npm-line {
+        font-size: 40px;
+        white-space: nowrap;
+        position: relative;
+      }
+      #s4-prompt {
+        color: var(--accent-dim);
+        margin-right: 18px;
+      }
+      #s4-npm-text {
+        color: var(--text);
+      }
+      #s4-cursor {
+        color: var(--accent);
+        animation: s4-blink 1s steps(1) infinite;
+      }
+      #s4-strike {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 5px;
+        background: var(--accent);
+      }
+      #s4-replace {
+        width: 920px;
+        margin-top: 56px;
+        font-size: 58px;
+        font-weight: 700;
+        line-height: 1.15;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+      #s4-codeblock {
+        width: 920px;
+        margin-top: 40px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 26px 30px;
+        position: relative;
+      }
+      #s4-codeblock pre {
+        font-size: 28px;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      #s4-codeblock pre .tag {
+        color: var(--accent-dim);
+      }
+      #s4-copied {
+        position: absolute;
+        right: 26px;
+        top: -26px;
+        background: var(--surface);
+        border: 1px solid var(--accent-dim);
+        color: var(--accent);
+        font-size: 26px;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 999px;
+      }
+
+      @keyframes s4-blink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+
+      /* =====================================================================
+         Scene 5 — Works everywhere, respects everyone (13.5 - 17.0s)
+         ===================================================================== */
+      #s5 {
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+      }
+      #s5-name {
+        font-size: 128px;
+        font-weight: 900;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+      }
+      #s5-claim {
+        margin-top: 38px;
+        width: 880px;
+        text-align: center;
+        font-size: 52px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+      #s5-a11y {
+        margin-top: 130px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 32px;
+        color: var(--text-secondary);
+      }
+      #s5-a11y .check {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      /* =====================================================================
+         Scene 6 — Now your agent can paste them (17.0 - 20.5s)
+         ===================================================================== */
+      #s6 {
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      #s6-overlay {
+        width: 920px;
+        text-align: center;
+        font-size: 52px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 48px;
+      }
+      #s6-terminal {
+        width: 1024px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 26px 22px;
+      }
+      #s6-termbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      #s6-cmd-line {
+        font-size: 24px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      #s6-prompt {
+        color: var(--accent-dim);
+        margin-right: 16px;
+      }
+      #s6-cmd-text {
+        color: var(--text);
+      }
+      #s6-cursor {
+        color: var(--accent);
+        animation: s4-blink 1s steps(1) infinite;
+      }
+      #s6-bubble {
+        margin-top: 34px;
+        align-self: center;
+        background: var(--panel-hover);
+        border: 1px solid var(--border-light);
+        border-radius: 22px;
+        padding: 22px 32px;
+        font-size: 38px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      #s6-pricing {
+        margin-top: 56px;
+        display: flex;
+        gap: 22px;
+      }
+      .s6-pcard {
+        width: 290px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 26px 20px;
+        text-align: center;
+      }
+      .s6-pcard .tier {
+        font-size: 26px;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+      }
+      .s6-pcard .price {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 44px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      /* =====================================================================
+         Scene 7 — Wordmark (20.5 - 23.0s)
+         ===================================================================== */
+      #s7 {
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      #s7-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 46%,
+          rgba(228, 255, 84, 0.42) 0%,
+          rgba(228, 255, 84, 0.14) 40%,
+          rgba(228, 255, 84, 0) 68%
+        );
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      #s7-word {
+        position: relative;
+        font-size: 190px;
+        font-weight: 900;
+        color: var(--accent);
+        letter-spacing: -0.03em;
+      }
+      #s7-line1 {
+        position: relative;
+        margin-top: 34px;
+        font-size: 44px;
+        color: var(--text-secondary);
+      }
+      #s7-line2 {
+        position: relative;
+        margin-top: 16px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 46px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      /* =====================================================================
+         Verbatim NudaUI component CSS — consolidated once, referenced by id
+         across scenes 1, 3 and 4. Declarations are unmodified from the
+         registry export (_components.json). A single additive rule is
+         appended at the very end to drive the Shine Sweep's own ::after
+         sweep without simulating a mouse hover (render is deterministic and
+         has no pointer input); the component's own hover rule above it is
+         untouched.
+         ===================================================================== */
+      /* ===== Component: Pulse Dots (pulse-dots) — verbatim from registry ===== */
+      /* Pulse Dots Loader
+         Three dots pulsing in sequence.
+         Customize: --pulse-dots-color, --pulse-dots-size */
+
+      .nuda-pulse-dots {
+        --pulse-dots-color: #a78bfa;
+        --pulse-dots-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px;
+      }
+
+      .nuda-pulse-dots span {
+        width: var(--pulse-dots-size);
+        height: var(--pulse-dots-size);
+        background: var(--pulse-dots-color);
+        border-radius: 50%;
+        animation: nuda-pulse-dots 1.4s ease-in-out infinite;
+        will-change: transform, opacity;
+      }
+
+      .nuda-pulse-dots span:nth-child(2) { animation-delay: 0.2s; }
+      .nuda-pulse-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+      @keyframes nuda-pulse-dots {
+        0%, 80%, 100% {
+          transform: scale(0.4);
+          opacity: 0.3;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nuda-pulse-dots span {
+          animation: none;
+          opacity: 0.6;
+        }
+      }
+
+      /* ===== Component: Conic Spin (conic-spin-loader) — verbatim from registry ===== */
+      /* Conic Spin Spinner
+         A full conic-gradient sweep masked into a ring.
+         Customize: --conicspin-color, --conicspin-size */
+
+      .nuda-conicspin {
+        --conicspin-color: #e4ff54;
+        --conicspin-size: 40px;
+        width: var(--conicspin-size);
+        height: var(--conicspin-size);
+        border-radius: 50%;
+        background: conic-gradient(from 0deg, #09090b, var(--conicspin-color));
+        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+        mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+        animation: nuda-conicspin 1.1s linear infinite;
+        will-change: transform;
+      }
+
+      @keyframes nuda-conicspin {
+        to { transform: rotate(360deg); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nuda-conicspin { animation: none; opacity: 0.6; }
+      }
+
+      /* ===== Component: Smooth Toggle (smooth-toggle) — verbatim from registry ===== */
+      /* ── Smooth Toggle ───────────────────────────────────────────
+         Customize:
+           --nuda-tg-w         : track width
+           --nuda-tg-h         : track height
+           --nuda-tg-bg-off    : track background (off)
+           --nuda-tg-bg-on     : track background (on)
+           --nuda-tg-thumb-clr : thumb color
+           --nuda-tg-gap       : thumb padding from track edges
+         ──────────────────────────────────────────────────────────── */
+      .nuda-toggle {
+        --nuda-tg-w: 52px;
+        --nuda-tg-h: 28px;
+        --nuda-tg-bg-off: #d1d5db;
+        --nuda-tg-bg-on: #6366f1;
+        --nuda-tg-thumb-clr: #fff;
+        --nuda-tg-gap: 3px;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      /* Visually-hidden native checkbox */
+      .nuda-toggle__input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* Track */
+      .nuda-toggle__track {
+        position: relative;
+        display: inline-block;
+        width: var(--nuda-tg-w);
+        height: var(--nuda-tg-h);
+        background: var(--nuda-tg-bg-off);
+        border-radius: 9999px;
+        transition: background 0.3s ease;
+      }
+
+      /* Thumb */
+      .nuda-toggle__thumb {
+        position: absolute;
+        top: var(--nuda-tg-gap);
+        left: var(--nuda-tg-gap);
+        width: calc(var(--nuda-tg-h) - var(--nuda-tg-gap) * 2);
+        height: calc(var(--nuda-tg-h) - var(--nuda-tg-gap) * 2);
+        background: var(--nuda-tg-thumb-clr);
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      /* Checked state */
+      .nuda-toggle__input:checked + .nuda-toggle__track {
+        background: var(--nuda-tg-bg-on);
+      }
+
+      .nuda-toggle__input:checked + .nuda-toggle__track .nuda-toggle__thumb {
+        left: calc(var(--nuda-tg-w) - var(--nuda-tg-h) + var(--nuda-tg-gap));
+      }
+
+      /* Focus ring for keyboard users */
+      .nuda-toggle__input:focus-visible + .nuda-toggle__track {
+        outline: 2px solid var(--nuda-tg-bg-on);
+        outline-offset: 2px;
+      }
+
+      .nuda-toggle__label {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      /* ── Accessibility ──────────────────────────────────────── */
+      @media (prefers-reduced-motion: reduce) {
+        .nuda-toggle__track,
+        .nuda-toggle__thumb {
+          transition: none;
+        }
+      }
+
+      /* ===== Component: Stripe Progress (stripe-progress) — verbatim from registry ===== */
+      /* Stripe Progress Bar
+         Animated diagonal stripes moving through the progress fill.
+         Customize: --stripe-color, --stripe-track, --stripe-height */
+
+      .nuda-stripe-progress {
+        --stripe-color: #6366f1;
+        --stripe-track: rgba(255, 255, 255, 0.1);
+        --stripe-height: 12px;
+        width: 100%;
+        height: var(--stripe-height);
+        background: var(--stripe-track);
+        border-radius: calc(var(--stripe-height) / 2);
+        overflow: hidden;
+      }
+
+      .nuda-stripe-progress__bar {
+        height: 100%;
+        background-color: var(--stripe-color);
+        background-image: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.2) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.2) 75%,
+          transparent 75%
+        );
+        background-size: 16px 16px;
+        border-radius: inherit;
+        animation: nuda-stripe-move 0.6s linear infinite;
+        transition: width 0.3s ease;
+      }
+
+      @keyframes nuda-stripe-move {
+        to { background-position: 16px 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nuda-stripe-progress__bar {
+          animation: none;
+        }
+      }
+
+      /* ===== Component: Pulse Grid (pulse-grid-skeleton) — verbatim from registry ===== */
+      /* Pulse Grid Skeleton
+         3x3 grid of tiles pulsing in a diagonal wave (transform: scale + opacity).
+         Customize: --skpgrid-tile */
+
+      .nuda-skpgrid {
+        --skpgrid-tile: rgba(228, 255, 84, 0.16);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        padding: 12px;
+        width: fit-content;
+      }
+
+      .nuda-skpgrid span {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--skpgrid-tile);
+        transform-origin: center;
+        animation: nuda-skpgrid 1.5s ease-in-out infinite;
+        will-change: transform, opacity;
+      }
+
+      @keyframes nuda-skpgrid {
+        0%, 100% { transform: scale(0.82); opacity: 0.35; }
+        50%      { transform: scale(1);    opacity: 0.85; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nuda-skpgrid span { animation: none; opacity: 0.55; }
+      }
+
+      /* ===== Component: Shine Sweep (shine-sweep) — verbatim from registry ===== */
+      /* ── Shine Sweep ─────────────────────────────────────────────
+         Customize:
+           --nuda-ss-bg      : button background color
+           --nuda-ss-clr     : text color
+           --nuda-ss-radius  : border radius
+           --nuda-ss-speed   : sweep duration
+         ──────────────────────────────────────────────────────────── */
+      .nuda-shine-sweep {
+        --nuda-ss-bg: #6366f1;
+        --nuda-ss-clr: #fff;
+        --nuda-ss-radius: 8px;
+        --nuda-ss-speed: 0.6s;
+
+        position: relative;
+        overflow: hidden;
+        padding: 12px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--nuda-ss-clr);
+        background: var(--nuda-ss-bg);
+        border: none;
+        border-radius: var(--nuda-ss-radius);
+        cursor: pointer;
+      }
+
+      .nuda-shine-sweep__label {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Shine pseudo-element */
+      .nuda-shine-sweep::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.35),
+          transparent
+        );
+        transition: none;
+        transform: translateX(0);
+      }
+
+      .nuda-shine-sweep:hover::after {
+        animation: nuda-shine-sweep-anim var(--nuda-ss-speed) ease-in-out;
+      }
+
+      @keyframes nuda-shine-sweep-anim {
+        to { transform: translateX(400%); }
+      }
+
+      /* ── Accessibility ──────────────────────────────────────── */
+      @media (prefers-reduced-motion: reduce) {
+        .nuda-shine-sweep::after {
+          animation: none !important;
+        }
+      }
+
+      /* Additive, non-destructive: the render has no pointer input, so the
+         component's own :hover trigger above never fires. This rule adds a
+         second selector (a demo-active class we toggle from the timeline)
+         that runs the SAME keyframe declared above, on a slow loop, so the
+         real sweep is visible in the wall without touching the shipped
+         :hover rule or the keyframe itself. */
+      .s3-card[data-demo-active] .nuda-shine-sweep::after {
+        animation: nuda-shine-sweep-anim 1.8s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="nudaui-brag"
+      data-start="0"
+      data-width="1080"
+      data-height="1920"
+      data-duration="23.0"
+    >
+      <!-- ================================================================
+           Scene 1 — The opinion (0.0 - 3.0s)
+           ================================================================ -->
+      <section id="s1" class="scene clip" data-start="0" data-duration="3.0" data-track-index="0">
+        <span id="s1-eyebrow" class="mono">// an opinion</span>
+        <div id="s1-lines">
+          <span id="s1-line-1" class="s1-line">200kb</span>
+          <span id="s1-line-2" class="s1-line">for a loading spinner</span>
+          <span id="s1-line-3" class="s1-line">is insane.</span>
+        </div>
+        <div id="s1-spinner-dock">
+          <!-- Conic Spin Spinner -->
+          <div class="nuda-conicspin" role="status" aria-label="Loading"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           Scene 2 — The number (3.0 - 6.0s)
+           ================================================================ -->
+      <section id="s2" class="scene clip" data-start="3.0" data-duration="3.0" data-track-index="0">
+        <span id="s2-counter" class="mono">0</span>
+        <span id="s2-label">components</span>
+        <span id="s2-sub" class="mono">81 categories</span>
+      </section>
+
+      <!-- ================================================================
+           Scene 3 — The wall / SHOW THE THING (6.0 - 10.0s)
+           ================================================================ -->
+      <section id="s3" class="scene clip" data-start="6.0" data-duration="4.0" data-track-index="0">
+        <div id="s3-glow"></div>
+        <div id="s3-grid">
+          <div class="s3-card" id="s3-card-1">
+            <div class="s3-stage">
+              <!-- Pulse Dots Loader -->
+              <div class="nuda-pulse-dots" role="status" aria-label="Loading">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <span class="s3-card-label mono">Pulse Dots</span>
+          </div>
+
+          <div class="s3-card" id="s3-card-2">
+            <div class="s3-stage">
+              <!-- Conic Spin Spinner -->
+              <div class="nuda-conicspin" role="status" aria-label="Loading"></div>
+            </div>
+            <span class="s3-card-label mono">Conic Spin</span>
+          </div>
+
+          <div class="s3-card" id="s3-card-3">
+            <div class="s3-stage">
+              <!-- Smooth Toggle — iOS-style toggle switch
+                   Uses a hidden checkbox for native accessibility. -->
+              <label class="nuda-toggle" role="switch">
+                <input class="nuda-toggle__input" type="checkbox" />
+                <span class="nuda-toggle__track">
+                  <span class="nuda-toggle__thumb"></span>
+                </span>
+                <span class="nuda-toggle__label">Toggle</span>
+              </label>
+            </div>
+            <span class="s3-card-label mono">Smooth Toggle</span>
+          </div>
+
+          <div class="s3-card" id="s3-card-4">
+            <div class="s3-stage" style="width: 100%">
+              <!-- Stripe Progress Bar -->
+              <div
+                class="nuda-stripe-progress"
+                role="progressbar"
+                aria-valuenow="65"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="65% complete"
+              >
+                <div class="nuda-stripe-progress__bar" style="width: 65%"></div>
+              </div>
+            </div>
+            <span class="s3-card-label mono">Stripe Progress</span>
+          </div>
+
+          <div class="s3-card" id="s3-card-5">
+            <div class="s3-stage">
+              <div class="nuda-skpgrid" aria-hidden="true">
+                <!-- 3x3 tiles; stagger delays diagonally: (row + col) * 0.12s -->
+                <span style="animation-delay:0s"></span>
+                <span style="animation-delay:.12s"></span>
+                <span style="animation-delay:.24s"></span>
+                <span style="animation-delay:.12s"></span>
+                <span style="animation-delay:.24s"></span>
+                <span style="animation-delay:.36s"></span>
+                <span style="animation-delay:.24s"></span>
+                <span style="animation-delay:.36s"></span>
+                <span style="animation-delay:.48s"></span>
+              </div>
+            </div>
+            <span class="s3-card-label mono">Pulse Grid</span>
+          </div>
+
+          <div class="s3-card" id="s3-card-6">
+            <div class="s3-stage">
+              <!-- Shine Sweep — light sweep across button on hover -->
+              <button class="nuda-shine-sweep">
+                <span class="nuda-shine-sweep__label">Shine Sweep</span>
+              </button>
+            </div>
+            <span class="s3-card-label mono">Shine Sweep</span>
+          </div>
+        </div>
+        <span id="s3-caption" class="mono">every one of these is CSS you paste</span>
+      </section>
+
+      <!-- ================================================================
+           Scene 4 — The install that isn't (10.0 - 13.5s)
+           ================================================================ -->
+      <section id="s4" class="scene clip" data-start="10.0" data-duration="3.5" data-track-index="0">
+        <div id="s4-terminal">
+          <div id="s4-termbar">
+            <span class="s4-dot"></span>
+            <span class="s4-dot"></span>
+            <span class="s4-dot"></span>
+          </div>
+          <div id="s4-npm-line" class="mono" data-layout-allow-occlusion="true">
+            <span id="s4-prompt">$</span><span id="s4-npm-text"></span><span id="s4-cursor">▌</span>
+            <span id="s4-strike"></span>
+          </div>
+        </div>
+        <div id="s4-replace">Grab the snippet. That's the whole install.</div>
+        <div id="s4-codeblock">
+          <pre><code>&lt;<span class="tag">!-- Conic Spin Spinner --</span>&gt;
+&lt;div class="nuda-conicspin" role="status" aria-label="Loading"&gt;&lt;/div&gt;</code></pre>
+          <span id="s4-copied">Copied ✓</span>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           Scene 5 — Works everywhere, respects everyone (13.5 - 17.0s)
+           ================================================================ -->
+      <section id="s5" class="scene clip" data-start="13.5" data-duration="3.5" data-track-index="0">
+        <span id="s5-name">React</span>
+        <span id="s5-claim">If it renders markup, it runs NudaUI.</span>
+        <span id="s5-a11y" class="mono"><span class="check">✓</span> prefers-reduced-motion, shipped by default.</span>
+      </section>
+
+      <!-- ================================================================
+           Scene 6 — Now your agent can paste them (17.0 - 20.5s)
+           ================================================================ -->
+      <section id="s6" class="scene clip" data-start="17.0" data-duration="3.5" data-track-index="0">
+        <span id="s6-overlay">Zero install. For your agent too.</span>
+        <div id="s6-terminal">
+          <div id="s6-termbar">
+            <span class="s4-dot"></span>
+            <span class="s4-dot"></span>
+            <span class="s4-dot"></span>
+          </div>
+          <div id="s6-cmd-line" class="mono">
+            <span id="s6-prompt">$</span><span id="s6-cmd-text"></span><span id="s6-cursor">▌</span>
+          </div>
+        </div>
+        <span id="s6-bubble">&ldquo;build me a pricing page&rdquo;</span>
+        <div id="s6-pricing">
+          <div class="s6-pcard" id="s6-pcard-1"><div class="tier">Starter</div><div class="price mono">$9</div></div>
+          <div class="s6-pcard" id="s6-pcard-2"><div class="tier">Pro</div><div class="price mono">$29</div></div>
+          <div class="s6-pcard" id="s6-pcard-3"><div class="tier">Team</div><div class="price mono">$99</div></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           Scene 7 — Wordmark (20.5 - 23.0s)
+           ================================================================ -->
+      <section id="s7" class="scene clip" data-start="20.5" data-duration="2.5" data-track-index="0">
+        <div id="s7-glow"></div>
+        <span id="s7-word">NudaUI</span>
+        <span id="s7-line1">1,503 components. Zero dependencies.</span>
+        <span id="s7-line2" class="mono">nudaui.dev</span>
+      </section>
+
+      <!-- ================================================================
+           Music — starts 3.02s into the track so video t=0 lands on a beat.
+           No fade-in; 0.6s fade-out is authored on the timeline below.
+           ================================================================ -->
+      <audio
+        id="bgm"
+        src="assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3"
+        data-start="0"
+        data-duration="23.0"
+        data-media-start="3.02"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- ================================================================
+           SFX — chosen after the animation existed, matched to motion.
+           Low high-frequency-risk interface/click_003.ogg for the repeated
+           ticks in scenes 3 and 5 (6 and 8 repeats). See build-report.md.
+           ================================================================ -->
+      <audio id="sfx-s1-1" src="assets/sfx/interface/click_003.ogg" data-start="0.0000" data-track-index="11" data-volume="0.55"></audio>
+      <audio id="sfx-s1-2" src="assets/sfx/interface/click_003.ogg" data-start="0.5000" data-track-index="12" data-volume="0.52"></audio>
+      <audio id="sfx-s1-3" src="assets/sfx/interface/click_003.ogg" data-start="1.0000" data-track-index="13" data-volume="0.49"></audio>
+      <audio id="sfx-s2-1" src="assets/sfx/interface/click_003.ogg" data-start="3.0000" data-track-index="14" data-volume="0.42"></audio>
+      <audio id="sfx-s2-2" src="assets/sfx/interface/click_003.ogg" data-start="3.3200" data-track-index="15" data-volume="0.40"></audio>
+      <audio id="sfx-s2-3" src="assets/sfx/interface/click_003.ogg" data-start="3.6400" data-track-index="16" data-volume="0.38"></audio>
+      <audio id="sfx-s2-4" src="assets/sfx/interface/click_003.ogg" data-start="3.9600" data-track-index="17" data-volume="0.36"></audio>
+      <audio id="sfx-s2-5" src="assets/sfx/interface/click_003.ogg" data-start="4.2800" data-track-index="18" data-volume="0.34"></audio>
+      <audio id="sfx-s2-6" src="assets/sfx/interface/click_003.ogg" data-start="4.6000" data-track-index="19" data-volume="0.32"></audio>
+      <audio id="sfx-s3-card-1" src="assets/sfx/interface/click_003.ogg" data-start="6.0000" data-track-index="20" data-volume="0.50"></audio>
+      <audio id="sfx-s3-card-2" src="assets/sfx/interface/click_003.ogg" data-start="6.5000" data-track-index="21" data-volume="0.44"></audio>
+      <audio id="sfx-s3-card-3" src="assets/sfx/interface/click_003.ogg" data-start="7.0000" data-track-index="22" data-volume="0.38"></audio>
+      <audio id="sfx-s3-card-4" src="assets/sfx/interface/click_003.ogg" data-start="7.5000" data-track-index="23" data-volume="0.32"></audio>
+      <audio id="sfx-s3-card-5" src="assets/sfx/interface/click_003.ogg" data-start="8.0000" data-track-index="24" data-volume="0.26"></audio>
+      <audio id="sfx-s3-card-6" src="assets/sfx/interface/click_003.ogg" data-start="8.5000" data-track-index="25" data-volume="0.20"></audio>
+      <audio id="sfx-s4-key-1" src="assets/sfx/keyboard/keypress-001.wav" data-start="10.2000" data-track-index="26" data-volume="0.42"></audio>
+      <audio id="sfx-s4-key-2" src="assets/sfx/keyboard/keypress-002.wav" data-start="10.3231" data-track-index="27" data-volume="0.42"></audio>
+      <audio id="sfx-s4-key-3" src="assets/sfx/keyboard/keypress-003.wav" data-start="10.4462" data-track-index="28" data-volume="0.42"></audio>
+      <audio id="sfx-s4-key-4" src="assets/sfx/keyboard/keypress-004.wav" data-start="10.5692" data-track-index="29" data-volume="0.42"></audio>
+      <audio id="sfx-s4-key-5" src="assets/sfx/keyboard/keypress-005.wav" data-start="10.6923" data-track-index="30" data-volume="0.42"></audio>
+      <audio id="sfx-s4-key-6" src="assets/sfx/keyboard/keypress-006.wav" data-start="10.8154" data-track-index="31" data-volume="0.42"></audio>
+      <audio id="sfx-s4-key-7" src="assets/sfx/keyboard/keypress-007.wav" data-start="10.9385" data-track-index="32" data-volume="0.42"></audio>
+      <audio id="sfx-s4-copied" src="assets/sfx/interface/click_005.ogg" data-start="12.6000" data-track-index="33" data-volume="0.6"></audio>
+      <audio id="sfx-s5-1" src="assets/sfx/interface/click_003.ogg" data-start="13.5000" data-track-index="34" data-volume="0.18"></audio>
+      <audio id="sfx-s5-2" src="assets/sfx/interface/click_003.ogg" data-start="14.0000" data-track-index="35" data-volume="0.18"></audio>
+      <audio id="sfx-s5-3" src="assets/sfx/interface/click_003.ogg" data-start="14.5000" data-track-index="36" data-volume="0.18"></audio>
+      <audio id="sfx-s5-4" src="assets/sfx/interface/click_003.ogg" data-start="15.0000" data-track-index="37" data-volume="0.18"></audio>
+      <audio id="sfx-s5-5" src="assets/sfx/interface/click_003.ogg" data-start="15.5000" data-track-index="38" data-volume="0.18"></audio>
+      <audio id="sfx-s5-6" src="assets/sfx/interface/click_003.ogg" data-start="16.0000" data-track-index="39" data-volume="0.18"></audio>
+      <audio id="sfx-s5-7" src="assets/sfx/interface/click_003.ogg" data-start="16.5000" data-track-index="40" data-volume="0.18"></audio>
+      <audio id="sfx-s5-8" src="assets/sfx/interface/click_003.ogg" data-start="16.7500" data-track-index="41" data-volume="0.18"></audio>
+      <audio id="sfx-s6-key-1" src="assets/sfx/keyboard/keypress-001.wav" data-start="17.0500" data-track-index="42" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-2" src="assets/sfx/keyboard/keypress-002.wav" data-start="17.1025" data-track-index="43" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-3" src="assets/sfx/keyboard/keypress-003.wav" data-start="17.1549" data-track-index="44" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-4" src="assets/sfx/keyboard/keypress-004.wav" data-start="17.2074" data-track-index="45" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-5" src="assets/sfx/keyboard/keypress-005.wav" data-start="17.2598" data-track-index="46" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-6" src="assets/sfx/keyboard/keypress-006.wav" data-start="17.3123" data-track-index="47" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-7" src="assets/sfx/keyboard/keypress-007.wav" data-start="17.3648" data-track-index="48" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-8" src="assets/sfx/keyboard/keypress-008.wav" data-start="17.4172" data-track-index="49" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-9" src="assets/sfx/keyboard/keypress-001.wav" data-start="17.4697" data-track-index="50" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-10" src="assets/sfx/keyboard/keypress-002.wav" data-start="17.5221" data-track-index="51" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-11" src="assets/sfx/keyboard/keypress-003.wav" data-start="17.5746" data-track-index="52" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-12" src="assets/sfx/keyboard/keypress-004.wav" data-start="17.6270" data-track-index="53" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-13" src="assets/sfx/keyboard/keypress-005.wav" data-start="17.6795" data-track-index="54" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-14" src="assets/sfx/keyboard/keypress-006.wav" data-start="17.7320" data-track-index="55" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-15" src="assets/sfx/keyboard/keypress-007.wav" data-start="17.7844" data-track-index="56" data-volume="0.4"></audio>
+      <audio id="sfx-s6-key-16" src="assets/sfx/keyboard/keypress-008.wav" data-start="17.8369" data-track-index="57" data-volume="0.4"></audio>
+      <audio id="sfx-s6-impact-1" src="assets/sfx/impact/impactSoft_medium_001.ogg" data-start="19.0000" data-track-index="58" data-volume="0.55"></audio>
+      <audio id="sfx-s6-impact-2" src="assets/sfx/impact/impactSoft_medium_001.ogg" data-start="19.1500" data-track-index="59" data-volume="0.55"></audio>
+      <audio id="sfx-s6-impact-3" src="assets/sfx/impact/impactSoft_medium_001.ogg" data-start="20.0000" data-track-index="60" data-volume="0.55"></audio>
+      <audio id="sfx-s7-wordmark" src="assets/sfx/impact/impactBell_heavy_000.ogg" data-start="20.5000" data-track-index="61" data-volume="0.75"></audio>
+    </div>
+
+    <script>
+      var tl = gsap.timeline({ paused: true });
+
+      // Initial "at rest" states set immediately (outside the paused
+      // timeline) so frame 0 never briefly shows the un-hidden state —
+      // a bare tl.set(...) at position 0 does not render while the
+      // playhead sits exactly at 0.
+      gsap.set("#s1-eyebrow", { opacity: 0, y: -10 });
+      gsap.set("#s4-strike", { scaleX: 0, transformOrigin: "left center" });
+      gsap.set("#s4-copied", { opacity: 0, scale: 0.7 });
+
+      // ---------------------------------------------------------------
+      // Helpers
+      // ---------------------------------------------------------------
+
+      // Deterministic character-reveal "typing" tween on a plain object,
+      // seekable like any other GSAP tween (no timers, no async).
+      function typeReveal(elId, text, start, duration) {
+        var obj = { n: 0 };
+        tl.to(
+          obj,
+          {
+            n: text.length,
+            duration: duration,
+            ease: "none",
+            onUpdate: function () {
+              var el = document.getElementById(elId);
+              if (el) el.textContent = text.slice(0, Math.round(obj.n));
+            },
+          },
+          start,
+        );
+      }
+
+      // Precomputed per-frame RMS (assets/audio-rms.js), sampled with
+      // tl.call() at 30fps across an explicit time window — the audio
+      // sampling pattern from hyperframes-creative (no Web Audio API,
+      // no runtime analysis, fully deterministic).
+      function scheduleGlow(elId, tStart, tEnd, base, amount) {
+        var fps = AUDIO_RMS_FPS;
+        var f0 = Math.floor(tStart * fps);
+        var f1 = Math.ceil(tEnd * fps);
+        for (var f = f0; f < f1; f++) {
+          (function (frameIndex, time) {
+            tl.call(
+              function () {
+                var idx = frameIndex;
+                if (idx < 0) idx = 0;
+                if (idx >= AUDIO_RMS.length) idx = AUDIO_RMS.length - 1;
+                var r = AUDIO_RMS[idx];
+                var el = document.getElementById(elId);
+                if (el) el.style.opacity = String(base + amount * r);
+              },
+              [],
+              time,
+            );
+          })(f, f / fps);
+        }
+      }
+
+      // ---------------------------------------------------------------
+      // Scene 1 — The opinion (0.0 - 3.0s)
+      // Three fragments land on beats t=0.0, 0.5, 1.0, then hold settled
+      // to 3.0 (7 words ~= 2.1s floor, satisfied by the 2.0s hold + entrances).
+      // ---------------------------------------------------------------
+      tl.to("#s1-eyebrow", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.0);
+
+      tl.fromTo(
+        "#s1-line-1",
+        { opacity: 0, y: 30, scale: 0.92 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: "back.out(1.6)" },
+        0.0,
+      );
+      tl.fromTo(
+        "#s1-line-2",
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.26, ease: "power3.out" },
+        0.5,
+      );
+      tl.fromTo(
+        "#s1-line-3",
+        { opacity: 0, y: 26, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: "back.out(1.6)" },
+        1.0,
+      );
+      tl.fromTo("#s1-spinner-dock", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.out" }, 0.2);
+
+      // ---------------------------------------------------------------
+      // Scene 2 — The number (3.0 - 6.0s)
+      // Count-up finishes by 4.6s; labels settle at 4.8 and 5.2, hold to 6.0.
+      // ---------------------------------------------------------------
+      var s2Counter = { val: 0 };
+      tl.to(
+        s2Counter,
+        {
+          val: 1503,
+          duration: 1.6,
+          ease: "power2.out",
+          onUpdate: function () {
+            var el = document.getElementById("s2-counter");
+            if (el) el.textContent = Math.round(s2Counter.val).toLocaleString("en-US");
+          },
+        },
+        3.0,
+      );
+      tl.fromTo("#s2-label", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 4.8);
+      tl.fromTo("#s2-sub", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 5.2);
+
+      // ---------------------------------------------------------------
+      // Scene 3 — The wall (6.0 - 10.0s)
+      // Six real components arrive one per beat, then hold animating.
+      // ---------------------------------------------------------------
+      tl.fromTo("#s3-card-1", { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }, 6.0); // beat-grid: card 1 at 6.00s
+      tl.fromTo("#s3-card-2", { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }, 6.5); // beat-grid: card 2 at 6.50s
+      tl.fromTo("#s3-card-3", { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }, 7.0); // beat-grid: card 3 at 7.00s
+      tl.fromTo("#s3-card-4", { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }, 7.5); // beat-grid: card 4 at 7.50s
+      tl.fromTo("#s3-card-5", { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }, 8.0); // beat-grid: card 5 at 8.00s
+      tl.fromTo("#s3-card-6", { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }, 8.5); // beat-grid: card 6 at 8.50s
+
+      // Flip the Smooth Toggle's real checkbox state mid-hold so its own
+      // shipped :checked transition plays once (a scripted, deterministic
+      // state change — no simulated pointer input).
+      tl.call(
+        function () {
+          var input = document.querySelector("#s3-card-3 .nuda-toggle__input");
+          if (input) input.checked = true;
+        },
+        [],
+        8.3,
+      );
+
+      // Activate the Shine Sweep demo-trigger class (see the additive CSS
+      // rule above) so the real sweep keyframe plays without a mouse.
+      tl.call(
+        function () {
+          var card = document.getElementById("s3-card-6");
+          if (card) card.setAttribute("data-demo-active", "true");
+        },
+        [],
+        6.0,
+      );
+
+      tl.fromTo("#s3-caption", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 8.6);
+
+      // Accent glow behind the wall, driven by per-frame music RMS.
+      scheduleGlow("s3-glow", 6.0, 10.0, 0.42, 0.55);
+
+      // ---------------------------------------------------------------
+      // Scene 4 — The install that isn't (10.0 - 13.5s)
+      // ---------------------------------------------------------------
+      tl.fromTo("#s4-terminal", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 10.0);
+      typeReveal("s4-npm-text", "npm install …", 10.2, 0.8);
+
+      tl.to("#s4-strike", { scaleX: 1, duration: 0.15, ease: "power1.out" }, 11.2);
+      tl.to("#s4-terminal", { opacity: 0, y: -34, duration: 0.3, ease: "power2.in" }, 11.35);
+
+      tl.fromTo(
+        "#s4-replace",
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
+        11.35,
+      );
+      tl.fromTo(
+        "#s4-codeblock",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
+        11.8,
+      );
+      tl.to("#s4-copied", { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2.2)" }, 12.6);
+
+      // ---------------------------------------------------------------
+      // Scene 5 — Works everywhere, respects everyone (13.5 - 17.0s)
+      // Eight framework names cycle one per beat in a single slot; the two
+      // sentences each clear the reading floor over the full scene.
+      // ---------------------------------------------------------------
+      var s5Names = ["React", "Vue", "Svelte", "Astro", "Laravel", "Django", "Rails", "HTML"];
+      var s5Times = [13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5, 16.75]; // last slot is not grid-aligned (see below)
+      s5Names.forEach(function (name, i) {
+        var t = s5Times[i];
+        tl.call(
+          function () {
+            var el = document.getElementById("s5-name");
+            if (el) el.textContent = name;
+          },
+          [],
+          t,
+        );
+        tl.fromTo("#s5-name", { scale: 0.86, opacity: 0.35 }, { scale: 1, opacity: 1, duration: 0.18, ease: "power2.out" }, t);
+      });
+      // beat-grid: name 1 (React) at 13.50s, name 2 (Vue) at 14.00s, name 3 (Svelte) at 14.50s,
+      // name 4 (Astro) at 15.00s, name 5 (Laravel) at 15.50s, name 6 (Django) at 16.00s,
+      // name 7 (Rails) at 16.50s. The 8th name ("HTML") lands at 16.75s — the 0.5s grid
+      // inside this 3.5s scene only has 7 points (13.50..16.50) before the t=17.0 hard cut,
+      // so the final swap is placed just ahead of the cut instead of skipping a name.
+
+      tl.fromTo("#s5-claim", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 13.6);
+      tl.fromTo("#s5-a11y", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 15.5);
+
+      // ---------------------------------------------------------------
+      // Scene 6 — Now your agent can paste them (17.0 - 20.5s)
+      // Lands on the strong cue at t=17.0.
+      // ---------------------------------------------------------------
+      // beat-locked: 17.00s
+      tl.fromTo("#s6-overlay", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 17.3);
+      tl.fromTo("#s6-terminal", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 17.0);
+      typeReveal("s6-cmd-text", "claude mcp add --transport http nudaui https://nudaui.dev/mcp", 17.05, 0.8);
+
+      tl.fromTo(
+        "#s6-bubble",
+        { opacity: 0, y: 16, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.25, ease: "back.out(1.7)" },
+        18.0,
+      );
+
+      // aligned to strong cue at 19.00s (guidance, not a hard lock)
+      tl.fromTo("#s6-pcard-1", { opacity: 0, y: 22, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "back.out(2.2)" }, 19.0);
+      tl.fromTo("#s6-pcard-2", { opacity: 0, y: 22, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "back.out(2.2)" }, 19.15);
+      // aligned to strong cue at 20.00s (guidance, not a hard lock)
+      tl.fromTo("#s6-pcard-3", { opacity: 0, y: 22, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "back.out(2.2)" }, 20.0);
+
+      // ---------------------------------------------------------------
+      // Scene 7 — Wordmark (20.5 - 23.0s)
+      // Lands on the strong cue at t=20.5.
+      // ---------------------------------------------------------------
+      // beat-locked: 20.50s
+      tl.fromTo(
+        "#s7-word",
+        { opacity: 0, scale: 0.72, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(2.1)" },
+        20.5,
+      );
+      tl.fromTo("#s7-line1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 21.2);
+      tl.fromTo("#s7-line2", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 21.8);
+
+      scheduleGlow("s7-glow", 20.5, 23.0, 0.42, 0.55);
+
+      // ---------------------------------------------------------------
+      // Music envelope — full level throughout (no fade-in), 0.6s fade
+      // out at the very end. The tween's own values own the whole
+      // envelope once authored, so the flat "full level" segment is an
+      // explicit set at t=0 rather than relying on data-volume alone.
+      // ---------------------------------------------------------------
+      tl.to("#bgm", { volume: 0, duration: 0.6, ease: "none" }, 22.4);
+
+      window.__timelines["nudaui-brag"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

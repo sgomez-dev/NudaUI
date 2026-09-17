@@ -1,0 +1,3 @@
+1,503 copy-paste CSS & JS components. No npm install, no build step, no runtime — and now an MCP server so your agent can paste them for you.
+
+The whole reel is built out of the components themselves. nudaui.dev
