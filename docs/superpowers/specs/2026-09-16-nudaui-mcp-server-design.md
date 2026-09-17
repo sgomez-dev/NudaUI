@@ -63,7 +63,13 @@ invalidates one metric the brief asks for. See *Instrumentation*.
    read-only tools.
 2. Usage instrumentation from the first deploy.
 3. The repository prepared for registry publication: `server.json`, the
-   `mcp-name:` validation line, a README section.
+   `mcp-name:` line, a README section. (Correction recorded during the final
+   review: for this publish path — GitHub namespace, remote-only,
+   package-less — the `mcp-name:` line is not what validates ownership;
+   that happens purely through the OAuth device flow. README-token scanning
+   validates ownership only for PyPI/NuGet/Cargo *package* publishes. The
+   line is still correctly formatted and worth keeping, just not
+   load-bearing the way earlier drafts of this document claimed.)
 4. The endpoint present on every agent-facing surface the project already
    owns.
 5. Catalog claims that cannot drift from the registry again.
@@ -175,11 +181,25 @@ new dependency, no database.
 
 ```json
 {"evt":"mcp_tool","tool":"search_components","ok":true,"ms":142,
- "client":"claude-code/2.1","q_hash":"a3f…","results":8,
- "zero_results":false,"day":"2026-09-16"}
+ "client":"claude-code/2.1","uaHash":"464fb1912d16","queryHash":"a3f1c9e02b7d",
+ "results":8,"hydratedCount":8,"zeroResults":false,"degraded":false,
+ "day":"2026-09-16"}
 ```
 
-Query text is hashed, never stored raw. `zero_results` is kept in the clear
+(Corrected from an earlier draft's `q_hash`/`zero_results`: the shipped field
+names are camelCase — `queryHash`, `zeroResults` — matching the rest of the
+codebase's convention, not the snake_case this document originally showed.
+The shipped event also carries fields this draft omitted: `uaHash` — see the
+*Metric correction* below — `degraded` (the RAG index was unreachable or
+timed out and the tool fell back to local ranking), `hydratedCount` (hits
+found before category/hasJS filtering, so "the index found nothing" can be
+told apart from "a category filter emptied an otherwise-real result"), and
+`componentId` on `get_component` calls, normalized — trailing `.json`
+stripped, lowercased — so `toast-slide`, `toast-slide.json` and
+`Toast-Slide` aggregate as one bucket. Write the four-week queries against
+these field names, not the ones originally drafted here.)
+
+Query text is hashed, never stored raw. `zeroResults` is kept in the clear
 because "consultas que no devuelven resultados" is a metric the brief explicitly
 wants, and it is answerable without retaining user text.
 
@@ -190,6 +210,18 @@ exists to be counted. The nearest honest proxy is distinct client identity from
 **distinct clients per day**, not as sessions — otherwise the four-week readout
 measures something other than what was defined in advance, which would
 undermine the stopping criterion the whole experiment rests on.
+
+**Second correction, from the final whole-branch review.** `client` alone
+turned out to be unmeasurable in practice: `clientInfo` on the `_meta`
+envelope is optional (spec PR #3002 demoted it from MUST to SHOULD), so a
+compliant client can legitimately omit it, and with no fallback "distinct
+clients per day" would collapse into one `undefined` bucket for most real
+callers. `uaHash` — a hashed, never-raw digest of the request's `User-Agent`
+header — was added as a secondary identity bucket that complements `client`
+rather than replacing it: several different MCP clients can share one HTTP
+library's User-Agent and hash to the same bucket, so `client` stays the more
+precise signal whenever it is present, and `uaHash` is the floor underneath
+it. Report both, not just `client`, over the four weeks.
 
 ## Catalog integrity
 
@@ -211,8 +243,8 @@ Prepared in this branch, published by the maintainer:
 - `server.json` — official schema, namespace `io.github.sgomez-dev/*` (GitHub
   auth, no DNS verification), `remotes` entry of type `streamable-http` pointing
   at `https://nudaui.dev/mcp`.
-- `mcp-name:` line in the root README, which is what registry ownership
-  validation reads, plus a short server section.
+- `mcp-name:` line in the root README, plus a short server section. (Not the
+  ownership check for this publish path — see the correction under *Goals*.)
 - The endpoint added to `ai.txt`, `llms.txt`, `llms-full.txt`,
   `agent-instructions.md` and `/developers`. The sentence stating there is no
   npm package and no CLI stays — it remains accurate.

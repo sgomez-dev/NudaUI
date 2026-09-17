@@ -952,7 +952,15 @@ flagged in the clear because that is the metric worth acting on."
 
 ### Task 6: `server.json`, `mcp-name:` line, README section
 
-Registry publication reads the `mcp-name:` line from the root README to validate ownership, so it must land before publishing.
+`server.json` and the README's `mcp-name:` line are what a registry listing
+indexes, so they should land before publishing. **Correction from the final
+whole-branch review:** the `mcp-name:` line does not validate ownership for
+this publish path — GitHub namespace, remote-only, package-less. That
+README-token-scanning mechanism validates ownership only for PyPI/NuGet/Cargo
+*package* publishes; this server is verified purely through the OAuth device
+flow. The line is still correctly formatted and worth keeping (harmless, and
+some registry tooling may still look for it), just not load-bearing the way
+this line originally claimed.
 
 **Files:**
 - Create: `server.json`
@@ -964,10 +972,9 @@ Registry publication reads the `mcp-name:` line from the root README to validate
 
 ```json
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.sgomez-dev/nudaui",
   "description": "Search 1,503 copy-paste CSS and JS UI components with zero dependencies and no build step. Loaders, buttons, charts, date pickers, command palettes, auth screens and 75 more categories, returned as paste-ready HTML, CSS and JS.",
-  "status": "active",
   "repository": {
     "url": "https://github.com/sgomez-dev/nudaui",
     "source": "github"
@@ -982,9 +989,19 @@ Registry publication reads the `mcp-name:` line from the root README to validate
 }
 ```
 
-Leave the `description` exactly as written unless the maintainer has chosen a different option — it is drafted for search, and the component count must match `totalCount`.
+(Updated from an earlier draft: the shipped server.json uses the current
+`2025-12-11` schema, verified against the registry docs and the live schema,
+in place of this draft's stale `2025-07-09` URL — and it drops `status`,
+which the current schema no longer accepts on a publisher-submitted
+server.json; it is registry-managed and returned separately in API
+responses, not a field to set here.)
 
-- [ ] **Step 2: Add the `mcp-name:` validation line and server section to README**
+Leave the `description` exactly as written unless the maintainer has chosen a different option — it is drafted for search, and the component count must match `totalCount`. (A vitest in `src/lib/readme-claims.test.ts` now guards this: it parses `server.json`'s `description` and fails the build if its component count drifts from `totalCount`.)
+
+- [ ] **Step 2: Add the `mcp-name:` line and server section to README**
+
+(Not a "validation" line for this publish path — see the correction above
+this task's file list.)
 
 Insert after the existing `## 🤖 For AI agents and integrations` section:
 
@@ -1034,6 +1051,11 @@ git commit -m "docs: add server.json and MCP server section to README
 Adds the mcp-name: line the registry reads to validate repository
 ownership, plus the three-tool summary and client setup command."
 ```
+
+(The commit that actually landed, f91423e, carries this exact message and
+therefore repeats the ownership claim the final review corrected — see the
+note at the top of this task. Git history is not rewritten for a documentation
+correction; the correction is recorded here and in the design spec instead.)
 
 ---
 
