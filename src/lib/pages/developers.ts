@@ -78,7 +78,7 @@ export function developersDoc(): DocPage {
         blocks: [
           {
             kind: "p",
-            text: `The ${site.name} API exposes the whole component registry — ${totalCount} components across ${categories.length} categories — as static JSON. It is read-only, public, and served from a CDN. Use it to search the catalog, resolve a description to a component id, and pull the paste-ready source code for that component.`,
+            text: `The ${site.name} API exposes the whole component registry — ${totalCount.toLocaleString("en-US")} components across ${categories.length} categories — as static JSON. It is read-only, public, and served from a CDN. Use it to search the catalog, resolve a description to a component id, and pull the paste-ready source code for that component.`,
           },
           {
             kind: "table",
@@ -163,7 +163,7 @@ export function developersDoc(): DocPage {
                   '  "schemaVersion": "1.0",',
                   '  "name": "NudaUI",',
                   '  "license": "MIT",',
-                  '  "totals": { "components": 1022, "categories": 81 },',
+                  `  "totals": { "components": ${totalCount}, "categories": ${categories.length} },`,
                   '  "components": [',
                   "    {",
                   '      "id": "toast-slide",',
@@ -193,7 +193,7 @@ export function developersDoc(): DocPage {
                 code: [
                   "{",
                   '  "schemaVersion": "1.0",',
-                  '  "totals": { "components": 1022, "categories": 81 },',
+                  `  "totals": { "components": ${totalCount}, "categories": ${categories.length} },`,
                   '  "categories": [',
                   "    {",
                   '      "id": "loaders",',
@@ -278,7 +278,7 @@ export function developersDoc(): DocPage {
               [
                 "`search_components`",
                 "`query` (string, required) · `category` (string, optional) · `hasJS` (boolean, optional) · `limit` (1–20, default 8)",
-                `Searches ${totalCount} components by natural-language description and returns ids to pass to \`get_component\`. Falls back to keyword matching — and says so in the response — if the semantic index is unreachable.`,
+                `Searches ${totalCount.toLocaleString("en-US")} components by natural-language description and returns ids to pass to \`get_component\`. Falls back to keyword matching — and says so in the response — if the semantic index is unreachable.`,
               ],
               [
                 "`get_component`",
